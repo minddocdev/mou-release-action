@@ -36,4 +36,4 @@ inputs:
     required: true
 runs:
   using: "node12"
-  main: "run.js"
+  main: "dist/run.js"
