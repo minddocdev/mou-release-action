@@ -37,7 +37,7 @@ async function run() {
     const rawCommits = core.getInput('commits', {required: false});
     const commits = rawCommits ? (getJSON(rawCommits) as Commit[]) : [];
     const releaseTag = core.getInput('releaseTag', {required: true});
-    const templatePath = core.getInput('template', {required: true});
+    const templatePath = core.getInput('templatePath', {required: true});
     const token = core.getInput('token', {required: true});
     const draft = core.getInput('draft', {required: false}) == 'true' || true;
     const prerelease =
