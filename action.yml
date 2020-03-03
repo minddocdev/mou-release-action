@@ -1,0 +1,39 @@
+name: "MOU Release"
+description: "Create a Github release with parsed commits into a given Markdown template"
+author: "MindDoc Health GmbH"
+branding:
+  icon: "cloud"
+  color: "blue"
+inputs:
+  app:
+    description: "The name of the app involved in the release"
+    required: true
+  commits:
+    description: >-
+      Inject commit list as given by Github (e.g. for git push event: `github.event.commits`)
+    required: false
+    default: "[]"
+  draft:
+    description: "Publish release draft"
+    required: false
+    default: "true"
+  prerelease:
+    description: "Mark release as prerelease when creating"
+    required: false
+    default: "true"
+  releaseName:
+    description: "Mark release as prerelease when creating"
+    required: false
+    default: "[${app}] ${{tag}}"
+  tag:
+    description: "The git tag that belongs to the release"
+    required: true
+  templatePath:
+    description: "The path for the Markdown template that will be used to create the release body"
+    required: true
+  token:
+    description: "The token to access Github's API"
+    required: true
+runs:
+  using: "node12"
+  main: "run.js"

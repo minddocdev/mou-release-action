@@ -1,0 +1,66 @@
+{
+  "name": "mou-release-action",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Github Action that creates releases",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "webpack --progress",
+    "lint": "eslint ./src/** ./test/**",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minddocdev/mou-release-action.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup",
+    "release"
+  ],
+  "author": "MindDoc Health GmbH",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "semver": "^7.1.3"
+  },
+  "devDependencies": {
+    "@actions/github": "^2.1.1",
+    "@types/eslint-plugin-prettier": "^2.2.0",
+    "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.7",
+    "@types/prettier": "1.19.0",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
+    "@yarnpkg/pnpify": "^2.0.0-rc.18",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-typescript": "^7.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-import-resolver-node": "^0.3.3",
+    "eslint-plugin-eslint-comments": "^3.1.2",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.8.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.3",
+    "husky": "^4.2.3",
+    "jest": "^25.1.0",
+    "jest-config": "^25.1.0",
+    "jest-environment-node": "^25.1.0",
+    "prettier": "^1.19.1",
+    "prettier-eslint": "^9.0.1",
+    "ts-jest": "^25.2.1",
+    "ts-loader": "^6.2.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.8.3",
+    "webpack": "^5.0.0-beta.14",
+    "webpack-cli": "^3.3.11"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn build"
+    }
+  }
+}

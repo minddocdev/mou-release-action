@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "paths": {
+      "@minddocdev/mou-release-action/*": ["./src/*"],
+      "@minddocdev/mou-release-action/test/*": ["./test/*"]
+    },
+    "rootDir": ".",
+    "strict": true,
+    "target": "es2017",
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.spec.ts",
+  ],
+  "types": ["jest", "node"]
+}
