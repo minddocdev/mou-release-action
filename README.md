@@ -63,9 +63,9 @@ yarn test
 - default: `[${app}] ${{tag}}`
 - description: The title of the release.
 
-### `tag`
+### `releaseTag`
 
-- name: tag
+- name: releaseTag
 - required: true
 - description: The git tag that belongs to the release.
 

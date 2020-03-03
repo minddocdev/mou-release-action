@@ -36,7 +36,7 @@ async function run() {
     const app = core.getInput('app', {required: true});
     const rawCommits = core.getInput('commits', {required: false});
     const commits = rawCommits ? (getJSON(rawCommits) as Commit[]) : [];
-    const tag = core.getInput('tag', {required: true});
+    const releaseTag = core.getInput('releaseTag', {required: true});
     const templatePath = core.getInput('template', {required: true});
     const token = core.getInput('token', {required: true});
     const draft = core.getInput('draft', {required: false}) == 'true' || true;
@@ -44,9 +44,17 @@ async function run() {
       core.getInput('prerelease', {required: false}) == 'true' || true;
 
     const releaseName =
-      core.getInput('releaseName', {required: false}) || `[${app}] ${{tag}}`;
+      core.getInput('releaseName', {required: false}) ||
+      `[${app}] ${{releaseTag}}`;
     const body = generateReleaseBody(templatePath, app, commits);
-    await createRelease(token, tag, releaseName, body, draft, prerelease);
+    await createRelease(
+      token,
+      releaseTag,
+      releaseName,
+      body,
+      draft,
+      prerelease,
+    );
   } catch (error) {
     core.setFailed(error.message);
   }

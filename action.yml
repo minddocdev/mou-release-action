@@ -25,7 +25,7 @@ inputs:
     description: "Mark release as prerelease when creating"
     required: false
     default: "[${app}] ${{tag}}"
-  tag:
+  releaseTag:
     description: "The git tag that belongs to the release"
     required: true
   templatePath:
