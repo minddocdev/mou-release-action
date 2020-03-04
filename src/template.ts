@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import * as path from 'path';
+import {context} from '@actions/github';
 
 import {Commit} from '.';
 
@@ -23,6 +25,11 @@ export function generateReleaseBody(
   commits: Commit[],
 ) {
   const changelogMd = commitParser(commits);
-  const template = fs.readFileSync(templatePath, 'utf8');
+  // Read file relative to `.github/` folder
+  const { repo } = context.repo;
+  const template = fs.readFileSync(
+    path.resolve('/home/runner/work', repo, repo, '.github', templatePath),
+    'utf8',
+  );
   return template.replace(/\$APP/g, app).replace(/\$CHANGES/g, changelogMd);
 }

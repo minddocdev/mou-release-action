@@ -73,7 +73,8 @@ yarn test
 
 - name: templatePath
 - required: true
-- description: The path for the Markdown template that will be used to create the release body.
+- description: The path for the Markdown template that will be used to create the release body,
+relative to `.github/`.
 
 ### `token`
 

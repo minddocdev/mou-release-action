@@ -29,7 +29,9 @@ inputs:
     description: "The git tag that belongs to the release"
     required: true
   templatePath:
-    description: "The path for the Markdown template that will be used to create the release body"
+    description: >-
+      The path for the Markdown template that will be used to create the release body,
+      relative to `.github/`.
     required: true
   token:
     description: "The token to access Github's API"
