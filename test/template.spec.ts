@@ -4,6 +4,14 @@ import {generateReleaseBody} from '@minddocdev/mou-release-action/template';
 import {Commit, CommitAuthor} from '@minddocdev/mou-release-action/index';
 
 jest.mock('fs');
+jest.mock('@actions/github', () => ({
+  context: {
+    repo: {
+      owner: 'theowner',
+      repo: 'therepo',
+    },
+  }
+}));
 
 const commitAuthor: CommitAuthor = {
   email: 'dblancoit@gmail.com',
@@ -61,8 +69,8 @@ $CHANGES
 
 ## Changelog
 
-- [#1](https://commiturl) First commit message **([darioblanco](https://github.com/darioblanco))**
-- [#2](https://commiturl) Second commit message **([darioblanco](https://github.com/darioblanco))**
+- [#1](https://commiturl) First commit message ([@darioblanco](https://github.com/darioblanco))
+- [#2](https://commiturl) Second commit message ([@darioblanco](https://github.com/darioblanco))
 
 ## Checklist
 
@@ -116,8 +124,8 @@ $CHANGES
 
 ## Changelog
 
-- [#1](https://commiturl) First commit message **([darioblanco](https://github.com/darioblanco))**
-- [#2](https://commiturl) Second commit message **([darioblanco](https://github.com/darioblanco))**
+- [#1](https://commiturl) First commit message ([@darioblanco](https://github.com/darioblanco))
+- [#2](https://commiturl) Second commit message ([@darioblanco](https://github.com/darioblanco))
 
 ## Checklist
 

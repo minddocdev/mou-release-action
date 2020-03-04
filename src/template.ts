@@ -12,9 +12,9 @@ function commitParser(commits: Commit[]) {
   let commitMd = '';
   commits.forEach((commit: Commit, index: number) => {
     const {username} = commit.author;
-    commitMd = `${commitMd}- [#${index + 1}](${commit.url}) ${commit.message} **([${
+    commitMd = `${commitMd}- [#${index + 1}](${commit.url}) ${commit.message} ([@${
       username
-    }](https://github.com/${username}))**\n`;
+    }](https://github.com/${username}))\n`;
   });
   return commitMd.trim();
 }
