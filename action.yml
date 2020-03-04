@@ -24,7 +24,6 @@ inputs:
   releaseName:
     description: "Mark release as prerelease when creating"
     required: false
-    default: "[<app>] <releaseTag>"
   releaseTag:
     description: "The git tag that belongs to the release"
     required: true
