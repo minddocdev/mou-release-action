@@ -36,6 +36,7 @@ async function run() {
     const app = core.getInput('app', {required: true});
     const rawCommits = core.getInput('commits', {required: false});
     const commits = rawCommits ? (getJSON(rawCommits) as Commit[]) : [];
+    const releaseName = core.getInput('releaseName', {required: false});
     const releaseTag = core.getInput('releaseTag', {required: true});
     const templatePath = core.getInput('templatePath', {required: true});
     const token = core.getInput('token', {required: true});
@@ -43,9 +44,6 @@ async function run() {
     const prerelease =
       core.getInput('prerelease', {required: false}) == 'true' || true;
 
-    const releaseName =
-      core.getInput('releaseName', {required: false}) ||
-      `[${app}] ${{releaseTag}}`;
     const body = generateReleaseBody(templatePath, app, commits);
     await createRelease(
       token,

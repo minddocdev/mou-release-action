@@ -59,8 +59,7 @@ yarn test
 ### `releaseName`
 
 - name: releaseName
-- required: false
-- default: `[${app}] ${{tag}}`
+- required: true
 - description: The title of the release.
 
 ### `releaseTag`

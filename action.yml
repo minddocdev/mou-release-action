@@ -23,7 +23,7 @@ inputs:
     default: "true"
   releaseName:
     description: "Mark release as prerelease when creating"
-    required: false
+    required: true
   releaseTag:
     description: "The git tag that belongs to the release"
     required: true
