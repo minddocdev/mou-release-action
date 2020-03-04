@@ -123,17 +123,18 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@master
       - name: Bump version and push tag
-        uses: minddocdev/github-tag-action@master
+        uses: minddocdev/mou-version-action@v1.0.0
         id: bump_version
         with:
-          prefix: ${{ env.APP }}
+          prefix: ${{ env.APP }}@
           token: ${{ github.token }}
       - name: Create Release
         uses: minddocdev/mou-release-action@v1.0.0
         with:
           app: ${{ env.APP }}
           commits: ${{ github.event.commits }}
-          tag: ${{ steps.bump_version.outputs.tag }}
+          releaseName: ${{ env.APP }} ${{ steps.bump_version.outputs.version }}
+          releaseTag: ${{ steps.bump_version.outputs.tag }}
           templatePath: ./github/RELEASE_DRAFT/default.md
           token: ${{ github.token }}
 ```
