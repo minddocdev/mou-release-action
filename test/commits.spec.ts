@@ -16,31 +16,66 @@ const author = {
 };
 
 const html_url = 'https://commiturl';
-
-const compareCommitsResponse = {
-  data: {
-    commits: [
-      {
-        author,
-        html_url,
-        commit: { message: 'Message 1' },
-      },
-      {
-        author,
-        html_url,
-        commit: { message: 'Message 2' },
-      },
-    ],
-  },
-};
+const sha = '62ec8ea713fdf14e4abaef3d7d5138194dec49ce';
 
 describe('commit', () => {
-  test('render commit diff', async () => {
+  test('render commit diff for each category', async () => {
+    const compareCommitsResponse = {
+      data: {
+        commits: [
+          {
+            author,
+            html_url,
+            sha,
+            commit: { message: 'feat:super feature' },
+          },
+          {
+            author,
+            html_url,
+            sha,
+            commit: { message: 'fix: My fix' },
+          },
+          {
+            author,
+            html_url,
+            sha,
+            commit: { message: 'docs(context): document everything' },
+          },
+          {
+            author,
+            html_url,
+            sha,
+            commit: { message: 'style: awesome style' },
+          },
+          {
+            author,
+            html_url,
+            sha,
+            commit: { message: 'refactor: one does not simply refactor' },
+          },
+          {
+            author,
+            html_url,
+            sha,
+            commit: { message: 'test(: Tests are good' },
+          },
+          {
+            author,
+            html_url,
+            sha,
+            commit: { message: 'chore: somebody has to keep things going' },
+          },
+          {
+            author,
+            html_url,
+            sha,
+            commit: { message: 'uncategorized commit' },
+          },
+        ],
+      },
+    };
     const compareCommits = jest.fn(() => compareCommitsResponse);
     const github = { repos: { compareCommits } };
-    expect(await commitParser(github as any, 'v1.0.0', 'v1.1.1')).toBe(
-      '- [#1](https://commiturl) Message 1 ([@darioblanco](https://authorurl))\n\
-- [#2](https://commiturl) Message 2 ([@darioblanco](https://authorurl))',
-    );
+    expect(await commitParser(github as any, 'v1.0.0', 'v1.1.1')).toMatchSnapshot();
   });
 });

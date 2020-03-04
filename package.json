@@ -23,10 +23,10 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.3",
+    "@actions/github": "^2.1.1",
     "semver": "^7.1.3"
   },
   "devDependencies": {
-    "@actions/github": "^2.1.1",
     "@types/eslint-plugin-prettier": "^2.2.0",
     "@types/jest": "^25.1.3",
     "@types/node": "^13.7.7",
@@ -61,11 +61,6 @@
   "husky": {
     "hooks": {
       "pre-commit": "yarn build"
-    }
-  },
-  "dependenciesMeta": {
-    "octokit-rest-npm": {
-      "unplugged": true
     }
   }
 }

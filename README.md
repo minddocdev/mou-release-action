@@ -132,9 +132,41 @@ jobs:
         uses: minddocdev/mou-release-action@v1.0.0
         with:
           app: ${{ env.APP }}
-          commits: ${{ github.event.commits }}
+          commitDiffRef: tags/my-production-deployed-tag
           releaseName: ${{ env.APP }} ${{ steps.bump_version.outputs.version }}
           releaseTag: ${{ steps.bump_version.outputs.tag }}
           templatePath: ./github/RELEASE_DRAFT/default.md
           token: ${{ github.token }}
 ```
+
+If your commits follow the [Angular Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
+the action will automatically categorize them in `$CHANGES` like in the following example:
+
+```md
+## :alien: Changelog
+
+- Uncategorized commit - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:zap: Features**
+- Super feature - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:wrench: Fixes**
+- My fix - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:books: Documentation**
+- Document everything - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:nail_care: Style changes**
+- Awesome style - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:mountain: Refactors**
+- One does not simply refactor - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:traffic_light: Tests**
+- Tests are good - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:construction: Maintenance**
+- Somebody has to keep things going - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+```
+
+In this case, all commits that will be added to the production release are displayed here.

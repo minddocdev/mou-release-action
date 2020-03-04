@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commit render commit diff for each category 1`] = `
+"- Uncategorized commit - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:zap: Features**
+- Super feature - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:wrench: Fixes**
+- My fix - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:books: Documentation**
+- Document everything - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:nail_care: Style changes**
+- Awesome style - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:mountain: Refactors**
+- One does not simply refactor - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:traffic_light: Tests**
+- Tests are good - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:construction: Maintenance**
+- Somebody has to keep things going - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
+`;

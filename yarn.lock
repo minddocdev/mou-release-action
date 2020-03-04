@@ -5298,9 +5298,6 @@ fsevents@^2.1.2:
     typescript: ^3.8.3
     webpack: ^5.0.0-beta.14
     webpack-cli: ^3.3.11
-  dependenciesMeta:
-    octokit-rest-npm:
-      unplugged: true
   languageName: unknown
   linkType: soft
 
