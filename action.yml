@@ -8,11 +8,12 @@ inputs:
   app:
     description: "The name of the app involved in the release"
     required: true
-  commits:
+  commitDiffBase:
     description: >-
-      Inject commit list as given by Github (e.g. for git push event: `github.event.commits`)
+      The branch or tag that will be used as base for git commit comparison.
+      The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable
+      for the given `templatePath` template file.
     required: false
-    default: "[]"
   draft:
     description: "Publish release draft"
     required: false

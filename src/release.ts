@@ -1,16 +1,30 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import * as core from '@actions/core';
-import { GitHub, context } from '@actions/github';
+import { context, GitHub } from '@actions/github';
 
-export async function createRelease(
-  token: string,
+export async function createGithubRelease(
+  github: GitHub,
+  templatePath: string,
   tag: string,
   releaseName: string,
-  body: string,
   draft: boolean,
   prerelease: boolean,
+  app: string,
+  changes: string,
 ) {
-  const github = new GitHub(token);
   const { owner, repo } = context.repo;
+
+  // Create body from given template
+  let body = fs
+    .readFileSync(
+      path.resolve('/home/runner/work', repo, repo, '.github', templatePath),
+      'utf8',
+    )
+    .replace(/\$APP/g, app);
+  if (changes) {
+    body = body.replace(/\$CHANGES/g, changes);
+  }
 
   // Create a release
   // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
@@ -18,11 +32,12 @@ export async function createRelease(
   const createReleaseResponse = await github.repos.createRelease({
     owner,
     repo,
-    tag_name: tag, // eslint-disable-line @typescript-eslint/camelcase
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    tag_name: tag,
     name: releaseName,
     body,
     draft,
-    prerelease
+    prerelease,
   });
 
   // Get the ID, html_url, and upload URL for the created Release from the response

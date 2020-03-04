@@ -28,6 +28,7 @@ module.exports = {
   ],
   ignorePatterns: ['.yarn', 'dist', 'coverage', 'jest.config.js', 'webpack.config.js'],
   rules: {
+    'object-curly-spacing': [2, 'always'],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',

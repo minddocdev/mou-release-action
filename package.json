@@ -62,5 +62,10 @@
     "hooks": {
       "pre-commit": "yarn build"
     }
+  },
+  "dependenciesMeta": {
+    "octokit-rest-npm": {
+      "unplugged": true
+    }
   }
 }
