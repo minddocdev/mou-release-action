@@ -3,19 +3,15 @@ import * as path from 'path';
 import * as core from '@actions/core';
 import { context, GitHub } from '@actions/github';
 
-export async function createGithubRelease(
-  github: GitHub,
-  templatePath: string,
-  tag: string,
-  releaseName: string,
-  draft: boolean,
-  prerelease: boolean,
-  app: string,
-  changes: string,
-) {
-  const { owner, repo } = context.repo;
+const { owner, repo } = context.repo;
 
-  // Create body from given template
+export function renderReleaseBody(
+  templatePath: string,
+  app: string,
+  changes?: string,
+  tasks?: string,
+  pullRequests?: string,
+) {
   let body = fs
     .readFileSync(
       path.resolve('/home/runner/work', repo, repo, '.github', templatePath),
@@ -25,6 +21,23 @@ export async function createGithubRelease(
   if (changes) {
     body = body.replace(/\$CHANGES/g, changes);
   }
+  if (tasks) {
+    body = body.replace(/\$TASKS/g, tasks);
+  }
+  if (pullRequests) {
+    body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
+  }
+  return body;
+}
+
+export async function createGithubRelease(
+  github: GitHub,
+  tag: string,
+  name: string,
+  body: string,
+  draft: boolean,
+  prerelease: boolean,
+) {
 
   // Create a release
   // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
@@ -34,7 +47,7 @@ export async function createGithubRelease(
     repo,
     // eslint-disable-next-line @typescript-eslint/camelcase
     tag_name: tag,
-    name: releaseName,
+    name,
     body,
     draft,
     prerelease,

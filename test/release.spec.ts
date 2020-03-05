@@ -2,14 +2,14 @@
 import * as fs from 'fs';
 import { setOutput } from '@actions/core';
 
-import { createGithubRelease } from '@minddocdev/mou-release-action/release';
+import { createGithubRelease, renderReleaseBody } from '@minddocdev/mou-release-action/release';
 
 jest.mock('fs');
 jest.mock('@actions/github', () => ({
   context: {
     repo: {
-      owner: 'theowner',
-      repo: 'therepo',
+      owner: 'myorg',
+      repo: 'myrepo',
     },
   }
 }));
@@ -24,9 +24,7 @@ const createReleaseResponse = {
 };
 
 describe('release', () => {
-  test('render release template', async () => {
-    const createRelease = jest.fn(() => createReleaseResponse);
-    const github = { repos: { createRelease } };
+  test('render release template', () => {
     (fs.readFileSync as jest.Mock).mockImplementation(
       () => `
 # $APP release
@@ -34,6 +32,14 @@ describe('release', () => {
 ## Changelog
 
 $CHANGES
+
+## JIRA
+
+$TASKS
+
+## PRs
+
+$PULL_REQUESTS
 
 ## Checklist
 
@@ -48,31 +54,36 @@ $CHANGES
 - [ ] Stakeholder 2
 `,
     );
-    const tag = 'v1.1.0';
-    const releaseName = 'release title';
+    const app = 'myapp';
     const changes = `
 - [#1](https://commiturl) First commit message ([@darioblanco](https://github.com/darioblanco))
 - [#2](https://commiturl) Second commit message ([@darioblanco](https://github.com/darioblanco))
     `;
-    const draft = true;
-    const prerelease = true;
-    await createGithubRelease(
-      github as any, 'templatePath.md', tag, releaseName, draft, prerelease, 'myapp', changes,
-    );
-
-    expect(createRelease).toBeCalledWith({
-      draft,
-      prerelease,
-      owner: 'theowner',
-      repo: 'therepo',
-      tag_name: tag,
-      name: releaseName,
-      body: `
+    const tasks = `
+- [JIRA-123](https://myorg.atlassian.net/browse/JIRA-123)
+- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)
+    `;
+    const pullRequests = `
+- [#1716](https://github.com/myorg/myrepo/pull/1716)
+- [#1717](https://github.com/myorg/myrepo/pull/1716)
+    `;
+    const body = renderReleaseBody('myTemplatePath.md', app, changes, tasks, pullRequests);
+    expect(fs.readFileSync)
+      .toBeCalledWith('/home/runner/work/myrepo/myrepo/.github/myTemplatePath.md', 'utf8');
+    expect(body).toBe(`
 # myapp release
 
 ## Changelog
 
 ${changes}
+
+## JIRA
+
+${tasks}
+
+## PRs
+
+${pullRequests}
 
 ## Checklist
 
@@ -85,7 +96,27 @@ ${changes}
 
 - [ ] Stakeholder 1
 - [ ] Stakeholder 2
-`
+`);
+  });
+
+  test('create github release', async () => {
+    const createRelease = jest.fn(() => createReleaseResponse);
+    const github = { repos: { createRelease } };
+    const tag = 'v1.1.0';
+    const name = 'release title';
+    const body = 'my release body';
+    const draft = true;
+    const prerelease = true;
+    await createGithubRelease(github as any, tag, name, body, draft, prerelease);
+
+    expect(createRelease).toBeCalledWith({
+      body,
+      draft,
+      name,
+      prerelease,
+      owner: 'myorg',
+      repo: 'myrepo',
+      tag_name: tag,
     });
     expect(setOutput).toBeCalledTimes(3);
     expect(setOutput).toBeCalledWith('id', 'releaseId');

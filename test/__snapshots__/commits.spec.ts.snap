@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`commit render commit diff for each category 1`] = `
+exports[`commit render commits diff for each category 1`] = `
 "- Uncategorized commit - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:zap: Features**
@@ -23,4 +23,27 @@ exports[`commit render commit diff for each category 1`] = `
 
 **:construction: Maintenance**
 - Somebody has to keep things going - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
+`;
+
+exports[`commit render commits diff when scope is required 1`] = `
+"**:books: Documentation**
+- Document everything - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:mountain: Refactors**
+- One does not simply refactor - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
+`;
+
+exports[`commit render github squashed commits for scope auth 1`] = `
+"- Set values for staging and production - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:zap: Features**
+- Set login endpoint controller - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:wrench: Fixes**
+- Set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:traffic_light: Tests**
+- Add integration test for login endpoint - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;

@@ -34,26 +34,37 @@ yarn test
 - required: true
 - description: The name of the app involved in the release.
 
-### `commits`
+### `commitDiffBase`
 
-- name: commits
+- name: commitDiffBase
 - required: false
 - default: []
-- description: Inject commit list as given by Github
-(e.g. for git push event: `github.event.commits`).
+- description: The sha, branch or tag that will be used as base for git commit comparison.
+Branches should have the `heads/<branch name>` format and tags `tags/<tag name>`.
+The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable
+for the given `templatePath` template file.
+
+### `commitScope`
+
+- name: commitScope
+- required: false
+- default: []
+- description: Render commits that only below to the given scope.
+Scopes are analyzed for commits that follow the Angular commit style.
+e.g. `type(scope): my commit title` or `(scope): my commit title`
 
 ### `draft`
 
 - name: draft
 - required: false
-- default: true
+- default: `true`
 - description: Publish release draft.
 
 ### `prerelease`
 
 - name: prerelease
 - required: false
-- default: true
+- default: `true`
 - description: Mark release as prerelease when creating.
 
 ### `releaseName`
@@ -67,6 +78,21 @@ yarn test
 - name: releaseTag
 - required: true
 - description: The git tag that belongs to the release.
+
+### `taskBaseUrl`
+
+- name: taskBaseUrl
+- required: false
+- description: The base url to append for a detected task (do not set a trailing `/`).
+By default, it will create a url based on your Github organization.
+(e.g. `https://myorg.atlassian.net/browse`)
+
+### `taskPrefix`
+
+- name: taskPrefix
+- required: false
+- default: `JIRA-`
+- description: The prefix that identifies task ids in the commits
 
 ### `templatePath`
 
@@ -92,6 +118,14 @@ and the parsed `commits` respectively).
 ## Changelog
 
 $CHANGES
+
+## JIRA Tasks
+
+$TASKS
+
+## Pull Requests
+
+$PULL_REQUESTS
 
 ## Checklist
 
@@ -170,3 +204,6 @@ the action will automatically categorize them in `$CHANGES` like in the followin
 ```
 
 In this case, all commits that will be added to the production release are displayed here.
+
+In addition, you can render project management tasks and PRs. The PR rendering follows Github's
+format (where squash and rebase commits output `(#<PR_ID>)`).
