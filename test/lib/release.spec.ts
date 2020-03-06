@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import * as fs from 'fs';
+import { resolve as pathResolve } from 'path';
 import { setOutput } from '@actions/core';
 
 import {
   createGithubRelease, renderReleaseBody
 } from '@minddocdev/mou-release-action/lib/release';
 
-jest.mock('fs');
+jest.mock('path');
 jest.mock('@actions/github', () => ({
   context: {
     repo: {
@@ -30,98 +29,32 @@ describe('release', () => {
     const app = 'myapp';
     const templatePath = 'myTemplatePath.md';
 
-    afterEach(() => {
-      expect(fs.readFileSync).toBeCalledWith(
-        `/home/runner/work/myrepo/myrepo/.github/${templatePath}`,
-        'utf8',
-      );
+    test('render release template', () => {
+      (pathResolve as jest.Mock)
+        .mockImplementation(() => `${__dirname}/fixtures/basic.md`);
+      expect(renderReleaseBody('myTemplatePath.md', app)).toMatchSnapshot();
+      expect(pathResolve)
+        .toBeCalledWith('/home/runner/work', 'myrepo', 'myrepo', '.github', templatePath);
     });
 
-  test('render release template', () => {
-    (fs.readFileSync as jest.Mock).mockImplementation(
-      () => `
-# $APP release
+    test('render release template with changes, tasks and pull requests', () => {
+      (pathResolve as jest.Mock)
+        .mockImplementation(() => `${__dirname}/fixtures/with-changelog.md`);
 
-Just a template
-`,
-    );
-    expect(renderReleaseBody('myTemplatePath.md', app)).toBe(`
-# myapp release
-
-Just a template
-`);
-  });
-
-  test('render release template with changes, tasks and pull requests', () => {
-    (fs.readFileSync as jest.Mock).mockImplementation(
-      () => `
-# $APP release
-
-## Changelog
-
-$CHANGES
-
-## JIRA
-
-$TASKS
-
-## PRs
-
-$PULL_REQUESTS
-
-## Checklist
-
-- [ ] Check 1
-  - [ ] Check 1.2
-
-- [ ] Check 2
-
-## Stakeholders
-
-- [ ] Stakeholder 1
-- [ ] Stakeholder 2
-`,
-    );
-    const changes = `
+      const changes = `\
 - [#1](https://commiturl) First commit message ([@darioblanco](https://github.com/darioblanco))
-- [#2](https://commiturl) Second commit message ([@darioblanco](https://github.com/darioblanco))
-    `;
-    const tasks = `
+- [#2](https://commiturl) Second commit message ([@darioblanco](https://github.com/darioblanco))`;
+      const tasks = `\
 - [JIRA-123](https://myorg.atlassian.net/browse/JIRA-123)
-- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)
-    `;
-    const pullRequests = `
+- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)`;
+      const pullRequests = `\
 - [#1716](https://github.com/myorg/myrepo/pull/1716)
-- [#1717](https://github.com/myorg/myrepo/pull/1716)
-    `;
-    expect(renderReleaseBody('myTemplatePath.md', app, changes, tasks, pullRequests)).toBe(`
-# myapp release
-
-## Changelog
-
-${changes}
-
-## JIRA
-
-${tasks}
-
-## PRs
-
-${pullRequests}
-
-## Checklist
-
-- [ ] Check 1
-  - [ ] Check 1.2
-
-- [ ] Check 2
-
-## Stakeholders
-
-- [ ] Stakeholder 1
-- [ ] Stakeholder 2
-`);
-  });
+- [#1717](https://github.com/myorg/myrepo/pull/1716)`;
+      expect(renderReleaseBody('myTemplatePath.md', app, changes, tasks, pullRequests))
+        .toMatchSnapshot();
+      expect(pathResolve)
+        .toBeCalledWith('/home/runner/work', 'myrepo', 'myrepo', '.github', templatePath);
+    });
   });
 
   test('create github release', async () => {
@@ -144,7 +77,7 @@ ${pullRequests}
       tag_name: tag,
     });
     expect(setOutput).toBeCalledTimes(3);
-    expect(setOutput).toBeCalledWith('id', 'releaseId');
+    expect(setOutput).toBeCalledWith('release_id', 'releaseId');
     expect(setOutput).toBeCalledWith('html_url', 'htmlUrl');
     expect(setOutput).toBeCalledWith('upload_url', 'uploadUrl');
   });

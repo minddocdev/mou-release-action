@@ -25,9 +25,9 @@ export async function run() {
     // Release config
     const releaseName = core.getInput('releaseName', { required: false });
     const templatePath = core.getInput('templatePath', { required: true });
-    const draft = core.getInput('draft', { required: false }) == 'true' || false;
+    const draft = core.getInput('draft', { required: false }) === 'true' || false;
     const prerelease =
-      core.getInput('prerelease', { required: false }) == 'true' || false;
+      core.getInput('prerelease', { required: false }) === 'true' || false;
 
     const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
       github,
@@ -39,7 +39,7 @@ export async function run() {
     const body = renderReleaseBody(templatePath, app, changes, tasks, pullRequests);
 
     const releaseTag = core.getInput('releaseTag', { required: false }) ||
-      bumpVersion(token, tagPrefix, nextVersionType);
+      await bumpVersion(github, tagPrefix, nextVersionType);
     await createGithubRelease(github, releaseTag, releaseName, body, draft, prerelease);
   } catch (error) {
     core.setFailed(error.message);

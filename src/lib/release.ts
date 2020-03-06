@@ -56,7 +56,7 @@ export async function createGithubRelease(
     data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl }
   } = createReleaseResponse;
 
-  core.setOutput('id', releaseId.toString());
+  core.setOutput('release_id', releaseId.toString());
   core.setOutput('html_url', htmlUrl);
   core.setOutput('upload_url', uploadUrl);
 }

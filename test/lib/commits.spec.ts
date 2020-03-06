@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import { commitParser } from '@minddocdev/mou-release-action/lib/commits';
 import { setOutput } from '@actions/core';
+import { commitParser } from '@minddocdev/mou-release-action/lib/commits';
 
 jest.mock('@actions/github', () => ({
   context: {

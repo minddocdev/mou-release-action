@@ -1,3 +1,4 @@
+import * as semver from 'semver';
 import * as core from '@actions/core';
 import { context, GitHub } from '@actions/github';
 
@@ -7,21 +8,7 @@ export enum VersionType {
   patch = 'patch',
 }
 
-export function bumpVersion(token: string, tagPrefix: string, nextVersionType: VersionType) {
-  // Using pagination: https://octokit.github.io/rest.js/v17#pagination
-  // const listMatchingRefsOptions = github.git.listMatchingRefs.endpoint.merge({
-  //   owner,
-  //   repo,
-  //   ref: `tags/${tagPrefix}`,
-  // });
-
-  // TODO - Use nodegit
-
-  // Find latest tag, bump and push it
-  return '';
-}
-
-export async function retrieveLastReleasedVersion(github: GitHub, tagPrefix: string) {
+const findReleaseTag = async (github: GitHub, matchFunction: (release: {}) => {}) => {
   const { owner, repo } = context.repo;
 
   // Using pagination: https://octokit.github.io/rest.js/v17#pagination
@@ -30,22 +17,36 @@ export async function retrieveLastReleasedVersion(github: GitHub, tagPrefix: str
     repo,
   });
 
-  const findRelease = async () => {
-    // Look for the earliest published release that matches the tag prefix (if given)
-    /* eslint-disable no-restricted-syntax */
-    for await (const response of github.paginate.iterator(listReleasesOptions)) {
-      for (const release of response.data) {
-        const { prerelease, draft, tag_name: tagName } = release;
-        if (!draft && !prerelease && tagName.startsWith(tagPrefix)) {
-          return release;
-        }
-      }
+  // Look for the earliest release that matches the given condition
+  /* eslint-disable no-restricted-syntax */
+  for await (const response of github.paginate.iterator(listReleasesOptions)) {
+    for (const release of response.data) {
+      if (matchFunction(release)) return release.tag_name;
     }
-    /* eslint-enable no-restricted-syntax */
-    return { tag_name: undefined };
-  };
+  }
+  /* eslint-enable no-restricted-syntax */
+  return undefined;
+};
 
-  const { tag_name: lastPublishedTag } = await findRelease();
+export async function bumpVersion(github: GitHub, tagPrefix: string, nextVersionType: VersionType) {
+  const matchesTagPrefix = (release) => release.tag_name.startsWith(tagPrefix);
+  const lastTag = (await findReleaseTag(github, matchesTagPrefix));
+  const lastVersion = lastTag ? lastTag.replace(tagPrefix, '') : '0.0.0';
+  const newVersion = semver.inc(lastVersion, nextVersionType);
+  const newTag = `${tagPrefix}${newVersion}`;
+  core.setOutput('previous_tag', lastTag);
+  core.setOutput('previous_version', lastVersion);
+  core.setOutput('new_tag', newTag);
+  core.setOutput('new_version', newVersion);
+  return newTag;
+}
+
+export async function retrieveLastReleasedVersion(github: GitHub, tagPrefix: string) {
+  const isVersionReleased = (release) => {
+    const { prerelease, draft, tag_name: tagName } = release;
+    return !draft && !prerelease && tagName.startsWith(tagPrefix);
+  };
+  const lastPublishedTag  = await findReleaseTag(github, isVersionReleased);
   core.setOutput('base_tag', lastPublishedTag || '');
   return lastPublishedTag;
 }

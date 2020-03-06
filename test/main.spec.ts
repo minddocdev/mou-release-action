@@ -82,7 +82,7 @@ describe('run', () => {
       undefined,
     );
     expect(renderReleaseBody).toBeCalledWith(templatePath, app, changes, tasks, pullRequests);
-    expect(bumpVersion).toBeCalledWith(token, tagPrefix, nextVersionType);
+    expect(bumpVersion).toBeCalledWith(expect.any(GitHub), tagPrefix, nextVersionType);
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
       releaseTag,
@@ -96,8 +96,8 @@ describe('run', () => {
 
   test('with specific production release and new release tag', async () => {
     const baseRef = 'v1.0.4';
-    const draft = false;
-    const prerelease = false;
+    const givenDraft = false;
+    const givenPrerelease = false;
     const releaseTag = 'v1.0.6';
     const taskBaseUrl = 'https://myfaketask.url';
     (getInput as jest.Mock).mockImplementation((name: string) => {
@@ -107,11 +107,11 @@ describe('run', () => {
         case 'baseRef':
           return baseRef;
         case 'draft':
-          return `${draft}`;
+          return `${givenDraft}`;
         case 'monorepo':
           return 'true';
         case 'prerelease':
-          return `${prerelease}`;
+          return `${givenPrerelease}`;
         case 'releaseName':
           return releaseName;
         case 'releaseTag':
@@ -146,8 +146,8 @@ describe('run', () => {
       releaseTag,
       releaseName,
       body,
-      draft,
-      prerelease,
+      givenDraft,
+      givenPrerelease,
     );
     expect(setFailed).not.toBeCalled();
   });
