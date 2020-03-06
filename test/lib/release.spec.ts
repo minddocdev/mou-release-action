@@ -2,7 +2,9 @@
 import * as fs from 'fs';
 import { setOutput } from '@actions/core';
 
-import { createGithubRelease, renderReleaseBody } from '@minddocdev/mou-release-action/release';
+import {
+  createGithubRelease, renderReleaseBody
+} from '@minddocdev/mou-release-action/lib/release';
 
 jest.mock('fs');
 jest.mock('@actions/github', () => ({
@@ -24,7 +26,33 @@ const createReleaseResponse = {
 };
 
 describe('release', () => {
+  describe('render release template', () => {
+    const app = 'myapp';
+    const templatePath = 'myTemplatePath.md';
+
+    afterEach(() => {
+      expect(fs.readFileSync).toBeCalledWith(
+        `/home/runner/work/myrepo/myrepo/.github/${templatePath}`,
+        'utf8',
+      );
+    });
+
   test('render release template', () => {
+    (fs.readFileSync as jest.Mock).mockImplementation(
+      () => `
+# $APP release
+
+Just a template
+`,
+    );
+    expect(renderReleaseBody('myTemplatePath.md', app)).toBe(`
+# myapp release
+
+Just a template
+`);
+  });
+
+  test('render release template with changes, tasks and pull requests', () => {
     (fs.readFileSync as jest.Mock).mockImplementation(
       () => `
 # $APP release
@@ -54,7 +82,6 @@ $PULL_REQUESTS
 - [ ] Stakeholder 2
 `,
     );
-    const app = 'myapp';
     const changes = `
 - [#1](https://commiturl) First commit message ([@darioblanco](https://github.com/darioblanco))
 - [#2](https://commiturl) Second commit message ([@darioblanco](https://github.com/darioblanco))
@@ -67,10 +94,7 @@ $PULL_REQUESTS
 - [#1716](https://github.com/myorg/myrepo/pull/1716)
 - [#1717](https://github.com/myorg/myrepo/pull/1716)
     `;
-    const body = renderReleaseBody('myTemplatePath.md', app, changes, tasks, pullRequests);
-    expect(fs.readFileSync)
-      .toBeCalledWith('/home/runner/work/myrepo/myrepo/.github/myTemplatePath.md', 'utf8');
-    expect(body).toBe(`
+    expect(renderReleaseBody('myTemplatePath.md', app, changes, tasks, pullRequests)).toBe(`
 # myapp release
 
 ## Changelog
@@ -97,6 +121,7 @@ ${pullRequests}
 - [ ] Stakeholder 1
 - [ ] Stakeholder 2
 `);
+  });
   });
 
   test('create github release', async () => {

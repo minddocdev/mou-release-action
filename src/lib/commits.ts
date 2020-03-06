@@ -1,6 +1,8 @@
 import { context, GitHub } from '@actions/github';
 import * as core from '@actions/core';
 
+import { VersionType } from './version';
+
 // Octokit's commit type subset
 interface Commit {
   username: string,
@@ -16,8 +18,7 @@ interface Commit {
  */
 export async function commitParser(
   github: GitHub,
-  commitDiffBase: string,
-  releaseTag: string,
+  baseRef: string,
   taskPrefix: string,
   taskBaseUrl?: string,
   commitScope?: string,
@@ -64,10 +65,12 @@ export async function commitParser(
   const compareCommitsResponse = await github.repos.compareCommits({
     owner,
     repo,
-    base: commitDiffBase,
-    head: releaseTag
+    base: baseRef,
+    head: context.sha,
   });
-  const { data: { commits } } = compareCommitsResponse;
+  const {
+    data: { commits },
+  } = compareCommitsResponse;
 
   const categorizeCommit = (commit: Commit) => {
     const { message } = commit;
@@ -90,7 +93,7 @@ export async function commitParser(
 
   const prRegExp = new RegExp('(\\(#\\d+\\))', 'gi');
   const taskRegExp = new RegExp(`(${taskPrefix}\\d+)`, 'gi');
-  commits.forEach((githubCommit) => {
+  commits.forEach(githubCommit => {
     const {
       author: { login: username, html_url: userUrl },
       html_url: commitUrl,
@@ -105,12 +108,22 @@ export async function commitParser(
       const messageLines = message.split('* ');
       // Retrieve PR link and JIRA information from first line
       const prMatch = prRegExp.exec(messageLines[0]);
-      if (prMatch) prMatch.slice(1).forEach(pr => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
+      if (prMatch)
+        prMatch.slice(1).forEach(pr => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
       const taskMatch = taskRegExp.exec(messageLines[0]);
       if (taskMatch) taskMatch.slice(1).forEach(task => tasks.push(task));
       // Categorize all commits except first one
-      messageLines.slice(1).forEach((messageLine) =>
-        categorizeCommit({ username, userUrl, commitUrl, sha, message: messageLine.trim() }));
+      messageLines
+        .slice(1)
+        .forEach(messageLine =>
+          categorizeCommit({
+            username,
+            userUrl,
+            commitUrl,
+            sha,
+            message: messageLine.trim(),
+          }),
+        );
     } else {
       categorizeCommit(commit);
     }
@@ -131,16 +144,17 @@ export async function commitParser(
     // Always capitalize commit messages
     message = `${message[0].toUpperCase()}${message.slice(1)}`;
     // Add to global change markdown
-    changesMd = `${changesMd}- ${message} - [${sha.substring(0, 8)}](${
-      commitUrl
-    })([@${username}](${userUrl}))\n`;
+    changesMd = `${changesMd}- ${message} - [${sha.substring(
+      0,
+      8,
+    )}](${commitUrl})([@${username}](${userUrl}))\n`;
     // Add to global commit sha list
     changes.push(sha);
   };
 
   uncategorizedCommits.forEach(formatCommit);
 
-  Object.keys(commitGroups).forEach((category) => {
+  Object.keys(commitGroups).forEach(category => {
     const { title, commits } = commitGroups[category];
     if (commits.length !== 0) {
       changesMd = `${changesMd}\n${title}\n`;
@@ -154,9 +168,15 @@ export async function commitParser(
 
   return {
     changes: changesMd.trim(),
-    tasks: tasks.map(task => `- [${task}](${
-      taskBaseUrl ? taskBaseUrl : `https://${owner}.atlassian.net/browse`
-    }/${task})\n`).join(),
+    nextVersionType: VersionType.patch, // TODO - Detect major and minor from commits or PRs
+    tasks: tasks
+      .map(
+        task =>
+          `- [${task}](${
+            taskBaseUrl ? taskBaseUrl : `https://${owner}.atlassian.net/browse`
+          }/${task})\n`,
+      )
+      .join(),
     pullRequests: pullRequests
       .map(pr => `- [#${pr}](https://github.com/${owner}/${repo}/pull/${pr})\n`)
       .join(),

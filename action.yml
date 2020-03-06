@@ -8,33 +8,36 @@ inputs:
   app:
     description: "The name of the app involved in the release"
     required: true
-  commitDiffBase:
+  baseRef:
     description: >-
-      The sha, branch or tag that will be used as base for git commit comparison.
+      The sha, branch or tag that will be used as base for git commit comparison, instead of
+      the automatic detection of latest published release.
       Branches should have the `heads/<branch name>` format and tags `tags/<tag name>`.
       The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable
       for the given `templatePath` template file.
-    required: false
-  commitScope:
-    description: >-
-      Render commits that only below to the given scope. Scopes are analyzed for commits that
-      follow the Angular commit style.
-      e.g. `type(scope): my commit title` or `(scope): my commit title`
     required: false
   draft:
     description: "Publish release draft"
     required: false
     default: "true"
+  monorepo:
+    description: >-
+      Creates tag and render commits for a specific scope, based on the given app name.
+      Scopes from commits are analyzed for commits that follow the Angular commit style.
+      e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
+    required: false
   prerelease:
     description: "Mark release as prerelease when creating"
     required: false
     default: "true"
   releaseName:
-    description: "Mark release as prerelease when creating"
+    description: "The release title"
     required: true
   releaseTag:
-    description: "The git tag that belongs to the release"
-    required: true
+    description: >-
+      The git tag that will be linked to the release.
+      If undefined, it will detect the latest tag and bump it.
+    required: false
   taskBaseUrl:
     description: >-
       The base url to append for a detected task (do not set a trailing `/`).

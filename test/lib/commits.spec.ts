@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { commitParser } from '@minddocdev/mou-release-action/commits';
+import { commitParser } from '@minddocdev/mou-release-action/lib/commits';
 import { setOutput } from '@actions/core';
 
 jest.mock('@actions/github', () => ({
@@ -83,7 +83,7 @@ describe('commit', () => {
     const github = { repos: { compareCommits } };
     const {
       changes, tasks, pullRequests,
-    } = await commitParser(github as any, 'v1.0.0', 'v1.1.1', 'JIRA-');
+    } = await commitParser(github as any, 'v1.0.0', 'JIRA-');
     expect(setOutput).toBeCalledWith(
       'changes',
       JSON.stringify(compareCommitsResponse.data.commits.map(commit => commit.sha)), // 8 commits
@@ -100,7 +100,7 @@ describe('commit', () => {
     const github = { repos: { compareCommits } };
     const {
       changes, tasks, pullRequests,
-    } = await commitParser(github as any, 'v1.0.0', 'v1.1.1', 'JIRA-', undefined, 'context');
+    } = await commitParser(github as any, 'v1.0.0', 'JIRA-', undefined, 'context');
     expect(setOutput).toBeCalledWith(
       'changes',
       '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce","62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
@@ -112,8 +112,10 @@ describe('commit', () => {
     expect(pullRequests).toBe('');
   });
 
-  test('render github squashed commits for scope auth', async () => {
-    const commitMessage = '[JIRA-2772] Title of my PR (#1716)\n\n\
+  [undefined, 'http://my-task-url'].forEach(taskBaseUrl =>
+    test(`render gh squashed commits with scope, PRs and tasks for ${taskBaseUrl}`, async () => {
+      const commitMessage =
+        '[JIRA-2772] Title of my PR (#1716)\n\n\
 * feat(auth): set login endpoint controller\n\n\
 * test(auth): add integration test for login endpoint\n\n\
 * fix(auth): set secure and http only options\n\n\
@@ -124,6 +126,52 @@ And this is the footer\n\n\
 This is the body of the previous commit\n\n\
 * feat(auth): set expiration of the cookie to the amount of time of the token\n\n\
 * fix(auth): remove joi validation since it does not accept localhost';
+      const compareSquashedCommitsResponse = {
+        data: {
+          commits: [
+            {
+              author,
+              html_url,
+              sha,
+              commit: {
+                message: commitMessage,
+              },
+            },
+          ],
+        },
+      };
+      const compareCommits = jest.fn(() => compareSquashedCommitsResponse);
+      const github = { repos: { compareCommits } };
+      const { changes, tasks, pullRequests } = await commitParser(
+        github as any,
+        'v1.0.0',
+        'JIRA-',
+        taskBaseUrl,
+        'auth',
+      );
+      if (!taskBaseUrl) taskBaseUrl = 'https://theowner.atlassian.net/browse';
+      expect(setOutput).toBeCalledWith(
+        'changes',
+        JSON.stringify(
+          commitMessage
+            .split('* ')
+            .slice(2)
+            .map(() => sha),
+        ), // 6 commits
+      );
+      expect(setOutput).toBeCalledWith('tasks', '["JIRA-2772"]');
+      expect(setOutput).toBeCalledWith('pull_requests', '["1716"]');
+      expect(changes).toMatchSnapshot();
+      expect(tasks).toBe(`- [JIRA-2772](${taskBaseUrl}/JIRA-2772)\n`);
+      expect(pullRequests).toBe('- [#1716](https://github.com/theowner/therepo/pull/1716)\n');
+    }),
+  );
+
+  test('render github squashed commits without scope, PRs and tasks', async () => {
+    const commitMessage =
+      'Title of my PR\n\n\
+* set login endpoint controller\n\n\
+* add integration test for login endpoint\n\n';
     const compareSquashedCommitsResponse = {
       data: {
         commits: [
@@ -140,17 +188,19 @@ This is the body of the previous commit\n\n\
     };
     const compareCommits = jest.fn(() => compareSquashedCommitsResponse);
     const github = { repos: { compareCommits } };
-    const {
-      changes, tasks, pullRequests,
-    } = await commitParser(github as any, 'v1.0.0', 'v1.1.1', 'JIRA-', undefined, 'auth');
+    const { changes, tasks, pullRequests } = await commitParser(
+      github as any,
+      'v1.0.0',
+      'JIRA-',
+    );
     expect(setOutput).toBeCalledWith(
       'changes',
-      JSON.stringify(commitMessage.split('* ').slice(2).map(() => sha)), // 6 commits
+      '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce","62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
     );
-    expect(setOutput).toBeCalledWith('tasks', '["JIRA-2772"]');
-    expect(setOutput).toBeCalledWith('pull_requests', '["1716"]');
+    expect(setOutput).toBeCalledWith('tasks', '[]');
+    expect(setOutput).toBeCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
-    expect(tasks).toBe('- [JIRA-2772](https://theowner.atlassian.net/browse/JIRA-2772)\n');
-    expect(pullRequests).toBe('- [#1716](https://github.com/theowner/therepo/pull/1716)\n');
+    expect(tasks).toBe('');
+    expect(pullRequests).toBe('');
   });
 });

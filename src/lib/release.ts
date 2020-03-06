@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import * as fs from 'fs';
 import * as path from 'path';
 import * as core from '@actions/core';
 import { context, GitHub } from '@actions/github';
-
-const { owner, repo } = context.repo;
 
 export function renderReleaseBody(
   templatePath: string,
@@ -12,6 +11,7 @@ export function renderReleaseBody(
   tasks?: string,
   pullRequests?: string,
 ) {
+  const { repo } = context.repo;
   let body = fs
     .readFileSync(
       path.resolve('/home/runner/work', repo, repo, '.github', templatePath),
@@ -38,14 +38,13 @@ export async function createGithubRelease(
   draft: boolean,
   prerelease: boolean,
 ) {
-
+  const { owner, repo } = context.repo;
   // Create a release
   // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
   // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-create-release
   const createReleaseResponse = await github.repos.createRelease({
     owner,
     repo,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     tag_name: tag,
     name,
     body,
