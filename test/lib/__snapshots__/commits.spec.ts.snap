@@ -9,10 +9,13 @@ exports[`commit render commits diff for each category 1`] = `
 **:wrench: Fixes**
 - My fix - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
+**:runner: Performance**
+- Set additional performance steps - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
 **:books: Documentation**
 - Document everything - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
-**:nail_care: Style changes**
+**:nail_care: Style**
 - Awesome style - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:mountain: Refactors**
@@ -22,7 +25,13 @@ exports[`commit render commits diff for each category 1`] = `
 - Tests are good - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:construction: Maintenance**
-- Somebody has to keep things going - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
+- Somebody has to keep things going - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:construction_worker: Build**
+- Like chore but fancier - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:runner: CI**
+- Ok this is a CI change - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;
 
 exports[`commit render commits diff when scope is required 1`] = `
@@ -44,6 +53,9 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for http://
 - Set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
+**:runner: Performance**
+- Add additional fake performance - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
 **:traffic_light: Tests**
 - Add integration test for login endpoint - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;
@@ -58,6 +70,9 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for undefin
 **:wrench: Fixes**
 - Set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+
+**:runner: Performance**
+- Add additional fake performance - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:traffic_light: Tests**
 - Add integration test for login endpoint - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"

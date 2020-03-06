@@ -26,32 +26,54 @@ export async function commitParser(
   const commitGroups: {
     [index: string]: { title: string; commits: Commit[] };
   } = {
+    // A new feature
     feat: {
       title: '**:zap: Features**',
       commits: [],
     },
+    // A bug fix
     fix: {
       title: '**:wrench: Fixes**',
       commits: [],
     },
+    // A code change that improves performance
+    perf: {
+      title: '**:runner: Performance**',
+      commits: [],
+    },
+    // Documentation only changes
     docs: {
       title: '**:books: Documentation**',
       commits: [],
     },
+    // Changes that do not affect the meaning of the code (lint changes)
     style: {
-      title: '**:nail_care: Style changes**',
+      title: '**:nail_care: Style**',
       commits: [],
     },
+    // A code change that neither fixes a bug nor adds a feature
     refactor: {
       title: '**:mountain: Refactors**',
       commits: [],
     },
+    // Adding missing tests or correcting existing tests
     test: {
       title: '**:traffic_light: Tests**',
       commits: [],
     },
+    // Changes that affect the build system or external development dependencies
     chore: {
       title: '**:construction: Maintenance**',
+      commits: [],
+    },
+    // As an alternative to 'chore', but with very similar meaning
+    build: {
+      title: '**:construction_worker: Build**',
+      commits: [],
+    },
+    // Changes for CI configuration files and scripts (e.g. Github CI, helm values...)
+    ci: {
+      title: '**:runner: CI**',
       commits: [],
     },
   };

@@ -40,6 +40,12 @@ describe('commit', () => {
           author,
           html_url,
           sha,
+          commit: { message: 'perf: set additional performance steps' },
+        },
+        {
+          author,
+          html_url,
+          sha,
           commit: { message: 'docs(context): document everything' },
         },
         {
@@ -65,6 +71,18 @@ describe('commit', () => {
           html_url,
           sha,
           commit: { message: 'chore: somebody has to keep things going' },
+        },
+        {
+          author,
+          html_url,
+          sha,
+          commit: { message: 'build: like chore but fancier' },
+        },
+        {
+          author,
+          html_url,
+          sha,
+          commit: { message: 'ci: ok this is a CI change' },
         },
         {
           author,
@@ -119,6 +137,7 @@ describe('commit', () => {
 * feat(auth): set login endpoint controller\n\n\
 * test(auth): add integration test for login endpoint\n\n\
 * fix(auth): set secure and http only options\n\n\
+* perf(auth): add additional fake performance\n\n\
 This is the body of the previous commit\n\n\
 And this is the footer\n\n\
 * (auth): Set values for staging and production\n\n\
