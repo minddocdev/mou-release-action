@@ -32,6 +32,7 @@ export async function retrieveLastReleasedVersion(github: GitHub, tagPrefix: str
 
   const findRelease = async () => {
     // Look for the earliest published release that matches the tag prefix (if given)
+    /* eslint-disable no-restricted-syntax */
     for await (const response of github.paginate.iterator(listReleasesOptions)) {
       for (const release of response.data) {
         const { prerelease, draft, tag_name: tagName } = release;
@@ -40,9 +41,11 @@ export async function retrieveLastReleasedVersion(github: GitHub, tagPrefix: str
         }
       }
     }
+    /* eslint-enable no-restricted-syntax */
+    return { tag_name: undefined };
   };
 
   const { tag_name: lastPublishedTag } = await findRelease();
-  core.setOutput('base_tag', lastPublishedTag);
+  core.setOutput('base_tag', lastPublishedTag || '');
   return lastPublishedTag;
 }

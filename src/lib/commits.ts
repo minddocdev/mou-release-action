@@ -109,6 +109,7 @@ export async function commitParser(
         categoryMatch = true;
         return true;
       }
+      return false;
     });
     if (!categoryMatch) uncategorizedCommits.push(commit);
   };
@@ -157,8 +158,8 @@ export async function commitParser(
     const { username, userUrl, sha, commitUrl } = commit;
     let { message } = commit;
     // Only take into account the commit title
-    message = message.split('\n')[0];
-    // Detect if commit message has Angular format
+    [message] = message.split('\n');
+    // Detect if commit message has Angular forma[t
     if (/(\w+\(\w+\)|\w+|\(\w+\)):/.test(message)) {
       // Remove group information for changelog (e.g. messages with categories)
       message = message.split(':')[1].trim();
@@ -177,10 +178,10 @@ export async function commitParser(
   uncategorizedCommits.forEach(formatCommit);
 
   Object.keys(commitGroups).forEach(category => {
-    const { title, commits } = commitGroups[category];
-    if (commits.length !== 0) {
+    const { title, commits: groupCommits } = commitGroups[category];
+    if (groupCommits.length !== 0) {
       changesMd = `${changesMd}\n${title}\n`;
-      commits.forEach(formatCommit);
+      groupCommits.forEach(formatCommit);
     }
   });
 
@@ -194,9 +195,7 @@ export async function commitParser(
     tasks: tasks
       .map(
         task =>
-          `- [${task}](${
-            taskBaseUrl ? taskBaseUrl : `https://${owner}.atlassian.net/browse`
-          }/${task})\n`,
+          `- [${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})\n`,
       )
       .join(),
     pullRequests: pullRequests
