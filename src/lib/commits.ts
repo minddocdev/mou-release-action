@@ -166,8 +166,8 @@ export async function commitParser(
     let { message } = commit;
     // Only take into account the commit title
     [message] = message.split('\n');
-    // Detect if commit message has Angular forma[t
-    if (/(\w+\(\w+\)|\w+|\(\w+\)):/.test(message)) {
+    // Detect if commit message has Angular format
+    if (/(\w+\([a-zA-Z_-]+\)|\w+|\([a-zA-Z_-]+\)):/.test(message)) {
       // Remove group information for changelog (e.g. messages with categories)
       message = message.split(':')[1].trim();
     }

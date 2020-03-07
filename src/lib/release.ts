@@ -7,9 +7,9 @@ export function renderReleaseBody(
   templatePath: string,
   app: string,
   releaseVersion: string,
-  changes?: string,
-  tasks?: string,
-  pullRequests?: string,
+  changes = '',
+  tasks = '',
+  pullRequests = '',
 ) {
   const { repo } = context.repo;
   let body = fs
@@ -18,15 +18,9 @@ export function renderReleaseBody(
       'utf8',
     )
     .replace(/\$APP/g, app).replace(/\$VERSION/g, releaseVersion);
-  if (changes) {
-    body = body.replace(/\$CHANGES/g, changes);
-  }
-  if (tasks) {
-    body = body.replace(/\$TASKS/g, tasks);
-  }
-  if (pullRequests) {
-    body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
-  }
+  body = body.replace(/\$CHANGES/g, changes);
+  body = body.replace(/\$TASKS/g, tasks);
+  body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
   return body;
 }
 

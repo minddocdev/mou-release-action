@@ -47,7 +47,7 @@ describe('commit', () => {
           author,
           html_url,
           sha,
-          commit: { message: 'docs(context): document everything' },
+          commit: { message: 'docs(my-app): document everything' },
         },
         {
           author,
@@ -59,7 +59,7 @@ describe('commit', () => {
           author,
           html_url,
           sha,
-          commit: { message: 'refactor(context): one does not simply refactor' },
+          commit: { message: 'refactor(my-app): one does not simply refactor' },
         },
         {
           author,
@@ -122,7 +122,7 @@ describe('commit', () => {
       'v1.0.0',
       'JIRA-',
       undefined,
-      'context',
+      'my-app',
     );
     expect(setOutput).toBeCalledWith(
       'changes',
