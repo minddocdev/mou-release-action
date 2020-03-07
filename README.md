@@ -172,7 +172,7 @@ jobs:
           baseTag: my-production-deployed-tag
           releaseName: ${{ env.APP }} ${{ steps.bump_version.outputs.version }}
           releaseTag: ${{ steps.bump_version.outputs.tag }}
-          templatePath: ./github/RELEASE_DRAFT/default.md
+          templatePath: RELEASE_DRAFT/default.md
           token: ${{ github.token }}
 ```
 
@@ -200,7 +200,7 @@ jobs:
         with:
           app: ${{ env.APP }}
           monorepo: true
-          templatePath: ./github/RELEASE_DRAFT/default.md
+          templatePath: RELEASE_DRAFT/default.md
           token: ${{ github.token }}
 ```
 
