@@ -57,7 +57,7 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for http://
 - Add additional fake performance - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:traffic_light: Tests**
-- Add integration test for login endpoint - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
+- Add integration test for login endpoint #MAJOR - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;
 
 exports[`commit render gh squashed commits with scope, PRs and tasks for undefined 1`] = `
@@ -75,7 +75,7 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for undefin
 - Add additional fake performance - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:traffic_light: Tests**
-- Add integration test for login endpoint - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
+- Add integration test for login endpoint #MAJOR - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;
 
 exports[`commit render github squashed commits without scope, PRs and tasks 1`] = `

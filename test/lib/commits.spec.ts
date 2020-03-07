@@ -1,5 +1,6 @@
 import { setOutput } from '@actions/core';
 import { commitParser } from '@minddocdev/mou-release-action/lib/commits';
+import { VersionType } from '@minddocdev/mou-release-action/lib/version';
 
 jest.mock('@actions/github', () => ({
   context: {
@@ -16,6 +17,7 @@ const author = {
   html_url: 'https://authorurl',
 };
 
+// eslint-disable-next-line @typescript-eslint/camelcase
 const html_url = 'https://commiturl';
 const sha = '62ec8ea713fdf14e4abaef3d7d5138194dec49ce';
 
@@ -98,9 +100,11 @@ describe('commit', () => {
 
   test('render commits diff for each category', async () => {
     const github = { repos: { compareCommits } };
-    const {
-      changes, tasks, pullRequests,
-    } = await commitParser(github as any, 'v1.0.0', 'JIRA-');
+    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
+      github as any,
+      'v1.0.0',
+      'JIRA-',
+    );
     expect(setOutput).toBeCalledWith(
       'changes',
       JSON.stringify(compareCommitsResponse.data.commits.map(commit => commit.sha)), // 8 commits
@@ -108,16 +112,20 @@ describe('commit', () => {
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
+    expect(nextVersionType).toBe(VersionType.minor);
     expect(tasks).toBe('');
     expect(pullRequests).toBe('');
   });
 
   test('render commits diff when scope is required', async () => {
-    const compareCommits = jest.fn(() => compareCommitsResponse);
     const github = { repos: { compareCommits } };
-    const {
-      changes, tasks, pullRequests,
-    } = await commitParser(github as any, 'v1.0.0', 'JIRA-', undefined, 'context');
+    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
+      github as any,
+      'v1.0.0',
+      'JIRA-',
+      undefined,
+      'context',
+    );
     expect(setOutput).toBeCalledWith(
       'changes',
       '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce","62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
@@ -125,6 +133,7 @@ describe('commit', () => {
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
+    expect(nextVersionType).toBe(VersionType.patch);
     expect(tasks).toBe('');
     expect(pullRequests).toBe('');
   });
@@ -132,18 +141,18 @@ describe('commit', () => {
   [undefined, 'http://my-task-url'].forEach(taskBaseUrl =>
     test(`render gh squashed commits with scope, PRs and tasks for ${taskBaseUrl}`, async () => {
       const commitMessage =
-        '[JIRA-2772] Title of my PR (#1716)\n\n\
-* feat(auth): set login endpoint controller\n\n\
-* test(auth): add integration test for login endpoint\n\n\
-* fix(auth): set secure and http only options\n\n\
-* perf(auth): add additional fake performance\n\n\
-This is the body of the previous commit\n\n\
-And this is the footer\n\n\
-* (auth): Set values for staging and production\n\n\
-* Address comment from PR\n\n\
-This is the body of the previous commit\n\n\
-* feat(auth): set expiration of the cookie to the amount of time of the token\n\n\
-* fix(auth): remove joi validation since it does not accept localhost';
+        'JIRA-2772 Title of my PR (#1716)\n\n' +
+        '* feat(auth): set login endpoint controller\n\n' +
+        '* test(auth): add integration test for login endpoint #MAJOR\n\n' +
+        '* fix(auth): set secure and http only options\n\n' +
+        '* perf(auth): add additional fake performance\n\n' +
+        'This is the body of the previous commit\n\n' +
+        'And this is the footer\n\n' +
+        '* (auth): Set values for staging and production\n\n' +
+        '* Address comment from PR\n\n' +
+        'This is the body of the previous commit\n\n' +
+        '* feat(auth): set expiration of the cookie to the amount of time of the token\n\n' +
+        '* fix(auth): remove joi validation since it does not accept localhost';
       const compareSquashedCommitsResponse = {
         data: {
           commits: [
@@ -158,16 +167,14 @@ This is the body of the previous commit\n\n\
           ],
         },
       };
-      const compareCommits = jest.fn(() => compareSquashedCommitsResponse);
-      const github = { repos: { compareCommits } };
-      const { changes, tasks, pullRequests } = await commitParser(
+      const github = { repos: { compareCommits: jest.fn(() => compareSquashedCommitsResponse) } };
+      const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
         github as any,
         'v1.0.0',
         'JIRA-',
         taskBaseUrl,
         'auth',
       );
-      if (!taskBaseUrl) taskBaseUrl = 'https://theowner.atlassian.net/browse';
       expect(setOutput).toBeCalledWith(
         'changes',
         JSON.stringify(
@@ -180,16 +187,18 @@ This is the body of the previous commit\n\n\
       expect(setOutput).toBeCalledWith('tasks', '["JIRA-2772"]');
       expect(setOutput).toBeCalledWith('pull_requests', '["1716"]');
       expect(changes).toMatchSnapshot();
-      expect(tasks).toBe(`- [JIRA-2772](${taskBaseUrl}/JIRA-2772)\n`);
+      expect(nextVersionType).toBe(VersionType.major);
+      const jiraBaseUrl = taskBaseUrl || 'https://theowner.atlassian.net/browse';
+      expect(tasks).toBe(`- [JIRA-2772](${jiraBaseUrl}/JIRA-2772)\n`);
       expect(pullRequests).toBe('- [#1716](https://github.com/theowner/therepo/pull/1716)\n');
     }),
   );
 
   test('render github squashed commits without scope, PRs and tasks', async () => {
     const commitMessage =
-      'Title of my PR\n\n\
-* set login endpoint controller\n\n\
-* add integration test for login endpoint\n\n';
+      'Title of my PR\n\n' +
+      '* set login endpoint controller\n\n' +
+      '* add integration test for login endpoint\n\n';
     const compareSquashedCommitsResponse = {
       data: {
         commits: [
@@ -204,9 +213,8 @@ This is the body of the previous commit\n\n\
         ],
       },
     };
-    const compareCommits = jest.fn(() => compareSquashedCommitsResponse);
-    const github = { repos: { compareCommits } };
-    const { changes, tasks, pullRequests } = await commitParser(
+    const github = { repos: { compareCommits: jest.fn(() => compareSquashedCommitsResponse) } };
+    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
       github as any,
       'v1.0.0',
       'JIRA-',
@@ -218,6 +226,7 @@ This is the body of the previous commit\n\n\
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
+    expect(nextVersionType).toBe(VersionType.patch);
     expect(tasks).toBe('');
     expect(pullRequests).toBe('');
   });

@@ -82,6 +82,7 @@ export async function commitParser(
   const changes: string[] = [];
   const tasks: string[] = [];
   const pullRequests: string[] = [];
+  let nextVersionType = VersionType.patch;
 
   const { owner, repo } = context.repo;
   const compareCommitsResponse = await github.repos.compareCommits({
@@ -114,8 +115,9 @@ export async function commitParser(
     if (!categoryMatch) uncategorizedCommits.push(commit);
   };
 
-  const prRegExp = new RegExp('(\\(#\\d+\\))', 'gi');
-  const taskRegExp = new RegExp(`(${taskPrefix}\\d+)`, 'gi');
+  const prRegExp = new RegExp('(\\(#\\d+\\))', 'gmi');
+  const taskRegExp = new RegExp(`(${taskPrefix}\\d+)`, 'gmi');
+  const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
   commits.forEach(githubCommit => {
     const {
       author: { login: username, html_url: userUrl },
@@ -125,16 +127,21 @@ export async function commitParser(
     } = githubCommit;
     const commit: Commit = { username, userUrl, commitUrl, message, sha };
 
+    // Retrieve PR link information
+    const prMatch = prRegExp.exec(message);
+    if (prMatch)
+      prMatch.slice(1).forEach(pr => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
+    // Retrieve task information
+    const taskMatch = taskRegExp.exec(message);
+    if (taskMatch) taskMatch.slice(1).forEach(task => tasks.push(task));
+    // Retrieve specific bump key words
+    const majorMatch = majorRegExp.exec(message);
+    if (majorMatch) nextVersionType = VersionType.major;
+
     // Detect if commit is a Github squash. In that case, ignore commit title and convert
     // in multiple single line commits
     if (/\* .*\n/.test(message)) {
       const messageLines = message.split('* ');
-      // Retrieve PR link and JIRA information from first line
-      const prMatch = prRegExp.exec(messageLines[0]);
-      if (prMatch)
-        prMatch.slice(1).forEach(pr => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
-      const taskMatch = taskRegExp.exec(messageLines[0]);
-      if (taskMatch) taskMatch.slice(1).forEach(task => tasks.push(task));
       // Categorize all commits except first one
       messageLines
         .slice(1)
@@ -189,9 +196,14 @@ export async function commitParser(
   core.setOutput('tasks', JSON.stringify(tasks));
   core.setOutput('pull_requests', JSON.stringify(pullRequests));
 
+  // Set bump type to minor if there is at least one 'feat' commit
+  if (nextVersionType === VersionType.patch && commitGroups.feat.commits.length > 0) {
+    nextVersionType = VersionType.minor;
+  }
+
   return {
+    nextVersionType,
     changes: changesMd.trim(),
-    nextVersionType: VersionType.patch, // TODO - Detect major and minor from commits or PRs
     tasks: tasks
       .map(
         task =>
