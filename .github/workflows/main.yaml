@@ -21,8 +21,8 @@ on:
       - "tslint.json"
 
 jobs:
-  test:
-    name: lint, test and build
+  unit_test:
+    name: unit test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
@@ -31,3 +31,15 @@ jobs:
         run: yarn lint
       - name: Test code
         run: yarn test
+  integration_test:
+    name: integration test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v1.2.0
+      - name: Create Release
+        uses: minddocdev/mou-release-action@master
+        with:
+          app: mou-release-action
+          templatePath: RELEASE_DRAFT/default.md
+          token: ${{ github.token }}
