@@ -32,7 +32,7 @@ describe('version', () => {
         { prerelease: false, draft: false, tag_name: `${tagPrefix}0.0.1` }, // Production release
       ],
     },
-  ]
+  ];
 
   const mockGithub = (fixture: ReleaseFixture[]): any => {
     const listReleasesMock = jest.fn(() => 'iterator-options');
@@ -46,32 +46,148 @@ describe('version', () => {
   beforeEach(jest.restoreAllMocks);
 
   describe('bump version', () => {
-    test('bump PATCH when there is no last tag', async () => {
-      expect(await bumpVersion(mockGithub([{ data: [] }]), tagPrefix, VersionType.patch))
-        .toBe(`${tagPrefix}0.0.1`);
-      expect(setOutput).toBeCalledWith('previous_tag', undefined);
-      expect(setOutput).toBeCalledWith('previous_version', '0.0.0');
-      expect(setOutput).toBeCalledWith('new_tag', `${tagPrefix}0.0.1`);
-      expect(setOutput).toBeCalledWith('new_version', '0.0.1');
-
+    [
+      [VersionType.patch, '0.0.1'],
+      [VersionType.minor, '0.1.0'],
+      [VersionType.major, '1.0.0'],
+    ].forEach(([versionType, expectedVersion]) => {
+      test(`bump ${versionType} when there is no last and published tags`, async () => {
+        const expectedTag = `${tagPrefix}${expectedVersion}`;
+        const github = mockGithub([{ data: [] }]);
+        expect(await bumpVersion(github, tagPrefix, versionType as VersionType)).toBe(
+          expectedTag,
+        );
+        expect(setOutput).toBeCalledWith('previous_tag', '');
+        expect(setOutput).toBeCalledWith('previous_version', '0.0.0');
+        expect(setOutput).toBeCalledWith('new_tag', expectedTag);
+        expect(setOutput).toBeCalledWith('new_version', expectedVersion);
+        expect(setOutput).toBeCalledWith('release_type', versionType);
+      });
     });
 
-    test('bump MINOR', async () => {
-      expect(await bumpVersion(mockGithub(releaseResponseFixture), tagPrefix, VersionType.minor))
-        .toBe(`${tagPrefix}0.1.0`);
-      expect(setOutput).toBeCalledWith('previous_tag', `${tagPrefix}0.0.4`);
-      expect(setOutput).toBeCalledWith('previous_version', '0.0.4');
-      expect(setOutput).toBeCalledWith('new_tag', `${tagPrefix}0.1.0`);
-      expect(setOutput).toBeCalledWith('new_version', '0.1.0');
+    [
+      [VersionType.patch, '0.1.5'],
+      [VersionType.minor, '0.2.0'],
+      [VersionType.major, '1.0.0'],
+    ].forEach(([versionType, expectedVersion]) => {
+      test(`bump ${versionType} when there is a last tag but no published tags`, async () => {
+        const expectedTag = `${tagPrefix}${expectedVersion}`;
+        const previousVersion = `0.1.4`;
+        const previousTag = `${tagPrefix}${previousVersion}`;
+        const github = mockGithub([
+          {
+            data: [
+              { prerelease: false, draft: false, tag_name: 'fake-prefix@0.0.3' },
+              { prerelease: false, draft: false, tag_name: '0.0.3' },
+              { prerelease: false, draft: false, tag_name: 'other-app@0.0.3' },
+            ],
+          },
+          {
+            data: [
+              { prerelease: false, draft: false, tag_name: 'other-app@0.0.2' },
+              { prerelease: true, draft: true, tag_name: previousTag }, // Latest version
+              { prerelease: true, draft: true, tag_name: `${tagPrefix}0.1.3` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.2` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.1` },
+            ],
+          },
+        ]);
+        expect(await bumpVersion(github, tagPrefix, versionType as VersionType)).toBe(expectedTag);
+        expect(setOutput).toBeCalledWith('previous_tag', previousTag);
+        expect(setOutput).toBeCalledWith('previous_version', previousVersion);
+        expect(setOutput).toBeCalledWith('new_tag', expectedTag);
+        expect(setOutput).toBeCalledWith('new_version', expectedVersion);
+        expect(setOutput).toBeCalledWith('release_type', versionType);
+      });
     });
 
-    test('bump MAJOR', async () => {
-      expect(await bumpVersion(mockGithub(releaseResponseFixture), tagPrefix, VersionType.major))
-        .toBe(`${tagPrefix}1.0.0`);
-      expect(setOutput).toBeCalledWith('previous_tag', `${tagPrefix}0.0.4`);
-      expect(setOutput).toBeCalledWith('previous_version', '0.0.4');
-      expect(setOutput).toBeCalledWith('new_tag', `${tagPrefix}1.0.0`);
-      expect(setOutput).toBeCalledWith('new_version', '1.0.0');
+    [
+      [VersionType.patch, '0.1.5'],
+      [VersionType.minor, '0.2.0'],
+      [VersionType.major, '1.0.0'],
+    ].forEach(([versionType, expectedVersion]) => {
+      test(`bump ${versionType} when there is a last and published tags`, async () => {
+        const publishedTag = `${tagPrefix}0.1.1`;
+        const expectedTag = `${tagPrefix}${expectedVersion}`;
+        const previousVersion = `0.1.4`;
+        const previousTag = `${tagPrefix}${previousVersion}`;
+        const github = mockGithub([
+          {
+            data: [
+              { prerelease: false, draft: false, tag_name: 'fake-prefix@0.0.3' },
+              { prerelease: false, draft: false, tag_name: '0.0.3' },
+              { prerelease: false, draft: false, tag_name: 'other-app@0.0.3' },
+            ],
+          },
+          {
+            data: [
+              { prerelease: false, draft: false, tag_name: 'other-app@0.0.2' },
+              { prerelease: true, draft: true, tag_name: previousTag }, // Latest version
+              { prerelease: true, draft: true, tag_name: `${tagPrefix}0.1.3` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.2` },
+            ],
+          },
+        ]);
+        expect(await bumpVersion(github, tagPrefix, versionType as VersionType, publishedTag))
+          .toBe(expectedTag);
+        expect(setOutput).toBeCalledWith('previous_tag', previousTag);
+        expect(setOutput).toBeCalledWith('previous_version', previousVersion);
+        expect(setOutput).toBeCalledWith('new_tag', expectedTag);
+        expect(setOutput).toBeCalledWith('new_version', expectedVersion);
+        expect(setOutput).toBeCalledWith('release_type', versionType);
+      });
+    });
+
+    [
+      [VersionType.patch, '1.2.5'],
+      [VersionType.minor, '1.2.5'],
+      [VersionType.major, '1.2.5'],
+    ].forEach(([versionType, expectedVersion]) => {
+      test(`force bump to patch when there are minor/major between prod diffs`, async () => {
+        const publishedTag = `${tagPrefix}0.1.1`;
+        const expectedTag = `${tagPrefix}${expectedVersion}`;
+        const previousVersion = `1.2.4`;
+        const previousTag = `${tagPrefix}${previousVersion}`;
+        const github = mockGithub([
+          {
+            data: [
+              { prerelease: true, draft: true, tag_name: previousTag }, // Latest version
+              { prerelease: true, draft: true, tag_name: `${tagPrefix}1.2.3` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.2.2` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.2.1` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.2.0` },
+            ],
+          },
+          {
+            data: [
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.1.0` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.0.0` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.2.0` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.1` }, // Prod
+            ],
+          },
+        ]);
+        expect(await bumpVersion(github, tagPrefix, versionType as VersionType, publishedTag)).toBe(
+          expectedTag,
+        );
+        expect(setOutput).toBeCalledWith('previous_tag', previousTag);
+        expect(setOutput).toBeCalledWith('previous_version', previousVersion);
+        expect(setOutput).toBeCalledWith('new_tag', expectedTag);
+        expect(setOutput).toBeCalledWith('new_version', expectedVersion);
+        expect(setOutput).toBeCalledWith('release_type', VersionType.patch);
+      });
+    });
+
+    test('throw error when version cannot be bumped', async () => {
+      const github = mockGithub([
+        {
+          data: [{ prerelease: true, draft: true, tag_name: `${tagPrefix}1.fake.2` }],
+        },
+      ]);
+      await expect(bumpVersion(github, tagPrefix)).rejects.toThrowError(
+        new Error('Unable to perform a patch bump to version 1.fake.2'),
+      );
+      expect(setOutput).not.toBeCalled();
     });
   });
 

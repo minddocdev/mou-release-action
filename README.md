@@ -26,60 +26,55 @@ Run the tests
 yarn test
 ```
 
-## Inputs
+## Options
 
-### `app`
+### Inputs
+
+#### `app`
 
 - name: app
 - required: true
 - description: The name of the app involved in the release.
 
-### `commitDiffBase`
+#### `baseTag`
 
-- name: commitDiffBase
+- name: baseTag
 - required: false
-- default: []
-- description: The sha, branch or tag that will be used as base for git commit comparison.
-Branches should have the `heads/<branch name>` format and tags `tags/<tag name>`.
-The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable
-for the given `templatePath` template file.
+- description: The tag that will be used as base for git commit comparison, instead of the automatic detection of latest published release. The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable for the given `templatePath` template file.
 
-### `commitScope`
-
-- name: commitScope
-- required: false
-- default: []
-- description: Render commits that only below to the given scope.
-Scopes are analyzed for commits that follow the Angular commit style.
-e.g. `type(scope): my commit title` or `(scope): my commit title`
-
-### `draft`
+#### `draft`
 
 - name: draft
 - required: false
 - default: `true`
 - description: Publish release draft.
 
-### `prerelease`
+#### `monorepo`
+
+- name: monorepo
+- required: false
+- description: Creates tag and render commits for a specific scope, based on the given app name. Scopes from commits are analyzed for commits that follow the Angular commit style. e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
+
+#### `prerelease`
 
 - name: prerelease
 - required: false
 - default: `true`
 - description: Mark release as prerelease when creating.
 
-### `releaseName`
+#### `releaseName`
 
 - name: releaseName
 - required: true
 - description: The title of the release.
 
-### `releaseTag`
+#### `releaseTag`
 
 - name: releaseTag
 - required: true
 - description: The git tag that belongs to the release.
 
-### `taskBaseUrl`
+#### `taskBaseUrl`
 
 - name: taskBaseUrl
 - required: false
@@ -87,25 +82,82 @@ e.g. `type(scope): my commit title` or `(scope): my commit title`
 By default, it will create a url based on your Github organization.
 (e.g. `https://myorg.atlassian.net/browse`)
 
-### `taskPrefix`
+#### `taskPrefix`
 
 - name: taskPrefix
 - required: false
 - default: `JIRA-`
 - description: The prefix that identifies task ids in the commits
 
-### `templatePath`
+#### `templatePath`
 
 - name: templatePath
 - required: true
 - description: The path for the Markdown template that will be used to create the release body,
 relative to `.github/`.
 
-### `token`
+#### `token`
 
 - name: token
 - required: true
 - description: The token to access Github's API.
+
+### Outputs
+
+#### `changes`
+
+- name: changes
+- description: A JSON array with the list of commit sha that are involved in the release.
+
+#### `new_tag`
+
+- name: new_tag
+- description: The newly created tag that will reference the release.
+
+#### `new_version`
+
+- name: new_version
+- description: The newly created version that belongs to the tag.
+
+#### `html_url`
+
+- name: html_url
+- description: The browser url linking to Github's release.
+
+#### `new_version`
+
+- name: new_version
+- description: The bumped semantic version.
+
+#### `tasks`
+
+- name: tasks
+- description: A JSON array with the list of project management tasks involved in the release.
+
+#### `previous_tag`
+
+- name: previous_tag
+- description: The previously detected tag that was bumped by the action.
+
+#### `previous_version`
+
+- name: previous_version
+- description: The previously detected version that was bumped by the action.
+
+#### `pull_requests`
+
+- name: pull_requests
+- description: A JSON array with the list of Github pull requests involved in the release.
+
+#### `release_id`
+
+- name: release_id
+- description: The release id given by Github's API.
+
+#### `upload_url`
+
+- name: upload_url
+- description: The url used for uploading release artifacts.
 
 ## Usage
 

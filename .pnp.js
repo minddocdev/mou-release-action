@@ -41,6 +41,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:25.1.3"],
             ["@types/node", "npm:13.7.7"],
             ["@types/prettier", "npm:1.19.0"],
+            ["@types/semver", "npm:7.1.0"],
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:2.22.0"],
             ["@typescript-eslint/parser", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:2.22.0"],
             ["@yarnpkg/pnpify", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:2.0.0-rc.18"],
@@ -835,6 +836,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-prettier-npm-1.19.0-a6b7c059dc-2.zip/node_modules/@types/prettier/",
           "packageDependencies": [
             ["@types/prettier", "npm:1.19.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@types/semver", [
+        ["npm:7.1.0", {
+          "packageLocation": "./.yarn/cache/@types-semver-npm-7.1.0-ce58bbc3b4-2.zip/node_modules/@types/semver/",
+          "packageDependencies": [
+            ["@types/semver", "npm:7.1.0"],
+            ["@types/node", "npm:13.7.7"]
           ],
           "linkType": "HARD",
         }]
@@ -5957,6 +5968,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:25.1.3"],
             ["@types/node", "npm:13.7.7"],
             ["@types/prettier", "npm:1.19.0"],
+            ["@types/semver", "npm:7.1.0"],
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:2.22.0"],
             ["@typescript-eslint/parser", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:2.22.0"],
             ["@yarnpkg/pnpify", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:2.0.0-rc.18"],

@@ -39,7 +39,7 @@ export async function run() {
     const body = renderReleaseBody(templatePath, app, changes, tasks, pullRequests);
 
     const releaseTag = core.getInput('releaseTag', { required: false }) ||
-      await bumpVersion(github, tagPrefix, nextVersionType);
+      await bumpVersion(github, tagPrefix, nextVersionType, baseTag);
     await createGithubRelease(github, releaseTag, releaseName, body, draft, prerelease);
   } catch (error) {
     core.setFailed(error.message);

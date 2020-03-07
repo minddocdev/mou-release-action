@@ -82,7 +82,7 @@ describe('run', () => {
       undefined,
     );
     expect(renderReleaseBody).toBeCalledWith(templatePath, app, changes, tasks, pullRequests);
-    expect(bumpVersion).toBeCalledWith(expect.any(GitHub), tagPrefix, nextVersionType);
+    expect(bumpVersion).toBeCalledWith(expect.any(GitHub), tagPrefix, nextVersionType, baseTag);
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
       releaseTag,

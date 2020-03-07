@@ -56,8 +56,6 @@ inputs:
     description: "The token to access Github's API"
     required: true
 outputs:
-  release_id:
-    description: "The release id given by Github's API"
   changes:
     description: "A JSON array with the list of commit sha that are involved in the release"
   new_tag:
@@ -76,6 +74,8 @@ outputs:
     description: "The previously detected version that was bumped by the action"
   pull_requests:
     description: "A JSON array with the list of Github pull requests involved in the release"
+  release_id:
+    description: "The release id given by Github's API"
   upload_url:
     description: "The url used for uploading release artifacts"
 runs:

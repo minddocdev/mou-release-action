@@ -676,7 +676,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:>= 8, @types/node@npm:^13.7.7":
+"@types/node@npm:*, @types/node@npm:>= 8, @types/node@npm:^13.7.7":
   version: 13.7.7
   resolution: "@types/node@npm:13.7.7"
   checksum: 2/7a4a7c5060f86b6f4010d10b0de9831f98f303513a7403e8bfb3ad3f1d6a9533d023e1b6e2331959525156b84c0daf98ad1569407309da1f798498301f227a37
@@ -694,6 +694,15 @@ __metadata:
   version: 1.19.0
   resolution: "@types/prettier@npm:1.19.0"
   checksum: 2/784aed651e8743ae69d9bd865b290280d3451a0f424299addc2d256bf009186581d99891ca81ac91c00dc51c371a46b1f5b6d2aa7e2f34c6ddfb1752724ab869
+  languageName: node
+  linkType: hard
+
+"@types/semver@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@types/semver@npm:7.1.0"
+  dependencies:
+    "@types/node": "*"
+  checksum: 2/d4450e985101a5241a879c919a6f462e4d1ed82c7720d1b732a01bc5692356c5fd817e7ef985efd7b2175f47513d56c3d308ea79dd1f9faf18153a2c673df8fe
   languageName: node
   linkType: hard
 
@@ -5271,6 +5280,7 @@ fsevents@^2.1.2:
     "@types/jest": ^25.1.3
     "@types/node": ^13.7.7
     "@types/prettier": 1.19.0
+    "@types/semver": ^7.1.0
     "@typescript-eslint/eslint-plugin": ^2.22.0
     "@typescript-eslint/parser": ^2.22.0
     "@yarnpkg/pnpify": ^2.0.0-rc.18
