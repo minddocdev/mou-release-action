@@ -5,7 +5,8 @@ on:
     branches:
       - "master"
     paths:
-      - ".github/workflows/code.yaml"
+      - ".github/workflows/main.yaml"
+      - ".github/RELEASE_DRAFT*"
       - "package.json"
       - "src/**"
       - "tests/*"
@@ -13,7 +14,8 @@ on:
       - "tslint.json"
   pull_request:
     paths:
-      - ".github/workflows/code.yaml"
+      - ".github/workflows/main.yaml"
+      - ".github/RELEASE_DRAFT*"
       - "package.json"
       - "src/**"
       - "tests/*"
@@ -32,6 +34,7 @@ jobs:
       - name: Test code
         run: yarn test
   integration_test:
+    if: github.ref == 'refs/heads/master'
     name: integration test
     runs-on: ubuntu-latest
     steps:
