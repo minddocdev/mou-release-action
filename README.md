@@ -251,6 +251,8 @@ The action will replace the following variables:
 - `$APP`: the `app` input.
 - `$VERSION`: the updated version without `tagPrefix`.
 - `$CHANGES`: the rendered list of commit messages. See [commit format](#commit-format).
+Commits will be detected if a `baseRef` is given or if another previous (and matching) tag was
+pushed to the repository and its release was published (automatic detection).
 - `$TASKS`: the bullet list of detected tasks. See [task format](#task-format).
 - `$PULL_REQUESTS`: the list of Github PRs. See [PR format](#pr-format).
 
