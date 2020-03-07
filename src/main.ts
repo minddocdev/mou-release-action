@@ -16,8 +16,8 @@ export async function run() {
     const github = new GitHub(token);
 
     // Commit loading config
-    const baseRef =
-      core.getInput('baseRef', { required: false }) ||
+    const baseTag =
+      core.getInput('baseTag', { required: false }) ||
       (await retrieveLastReleasedVersion(github, tagPrefix));
     const taskBaseUrl = core.getInput('taskBaseUrl', { required: false });
     const taskPrefix = core.getInput('taskPrefix', { required: false });
@@ -31,7 +31,7 @@ export async function run() {
 
     const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
       github,
-      baseRef,
+      baseTag,
       taskPrefix,
       taskBaseUrl,
       monorepo ? app : undefined,

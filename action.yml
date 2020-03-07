@@ -8,11 +8,10 @@ inputs:
   app:
     description: "The name of the app involved in the release"
     required: true
-  baseRef:
+  baseTag:
     description: >-
-      The sha, branch or tag that will be used as base for git commit comparison, instead of
+      The tag that will be used as base for git commit comparison, instead of
       the automatic detection of latest published release.
-      Branches should have the `heads/<branch name>` format and tags `tags/<tag name>`.
       The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable
       for the given `templatePath` template file.
     required: false

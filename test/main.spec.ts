@@ -65,8 +65,8 @@ describe('run', () => {
     });
     const tagPrefix = 'v';
 
-    const baseRef = 'v1.0.0';
-    (retrieveLastReleasedVersion as jest.Mock).mockImplementation(() => baseRef);
+    const baseTag = 'v1.0.0';
+    (retrieveLastReleasedVersion as jest.Mock).mockImplementation(() => baseTag);
 
     const releaseTag = 'v1.0.5';
     (bumpVersion as jest.Mock).mockImplementation(() => releaseTag);
@@ -76,7 +76,7 @@ describe('run', () => {
     expect(retrieveLastReleasedVersion).toBeCalledWith(expect.any(GitHub), tagPrefix);
     expect(commitParser).toBeCalledWith(
       expect.any(GitHub),
-      baseRef,
+      baseTag,
       taskPrefix,
       undefined,
       undefined,
@@ -95,7 +95,7 @@ describe('run', () => {
   });
 
   test('with specific production release and new release tag', async () => {
-    const baseRef = 'v1.0.4';
+    const baseTag = 'v1.0.4';
     const givenDraft = false;
     const givenPrerelease = false;
     const releaseTag = 'v1.0.6';
@@ -104,8 +104,8 @@ describe('run', () => {
       switch (name) {
         case 'app':
           return app;
-        case 'baseRef':
-          return baseRef;
+        case 'baseTag':
+          return baseTag;
         case 'draft':
           return `${givenDraft}`;
         case 'monorepo':
@@ -132,13 +132,7 @@ describe('run', () => {
     await run();
 
     expect(retrieveLastReleasedVersion).not.toBeCalled();
-    expect(commitParser).toBeCalledWith(
-      expect.any(GitHub),
-      baseRef,
-      taskPrefix,
-      taskBaseUrl,
-      app,
-    );
+    expect(commitParser).toBeCalledWith(expect.any(GitHub), baseTag, taskPrefix, taskBaseUrl, app);
     expect(renderReleaseBody).toBeCalledWith(templatePath, app, changes, tasks, pullRequests);
     expect(bumpVersion).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
