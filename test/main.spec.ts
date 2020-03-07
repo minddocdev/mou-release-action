@@ -51,8 +51,6 @@ describe('run', () => {
           return `${draft}`;
         case 'prerelease':
           return `${prerelease}`;
-        case 'releaseName':
-          return releaseName;
         case 'taskPrefix':
           return taskPrefix;
         case 'templatePath':
@@ -68,7 +66,8 @@ describe('run', () => {
     const baseTag = 'v1.0.0';
     (retrieveLastReleasedVersion as jest.Mock).mockImplementation(() => baseTag);
 
-    const releaseTag = 'v1.0.5';
+    const releaseVersion = '1.0.5';
+    const releaseTag = `${tagPrefix}${releaseVersion}`;
     (bumpVersion as jest.Mock).mockImplementation(() => releaseTag);
 
     await run();
@@ -81,12 +80,19 @@ describe('run', () => {
       undefined,
       undefined,
     );
-    expect(renderReleaseBody).toBeCalledWith(templatePath, app, changes, tasks, pullRequests);
+    expect(renderReleaseBody).toBeCalledWith(
+      templatePath,
+      app,
+      releaseVersion,
+      changes,
+      tasks,
+      pullRequests,
+    );
     expect(bumpVersion).toBeCalledWith(expect.any(GitHub), tagPrefix, nextVersionType, baseTag);
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
       releaseTag,
-      releaseName,
+      `${app} ${releaseVersion}`,
       body,
       draft,
       prerelease,
@@ -98,7 +104,7 @@ describe('run', () => {
     const baseTag = 'v1.0.4';
     const givenDraft = false;
     const givenPrerelease = false;
-    const releaseTag = 'v1.0.6';
+    const releaseTag = `mycustomprefix-1.0.6`;
     const taskBaseUrl = 'https://myfaketask.url';
     (getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
@@ -133,7 +139,14 @@ describe('run', () => {
 
     expect(retrieveLastReleasedVersion).not.toBeCalled();
     expect(commitParser).toBeCalledWith(expect.any(GitHub), baseTag, taskPrefix, taskBaseUrl, app);
-    expect(renderReleaseBody).toBeCalledWith(templatePath, app, changes, tasks, pullRequests);
+    expect(renderReleaseBody).toBeCalledWith(
+      templatePath,
+      app,
+      releaseTag,
+      changes,
+      tasks,
+      pullRequests,
+    );
     expect(bumpVersion).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),

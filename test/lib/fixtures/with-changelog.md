@@ -1,4 +1,4 @@
-# $APP release
+# $APP $VERSION release
 
 ## Changelog
 

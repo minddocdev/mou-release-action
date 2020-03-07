@@ -7,41 +7,52 @@ import { retrieveLastReleasedVersion, bumpVersion } from './lib/version';
 
 export async function run() {
   try {
-    // Global config
-    const app = core.getInput('app', { required: true });
-    const token = core.getInput('token', { required: true });
-    const monorepo = core.getInput('monorepo', { required: false }) === 'true';
-    const tagPrefix = monorepo ? `${app}@` : `v`;
+        // Global config
+        const app = core.getInput('app', { required: true });
+        const token = core.getInput('token', { required: true });
+        const monorepo = core.getInput('monorepo', { required: false }) === 'true';
+        const tagPrefix = monorepo ? `${app}@` : `v`;
 
-    const github = new GitHub(token);
+        const github = new GitHub(token);
 
-    // Commit loading config
-    const baseTag =
-      core.getInput('baseTag', { required: false }) ||
-      (await retrieveLastReleasedVersion(github, tagPrefix));
-    const taskBaseUrl = core.getInput('taskBaseUrl', { required: false });
-    const taskPrefix = core.getInput('taskPrefix', { required: false });
+        // Commit loading config
+        const baseTag =
+          core.getInput('baseTag', { required: false }) ||
+          (await retrieveLastReleasedVersion(github, tagPrefix));
+        const taskBaseUrl = core.getInput('taskBaseUrl', { required: false });
+        const taskPrefix = core.getInput('taskPrefix', { required: false });
 
-    // Release config
-    const releaseName = core.getInput('releaseName', { required: false });
-    const templatePath = core.getInput('templatePath', { required: true });
-    const draft = core.getInput('draft', { required: false }) === 'true' || false;
-    const prerelease =
-      core.getInput('prerelease', { required: false }) === 'true' || false;
+        // Release config
+        const templatePath = core.getInput('templatePath', { required: true });
+        const draft = core.getInput('draft', { required: false }) === 'true' || false;
+        const prerelease = core.getInput('prerelease', { required: false }) === 'true' || false;
 
-    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
-      github,
-      baseTag,
-      taskPrefix,
-      taskBaseUrl,
-      monorepo ? app : undefined,
-    );
-    const body = renderReleaseBody(templatePath, app, changes, tasks, pullRequests);
+        const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
+          github,
+          baseTag,
+          taskPrefix,
+          taskBaseUrl,
+          monorepo ? app : undefined,
+        );
 
-    const releaseTag = core.getInput('releaseTag', { required: false }) ||
-      await bumpVersion(github, tagPrefix, nextVersionType, baseTag);
-    await createGithubRelease(github, releaseTag, releaseName, body, draft, prerelease);
-  } catch (error) {
+        const releaseTag =
+          core.getInput('releaseTag', { required: false }) ||
+          (await bumpVersion(github, tagPrefix, nextVersionType, baseTag));
+        // Won't replace it if release tag is given manually
+        const releaseVersion = releaseTag.replace(tagPrefix, '');
+        const releaseName =
+          core.getInput('releaseName', { required: false }) || `${app} ${releaseVersion}`;
+
+        const body = renderReleaseBody(
+          templatePath,
+          app,
+          releaseVersion,
+          changes,
+          tasks,
+          pullRequests,
+        );
+        await createGithubRelease(github, releaseTag, releaseName, body, draft, prerelease);
+      } catch (error) {
     core.setFailed(error.message);
   }
 }

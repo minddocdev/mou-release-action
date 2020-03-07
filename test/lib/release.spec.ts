@@ -27,12 +27,13 @@ const createReleaseResponse = {
 describe('release', () => {
   describe('render release template', () => {
     const app = 'myapp';
+    const releaseVersion = '1.0.0';
     const templatePath = 'myTemplatePath.md';
 
     test('render release template', () => {
       (pathResolve as jest.Mock)
         .mockImplementation(() => `${__dirname}/fixtures/basic.md`);
-      expect(renderReleaseBody('myTemplatePath.md', app)).toMatchSnapshot();
+      expect(renderReleaseBody('myTemplatePath.md', app, releaseVersion)).toMatchSnapshot();
       expect(pathResolve)
         .toBeCalledWith('/home/runner/work', 'myrepo', 'myrepo', '.github', templatePath);
     });
@@ -50,8 +51,9 @@ describe('release', () => {
       const pullRequests = `\
 - [#1716](https://github.com/myorg/myrepo/pull/1716)
 - [#1717](https://github.com/myorg/myrepo/pull/1717)`;
-      expect(renderReleaseBody('myTemplatePath.md', app, changes, tasks, pullRequests))
-        .toMatchSnapshot();
+      expect(renderReleaseBody(
+        'myTemplatePath.md', app, releaseVersion, changes, tasks, pullRequests,
+      )).toMatchSnapshot();
       expect(pathResolve)
         .toBeCalledWith('/home/runner/work', 'myrepo', 'myrepo', '.github', templatePath);
     });

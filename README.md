@@ -114,6 +114,7 @@ e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
 
 - name: releaseName
 - required: false
+- default: `<app> <version>`
 - description: The title of the release.
 
 #### `releaseTag`
@@ -208,7 +209,7 @@ Create a Markdown template that will be used for the release body. Reference it 
 `templatePath` input. For example:
 
 ```md
-# $APP release
+# $APP $VERSION release
 
 ## Changelog
 
@@ -239,7 +240,8 @@ $PULL_REQUESTS
 
 The action will replace the following variables:
 
-- `$APP`: the `app` input
+- `$APP`: the `app` input.
+- `$VERSION`: the updated version without `tagPrefix`.
 - `$CHANGES`: the rendered list of commit messages. See [commit format](#commit-format).
 - `$TASKS`: the bullet list of detected tasks. See [task format](#task-format).
 - `$PULL_REQUESTS`: the list of Github PRs. See [PR format](#pr-format).

@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`release render release template render release template 1`] = `
-"# myapp release
+"# myapp 1.0.0 release
 
 Just a template
 "
 `;
 
 exports[`release render release template render release template with changes, tasks and pull requests 1`] = `
-"# myapp release
+"# myapp 1.0.0 release
 
 ## Changelog
 

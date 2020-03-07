@@ -1,3 +1,3 @@
-# $APP release
+# $APP $VERSION release
 
 Just a template

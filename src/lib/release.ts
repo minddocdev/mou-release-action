@@ -6,6 +6,7 @@ import { context, GitHub } from '@actions/github';
 export function renderReleaseBody(
   templatePath: string,
   app: string,
+  releaseVersion: string,
   changes?: string,
   tasks?: string,
   pullRequests?: string,
@@ -16,7 +17,7 @@ export function renderReleaseBody(
       path.resolve('/home/runner/work', repo, repo, '.github', templatePath),
       'utf8',
     )
-    .replace(/\$APP/g, app);
+    .replace(/\$APP/g, app).replace(/\$VERSION/g, releaseVersion);
   if (changes) {
     body = body.replace(/\$CHANGES/g, changes);
   }
