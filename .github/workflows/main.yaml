@@ -1,4 +1,4 @@
-name: "code"
+name: "main"
 
 on:
   push:

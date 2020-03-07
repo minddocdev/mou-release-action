@@ -4,6 +4,71 @@ Creates a Github release with parsed commits into a given Markdown template.
 
 [![main](https://github.com/minddocdev/mou-release-action/workflows/main/badge.svg)](https://github.com/minddocdev/mou-release-action/actions?workflow=main)
 
+## Usage
+
+Use the action to create a release.
+
+For given tags (automatic tag creation would be disabled):
+
+```yaml
+name: 'myrelease'
+on:
+  push:
+    branches:
+      - master
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    env:
+      APP: myapp
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@master
+      - name: Bump version and push tag
+        uses: minddocdev/mou-version-action@master
+        id: bump_version
+        with:
+          prefix: ${{ env.APP }}@
+          token: ${{ github.token }}
+      - name: Create Release
+        uses: minddocdev/mou-release-action@master
+        with:
+          app: ${{ env.APP }}
+          baseTag: my-production-deployed-tag
+          releaseName: ${{ env.APP }} ${{ steps.bump_version.outputs.version }}
+          releaseTag: ${{ steps.bump_version.outputs.tag }}
+          templatePath: RELEASE_DRAFT/default.md
+          token: ${{ github.token }}
+```
+
+In the following example, the action will check for the latest published release that matches
+`myapp@` prefix, create a changelog for all the commits that has the `(myapp)` scope,
+and bump the version to `minor`, `major` or `patch` depending on the commit messages and if there
+was a previous `minor` or `major` bump in the diff with the latest published tag.
+
+```yaml
+name: 'myrelease'
+on:
+  push:
+    branches:
+      - master
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    env:
+      APP: myapp
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@master
+      - name: Create Release
+        uses: minddocdev/mou-release-action@master
+        with:
+          app: ${{ env.APP }}
+          monorepo: true
+          templatePath: RELEASE_DRAFT/default.md
+          token: ${{ github.token }}
+```
+
 ## Options
 
 ### Inputs
@@ -137,74 +202,7 @@ relative to `.github/`.
 - name: upload_url
 - description: The url used for uploading release artifacts.
 
-## Usage
-
-### Action definition
-
-Use the action to create a release.
-
-For given tags (automatic tag creation would be disabled):
-
-```yaml
-name: 'myrelease'
-on:
-  push:
-    branches:
-      - master
-jobs:
-  bump:
-    runs-on: ubuntu-latest
-    env:
-      APP: myapp
-    steps:
-      - name: Checkout git repository
-        uses: actions/checkout@master
-      - name: Bump version and push tag
-        uses: minddocdev/mou-version-action@master
-        id: bump_version
-        with:
-          prefix: ${{ env.APP }}@
-          token: ${{ github.token }}
-      - name: Create Release
-        uses: minddocdev/mou-release-action@master
-        with:
-          app: ${{ env.APP }}
-          baseTag: my-production-deployed-tag
-          releaseName: ${{ env.APP }} ${{ steps.bump_version.outputs.version }}
-          releaseTag: ${{ steps.bump_version.outputs.tag }}
-          templatePath: RELEASE_DRAFT/default.md
-          token: ${{ github.token }}
-```
-
-In the following example, the action will check for the latest published release that matches
-`myapp@` prefix, create a changelog for all the commits that has the `(myapp)` scope,
-and bump the version to `minor`, `major` or `patch` depending on the commit messages and if there
-was a previous `minor` or `major` bump in the diff with the latest published tag.
-
-```yaml
-name: 'myrelease'
-on:
-  push:
-    branches:
-      - master
-jobs:
-  bump:
-    runs-on: ubuntu-latest
-    env:
-      APP: myapp
-    steps:
-      - name: Checkout git repository
-        uses: actions/checkout@master
-      - name: Create Release
-        uses: minddocdev/mou-release-action@master
-        with:
-          app: ${{ env.APP }}
-          monorepo: true
-          templatePath: RELEASE_DRAFT/default.md
-          token: ${{ github.token }}
-```
-
-### Template
+## Template
 
 Create a Markdown template that will be used for the release body. Reference it with the
 `templatePath` input. For example:
@@ -237,7 +235,7 @@ $PULL_REQUESTS
 - [ ] Stakeholder 2
 ```
 
-#### Template variables
+### Template variables
 
 The action will replace the following variables:
 
@@ -246,7 +244,7 @@ The action will replace the following variables:
 - `$TASKS`: the bullet list of detected tasks. See [task format](#task-format).
 - `$PULL_REQUESTS`: the list of Github PRs. See [PR format](#pr-format).
 
-##### Commit format
+#### Commit format
 
 If your commits follow the expected [commit style](#commit-types)
 the action will automatically categorize them in `$CHANGES` like in the following example:
@@ -294,7 +292,7 @@ all changes will rendered without any fancy categorization:
 - Uncategorized commit 2 - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 ```
 
-##### Task format
+#### Task format
 
 Tasks are detected with the given `taskPrefix` and the hyperlink is created with `taskBaseUrl`.
 If none of these parameters are given, a default `JIRA-` prefix and
@@ -309,7 +307,7 @@ The output is a bullet list:
 - [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)
 ```
 
-##### PR format
+#### PR format
 
 In addition, you can render project management tasks and PRs. The PR rendering follows Github's
 format (where squash and rebase commits output `(#<PR_ID>)`).
@@ -321,14 +319,16 @@ format (where squash and rebase commits output `(#<PR_ID>)`).
 - [#1717](https://github.com/myorg/myrepo/pull/1717)
 ```
 
-#### Commit style
+## Commit style
 
 In case you want to take full power of changelog categories, the action offers a way to classify
 them in the release body.
 
+### Commit Message Conventions
+
 The commit style is strongly influenced by [Angular Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153).
 
-##### Type
+#### Type
 
 The following commit *types* are detected (using `<type>:` or `<type>(<scope>):` at
 the beginning of the commit message or in the Github squash line):
@@ -352,12 +352,12 @@ for those commits that belong to the specific app. Therefore, all relevant commi
 should have the `<type>(<scope>)` or `(<scope>)` format. Scope should be equal to the given
 `app` input.
 
-#### `MAJOR`, `MINOR` and `PATCH` bumps
+### Automatic semantic version type detection
 
 By default, all release versions will be bumped using `PATCH`. Therefore, this action defines
 different logic to bump using `MINOR` and `MAJOR`.
 
-##### `MINOR` bumps
+#### `MINOR` bumps
 
 If there is a `feat` in the commit diff between the latest published release and the current one,
 the action will suggest a `MINOR` release bump. This release type should only be used when new
@@ -366,13 +366,13 @@ features are deployed to production.
 As an alternative, it will also do a `MINOR` bump if there is a `#MINOR` string found
 in any commit message from the diff.
 
-##### `MAJOR` bumps
+#### `MAJOR` bumps
 
 If there is a `#MAJOR` string found in any commit message from the diff, the action will suggest
 a `MAJOR` release bump. As this release type involves backwards incompatible changes, the behavior
 should be fully controlled by the user.
 
-##### Multiple `MINOR` and `MAJOR` bump protection
+#### Multiple `MINOR` and `MAJOR` bump protection
 
 For teams with a slower release cadence, it would be easy to end up with a production deployment
 that has a big diff between `MINOR` and `MAJOR` versions. As we believe users are the ones who
