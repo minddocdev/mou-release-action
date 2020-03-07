@@ -101,9 +101,7 @@ describe('commit', () => {
   test('render commits diff for each category', async () => {
     const github = { repos: { compareCommits } };
     const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
-      github as any,
-      'v1.0.0',
-      'JIRA-',
+      github as any
     );
     expect(setOutput).toBeCalledWith(
       'changes',
