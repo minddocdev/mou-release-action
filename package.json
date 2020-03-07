@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "webpack --progress",
-    "lint": "eslint ./src/** ./test/**",
+    "lint": "eslint ./src/**/*.ts ./test/**/*.ts",
     "test": "jest --coverage"
   },
   "repository": {
