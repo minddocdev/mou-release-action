@@ -49,7 +49,7 @@ describe('release', () => {
 - [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)`;
       const pullRequests = `\
 - [#1716](https://github.com/myorg/myrepo/pull/1716)
-- [#1717](https://github.com/myorg/myrepo/pull/1716)`;
+- [#1717](https://github.com/myorg/myrepo/pull/1717)`;
       expect(renderReleaseBody('myTemplatePath.md', app, changes, tasks, pullRequests))
         .toMatchSnapshot();
       expect(pathResolve)

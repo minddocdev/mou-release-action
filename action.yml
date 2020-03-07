@@ -31,7 +31,7 @@ inputs:
     default: "true"
   releaseName:
     description: "The release title"
-    required: true
+    required: false
   releaseTag:
     description: >-
       The git tag that will be linked to the release.
@@ -64,8 +64,6 @@ outputs:
     description: "The newly created version that belongs to the tag"
   html_url:
     description: "The browser url linking to Github's release"
-  new_version:
-    description: "The bumped semantic version"
   tasks:
     description: "A JSON array with the list of project management tasks involved in the release"
   previous_tag:
