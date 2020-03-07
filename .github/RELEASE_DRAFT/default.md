@@ -1,4 +1,4 @@
-# $APP $VERSION release
+# $APP $VERSION
 
 ## :alien: Changelog
 
