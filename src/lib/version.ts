@@ -1,5 +1,4 @@
-import semverInc from 'semver/functions/inc';
-import semverSatisfies from 'semver/functions/satisfies';
+import semver from 'semver';
 import * as core from '@actions/core';
 import { context, GitHub } from '@actions/github';
 
@@ -45,14 +44,26 @@ export async function bumpVersion(
   // tags can be bumped
   let releaseType = nextVersionType;
   if (
-    nextVersionType !== VersionType.patch &&
     publishedVersion &&
-    !semverSatisfies(lastVersion, `^${publishedVersion}`)
+    // MINOR protection (if there was already a previous MINOR bump)
+    ((nextVersionType === VersionType.minor &&
+      !semver.satisfies(
+        lastVersion,
+        // ^1.2	is >=1.2.0 <2.0.0
+        `^${semver.major(publishedVersion)}.${semver.minor(publishedVersion)}`,
+      )) ||
+      // MAJOR protection (if there was already a previous MAJOR bump)
+      (nextVersionType === VersionType.major &&
+        !semver.satisfies(
+          lastVersion,
+          // ^1	is >=1.0.0 <2.0.0
+          `^${semver.major(publishedVersion)}`,
+        )))
   ) {
     releaseType = VersionType.patch;
   }
 
-  const newVersion = semverInc(lastVersion, releaseType);
+  const newVersion = semver.inc(lastVersion, releaseType);
   if (newVersion === null) {
     throw new Error(`Unable to perform a ${releaseType} bump to version ${lastVersion}`);
   }

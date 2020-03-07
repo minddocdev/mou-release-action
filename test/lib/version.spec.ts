@@ -139,30 +139,71 @@ describe('version', () => {
     });
 
     [
-      [VersionType.patch, '1.2.5'],
-      [VersionType.minor, '1.2.5'],
-      [VersionType.major, '1.2.5'],
+      [VersionType.minor, '0.2.5'],
+      [VersionType.major, '1.0.0'],
     ].forEach(([versionType, expectedVersion]) => {
-      test(`force bump to patch when there are minor/major between prod diffs`, async () => {
+      test(`force bump to patch for minor when there are minor between prod diffs`, async () => {
         const publishedTag = `${tagPrefix}0.1.1`;
         const expectedTag = `${tagPrefix}${expectedVersion}`;
-        const previousVersion = `1.2.4`;
+        const previousVersion = `0.2.4`;
         const previousTag = `${tagPrefix}${previousVersion}`;
         const github = mockGithub([
           {
             data: [
               { prerelease: true, draft: true, tag_name: previousTag }, // Latest version
-              { prerelease: true, draft: true, tag_name: `${tagPrefix}1.2.3` },
-              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.2.2` },
-              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.2.1` },
-              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.2.0` },
+              { prerelease: true, draft: true, tag_name: `${tagPrefix}0.2.3` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.2.2` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.2.1` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.2.0` },
             ],
           },
           {
             data: [
-              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.1.0` },
-              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.0.0` },
-              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.2.0` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.4` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.3` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.2` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.1` }, // Prod
+            ],
+          },
+        ]);
+        expect(await bumpVersion(github, tagPrefix, versionType as VersionType, publishedTag)).toBe(
+          expectedTag,
+        );
+        expect(setOutput).toBeCalledWith('previous_tag', previousTag);
+        expect(setOutput).toBeCalledWith('previous_version', previousVersion);
+        expect(setOutput).toBeCalledWith('new_tag', expectedTag);
+        expect(setOutput).toBeCalledWith('new_version', expectedVersion);
+        expect(setOutput).toBeCalledWith(
+          'release_type',
+          versionType === VersionType.minor ? VersionType.patch : versionType,
+        );
+      });
+    });
+
+    [
+      [VersionType.minor, '1.0.7'],
+      [VersionType.major, '1.0.7'],
+    ].forEach(([versionType, expectedVersion]) => {
+      test(`force bump to patch for major when there are major between prod diffs`, async () => {
+        const publishedTag = `${tagPrefix}0.1.1`;
+        const expectedTag = `${tagPrefix}${expectedVersion}`;
+        const previousVersion = `1.0.6`;
+        const previousTag = `${tagPrefix}${previousVersion}`;
+        const github = mockGithub([
+          {
+            data: [
+              { prerelease: true, draft: true, tag_name: previousTag }, // Latest version
+              { prerelease: true, draft: true, tag_name: `${tagPrefix}1.0.5` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.0.4` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.0.3` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.0.2` },
+            ],
+          },
+          {
+            data: [
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.0.1` },
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}1.0.0` }, // MAJOR
+              { prerelease: true, draft: false, tag_name: `${tagPrefix}0.2.0` }, // MINOR
               { prerelease: true, draft: false, tag_name: `${tagPrefix}0.1.1` }, // Prod
             ],
           },
