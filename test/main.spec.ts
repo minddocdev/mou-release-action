@@ -5,7 +5,7 @@ import {
 } from '@minddocdev/mou-release-action/lib/version';
 import { run } from '@minddocdev/mou-release-action/main';
 import {
-  createGithubRelease, renderReleaseBody
+  createGitTag, createGithubRelease, renderReleaseBody
 } from '@minddocdev/mou-release-action/lib/release';
 import { commitParser } from '@minddocdev/mou-release-action/lib/commits';
 
@@ -51,6 +51,8 @@ describe('run', () => {
           return `${draft}`;
         case 'prerelease':
           return `${prerelease}`;
+        case 'pushTag':
+          return 'true';
         case 'taskPrefix':
           return taskPrefix;
         case 'templatePath':
@@ -89,6 +91,7 @@ describe('run', () => {
       pullRequests,
     );
     expect(bumpVersion).toBeCalledWith(expect.any(GitHub), tagPrefix, nextVersionType, baseTag);
+    expect(createGitTag).toBeCalledWith(expect.any(GitHub), releaseTag);
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
       releaseTag,
@@ -118,6 +121,8 @@ describe('run', () => {
           return 'true';
         case 'prerelease':
           return `${givenPrerelease}`;
+        case 'pushTag':
+          return 'false';
         case 'releaseName':
           return releaseName;
         case 'releaseTag':
@@ -148,6 +153,7 @@ describe('run', () => {
       pullRequests,
     );
     expect(bumpVersion).not.toBeCalled();
+    expect(createGitTag).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
       releaseTag,

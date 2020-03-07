@@ -24,6 +24,21 @@ export function renderReleaseBody(
   return body;
 }
 
+export async function createGitTag(github: GitHub, tag: string) {
+  const { owner, repo } = context.repo;
+  const { sha } = context;
+
+  const { status } = await github.git.createRef({
+    owner,
+    repo,
+    sha,
+    ref: `refs/tags/${tag}`,
+  });
+  if (status !== 201) {
+    throw new Error(`Unable to create tag ${tag}. Github returned status ${status}`);
+  }
+}
+
 export async function createGithubRelease(
   github: GitHub,
   tag: string,

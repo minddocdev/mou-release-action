@@ -110,6 +110,14 @@ e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
 - default: `true`
 - description: Mark release as prerelease when creating.
 
+#### `pushTag`
+
+- name: pushTag
+- required: false
+- default: `true`
+- description: Creates and pushes the automatic calculated tag before creating the release.
+By default, a release draft won't create the tag, which only happens when it is published.
+
 #### `releaseName`
 
 - name: releaseName

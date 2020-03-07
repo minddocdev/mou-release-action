@@ -2,7 +2,7 @@ import { resolve as pathResolve } from 'path';
 import { setOutput } from '@actions/core';
 
 import {
-  createGithubRelease, renderReleaseBody
+  createGithubRelease, renderReleaseBody, createGitTag
 } from '@minddocdev/mou-release-action/lib/release';
 
 jest.mock('path');
@@ -12,6 +12,7 @@ jest.mock('@actions/github', () => ({
       owner: 'myorg',
       repo: 'myrepo',
     },
+    sha: 'mysha',
   }
 }));
 jest.mock('@actions/core');
@@ -56,6 +57,32 @@ describe('release', () => {
       )).toMatchSnapshot();
       expect(pathResolve)
         .toBeCalledWith('/home/runner/work', 'myrepo', 'myrepo', '.github', templatePath);
+    });
+  });
+
+  describe('create git tag', () => {
+    const tag = 'v1.1.0';
+
+    test('returns 201', async () => {
+      const createRef = jest.fn(() => ({ status: 201 }));
+      const github = { git: { createRef } };
+      await createGitTag(github as any, tag);
+
+      expect(createRef).toBeCalledWith({
+        owner: 'myorg',
+        repo: 'myrepo',
+        sha: 'mysha',
+        ref: `refs/tags/${tag}`,
+      });
+    });
+
+    test('returns 404', async () => {
+      const status = 404;
+      const createRef = jest.fn(() => ({ status }));
+      const github = { git: { createRef } };
+      await expect(createGitTag(github as any, tag)).rejects.toThrowError(
+        new Error(`Unable to create tag ${tag}. Github returned status ${status}`),
+      );
     });
   });
 
