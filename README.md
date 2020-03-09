@@ -11,9 +11,31 @@ for `mou-release-action`.
 
 ## Usage
 
-Use the action to create a release.
+Simplest usage, (single application per repository), and the action will check for
+the latest published release that matches the `v` prefix, create a changelog for all the
+commits in that diff and suggest a version bump to `minor`, `major` or `patch` depending
+on the commit messages, and if there was a previous `minor` or `major` bump in the diff
+with the latest published tag.
 
-For given tags (automatic tag creation would be disabled):
+```yaml
+name: 'myrelease'
+on:
+  push:
+    branches:
+      - master
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        uses: minddocdev/mou-release-action@master
+        with:
+          templatePath: RELEASE_DRAFT/default.md
+          token: ${{ github.token }}
+```
+
+For given tags, where automatic tag suggestion is disabled and the commit parsing is controlled
+by `baseTag` and `releaseTag`:
 
 ```yaml
 name: 'myrelease'
@@ -46,10 +68,11 @@ jobs:
           token: ${{ github.token }}
 ```
 
-In the following example, the action will check for the latest published release that matches
+More complex example, where the action will check for the latest published release that matches
 `myapp@` prefix, create a changelog for all the commits that has the `(myapp)` scope,
 and bump the version to `minor`, `major` or `patch` depending on the commit messages and if there
 was a previous `minor` or `major` bump in the diff with the latest published tag.
+This setting is ideal for monorepos, where multiple release scopes live.
 
 ```yaml
 name: 'myrelease'
