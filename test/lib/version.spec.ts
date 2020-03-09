@@ -166,9 +166,13 @@ describe('version', () => {
             ],
           },
         ]);
-        expect(await bumpVersion(github, tagPrefix, versionType as VersionType, publishedTag)).toBe(
-          expectedTag,
-        );
+        expect(await bumpVersion(
+          github,
+          tagPrefix,
+          versionType as VersionType,
+          publishedTag,
+          true
+        )).toBe(expectedTag);
         expect(setOutput).toBeCalledWith('previous_tag', previousTag);
         expect(setOutput).toBeCalledWith('previous_version', previousVersion);
         expect(setOutput).toBeCalledWith('new_tag', expectedTag);
@@ -208,9 +212,13 @@ describe('version', () => {
             ],
           },
         ]);
-        expect(await bumpVersion(github, tagPrefix, versionType as VersionType, publishedTag)).toBe(
-          expectedTag,
-        );
+        expect(await bumpVersion(
+          github,
+          tagPrefix,
+          versionType as VersionType,
+          publishedTag,
+          true
+        )).toBe(expectedTag);
         expect(setOutput).toBeCalledWith('previous_tag', previousTag);
         expect(setOutput).toBeCalledWith('previous_version', previousVersion);
         expect(setOutput).toBeCalledWith('new_tag', expectedTag);

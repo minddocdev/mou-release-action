@@ -47,12 +47,14 @@ describe('run', () => {
       switch (name) {
         case 'app':
           return app;
+        case 'bumpProtection':
+          return 'false';
         case 'draft':
           return `${draft}`;
         case 'prerelease':
           return `${prerelease}`;
         case 'pushTag':
-          return 'true';
+          return 'false';
         case 'taskPrefix':
           return taskPrefix;
         case 'templatePath':
@@ -91,7 +93,7 @@ describe('run', () => {
       pullRequests,
     );
     expect(bumpVersion).toBeCalledWith(expect.any(GitHub), tagPrefix, nextVersionType, baseTag);
-    expect(createGitTag).toBeCalledWith(expect.any(GitHub), releaseTag);
+    expect(createGitTag).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
       releaseTag,
@@ -115,6 +117,8 @@ describe('run', () => {
           return app;
         case 'baseTag':
           return baseTag;
+        case 'bumpProtection':
+          return 'true';
         case 'draft':
           return `${givenDraft}`;
         case 'monorepo':
@@ -122,7 +126,7 @@ describe('run', () => {
         case 'prerelease':
           return `${givenPrerelease}`;
         case 'pushTag':
-          return 'false';
+          return 'true';
         case 'releaseName':
           return releaseName;
         case 'releaseTag':
@@ -153,7 +157,7 @@ describe('run', () => {
       pullRequests,
     );
     expect(bumpVersion).not.toBeCalled();
-    expect(createGitTag).not.toBeCalled();
+    expect(createGitTag).toBeCalledWith(expect.any(GitHub), releaseTag);
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
       releaseTag,

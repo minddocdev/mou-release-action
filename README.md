@@ -88,6 +88,15 @@ instead of the automatic detection of latest published release.
 The commits will be formatted into a Markdown list and replaced into the `$CHANGES`
 variable for the given `templatePath` template file.
 
+#### `bumpProtection`
+
+- name: bumpProtection
+- required: false
+- default: `false`
+- description: Propose PATCH version bumps whenever a MINOR or MAJOR is detected
+in a diff that had a previous MINOR or MAJOR bump.
+See [multiple minor and major bump protection](#multiple-minor-and-major-bump-protection).
+
 #### `draft`
 
 - name: draft
@@ -114,8 +123,9 @@ e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
 
 - name: pushTag
 - required: false
-- default: `true`
+- default: `false`
 - description: Creates and pushes the automatic calculated tag before creating the release.
+Useful if you want the action to handle tags for you when publishing drafts.
 By default, a release draft won't create the tag, which only happens when it is published.
 
 #### `releaseName`
@@ -386,11 +396,13 @@ should be fully controlled by the user.
 
 #### Multiple `MINOR` and `MAJOR` bump protection
 
-For teams with a slower release cadence, it would be easy to end up with a production deployment
-that has a big diff between `MINOR` and `MAJOR` versions. As we believe users are the ones who
-should get the biggest benefit from semantic versioning, it might not make sense if they see a big
-number gap in those.
-**This is a very specific flow and we plan to make it configurable or to disable it**.
+**Bump protection is disabled by default, but you can enable passing the `bumpProtection` input.**
+
+For teams with a slower production release cadence that push a lot of tags automatically,
+it would be easy to end up with a production deployment that has a big diff between
+`MINOR` and `MAJOR` versions.
+As we believe users are the ones who should get the biggest benefit from semantic versioning,
+it might not make sense if they see a big number gap in those.
 
 Therefore, the release type protection will do a `PATCH` if there was already an **unreleased**
 `MAJOR` or `MINOR` bump in the diff.

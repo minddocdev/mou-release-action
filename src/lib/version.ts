@@ -29,7 +29,11 @@ const findReleaseTag = async (github: GitHub, matchFunction: (release: {}) => {}
 };
 
 export async function bumpVersion(
-  github: GitHub, tagPrefix: string, nextVersionType = VersionType.patch, publishedTag?: string,
+  github: GitHub,
+  tagPrefix: string,
+  nextVersionType = VersionType.patch,
+  publishedTag?: string,
+  bumpProtection = false,
 ) {
   const publishedVersion = publishedTag ? publishedTag.replace(tagPrefix, '') : undefined;
 
@@ -44,6 +48,7 @@ export async function bumpVersion(
   // tags can be bumped
   let releaseType = nextVersionType;
   if (
+    bumpProtection &&
     publishedVersion &&
     // MINOR protection (if there was already a previous MINOR bump)
     ((nextVersionType === VersionType.minor &&
