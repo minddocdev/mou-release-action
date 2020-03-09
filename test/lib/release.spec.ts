@@ -27,29 +27,11 @@ const createReleaseResponse = {
 
 describe('release', () => {
   describe('render release name', () => {
-    test('with draft and prerelease', () => {
-      expect(renderReleaseName(true, true)).toBe('Draft prerelease');
+    test('without app', () => {
+      expect(renderReleaseName('0.0.1')).toBe('0.0.1');
     });
-    test('with draft', () => {
-      expect(renderReleaseName(true, false)).toBe('Draft');
-    });
-    test('with prerelease', () => {
-      expect(renderReleaseName(false, true)).toBe('Prerelease');
-    });
-    test('when release is detected', () => {
-      expect(renderReleaseName(false, false)).toBe('Release');
-    });
-    test('with draft, prerelease and app', () => {
-      expect(renderReleaseName(true, true, 'myapp')).toBe('Draft prerelease myapp');
-    });
-    test('with draft and app', () => {
-      expect(renderReleaseName(true, false, 'myapp')).toBe('Draft myapp');
-    });
-    test('with prerelease and app', () => {
-      expect(renderReleaseName(false, true, 'myapp')).toBe('Prerelease myapp');
-    });
-    test('when release is detected and app is given', () => {
-      expect(renderReleaseName(false, false, 'myapp')).toBe('Release myapp');
+    test('with app', () => {
+      expect(renderReleaseName('0.0.1', 'myapp')).toBe('myapp@0.0.1');
     });
   });
 

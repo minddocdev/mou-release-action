@@ -42,8 +42,7 @@ export async function run() {
     // Won't replace it if release tag is given manually
     const releaseVersion = releaseTag.replace(tagPrefix, '');
     const releaseName =
-      core.getInput('releaseName', { required: false }) ||
-      renderReleaseName(draft, prerelease, app);
+      core.getInput('releaseName', { required: false }) || renderReleaseName(releaseVersion, app);
     const body = renderReleaseBody(
       templatePath,
       app,

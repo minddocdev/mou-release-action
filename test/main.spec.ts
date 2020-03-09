@@ -82,7 +82,7 @@ describe('run', () => {
       undefined,
       undefined,
     );
-    expect(renderReleaseName).toBeCalledWith(draft, prerelease, undefined);
+    expect(renderReleaseName).toBeCalledWith(releaseVersion, undefined);
     expect(renderReleaseBody).toBeCalledWith(
       templatePath,
       undefined,

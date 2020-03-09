@@ -4,6 +4,11 @@ Creates a Github release with parsed commits into a given Markdown template.
 
 [![main](https://github.com/minddocdev/mou-release-action/workflows/main/badge.svg)](https://github.com/minddocdev/mou-release-action/actions?workflow=main)
 
+Actually, the `mou-release-action` creates [releases](https://github.com/minddocdev/mou-release-action/releases)
+for `mou-release-action`.
+
+![xzibit](https://i.imgur.com/FP1KQOR.png?1)
+
 ## Usage
 
 Use the action to create a release.
