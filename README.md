@@ -64,7 +64,6 @@ jobs:
         uses: minddocdev/mou-release-action@master
         with:
           app: ${{ env.APP }}
-          monorepo: true
           templatePath: RELEASE_DRAFT/default.md
           token: ${{ github.token }}
 ```
@@ -76,8 +75,11 @@ jobs:
 #### `app`
 
 - name: app
-- required: true
+- required: false
 - description: The name of the app involved in the release.
+Creates tag and render commits for a specific scope, based on the given app name.
+Scopes from commits are analyzed for commits that follow the Angular commit style.
+e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
 
 #### `baseTag`
 
@@ -103,14 +105,6 @@ See [multiple minor and major bump protection](#multiple-minor-and-major-bump-pr
 - required: false
 - default: `true`
 - description: Publish release draft.
-
-#### `monorepo`
-
-- name: monorepo
-- required: false
-- description: Creates tag and render commits for a specific scope, based on the given app name.
-Scopes from commits are analyzed for commits that follow the Angular commit style.
-e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
 
 #### `prerelease`
 
@@ -301,7 +295,7 @@ the action will automatically categorize them in `$CHANGES` like in the followin
 In this case, all commits that will be added to the production release are displayed here. The ones
 that did not follow any commit style where at the top of the changelog without a category.
 
-If the `monorepo` setting is true, commits that only have the `(<app>)` scope will be shown.
+If the `app` input is given, commits that only have the `(<app>)` scope will be shown.
 Being `<app>` the input given to the action.
 
 Of course, in case you do not want to follow a specific commit style at all,
@@ -369,7 +363,7 @@ the beginning of the commit message or in the Github squash line):
 
 #### Scope
 
-The *scope* is required when `monorepo` mode is enabled, in order to only generate a changelog
+The *scope* is required when an `app` is given, in order to only generate a changelog
 for those commits that belong to the specific app. Therefore, all relevant commit messages
 should have the `<type>(<scope>)` or `(<scope>)` format. Scope should be equal to the given
 `app` input.

@@ -8,10 +8,9 @@ import { retrieveLastReleasedVersion, bumpVersion } from './lib/version';
 export async function run() {
   try {
     // Global config
-    const app = core.getInput('app', { required: true });
+    const app = core.getInput('app', { required: false });
     const token = core.getInput('token', { required: true });
-    const monorepo = core.getInput('monorepo', { required: false }) === 'true';
-    const tagPrefix = monorepo ? `${app}@` : `v`;
+    const tagPrefix = app ? `${app}@` : `v`;
 
     const github = new GitHub(token);
 
@@ -33,7 +32,7 @@ export async function run() {
       baseTag,
       taskPrefix,
       taskBaseUrl,
-      monorepo ? app : undefined,
+      app,
     );
 
     const releaseTag =
@@ -44,7 +43,7 @@ export async function run() {
     const releaseVersion = releaseTag.replace(tagPrefix, '');
     const releaseName =
       core.getInput('releaseName', { required: false }) ||
-      renderReleaseName(draft, prerelease, monorepo ? app : undefined);
+      renderReleaseName(draft, prerelease, app);
     const body = renderReleaseBody(
       templatePath,
       app,

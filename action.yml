@@ -6,8 +6,12 @@ branding:
   color: "blue"
 inputs:
   app:
-    description: "The name of the app involved in the release"
-    required: true
+    description: >-
+      The name of the app involved in the release (monorepo mode).
+      Creates tag and render commits for a specific scope, based on the given app name.
+      Scopes from commits are analyzed for commits that follow the Angular commit style.
+      e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
+    required: false
   baseTag:
     description: >-
       The tag that will be used as base for git commit comparison, instead of
@@ -25,12 +29,6 @@ inputs:
     description: "Publish release draft"
     required: false
     default: "true"
-  monorepo:
-    description: >-
-      Creates tag and render commits for a specific scope, based on the given app name.
-      Scopes from commits are analyzed for commits that follow the Angular commit style.
-      e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
-    required: false
   prerelease:
     description: "Mark release as prerelease when creating"
     required: false

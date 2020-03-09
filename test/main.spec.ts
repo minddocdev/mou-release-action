@@ -17,7 +17,6 @@ jest.mock('@minddocdev/mou-release-action/lib/version');
 
 describe('run', () => {
   // Required input values
-  const app = 'fake-app';
   const templatePath = 'RELEASE_DRAFT/default.md';
   const token = 'faketoken';
   // Default input values
@@ -44,8 +43,6 @@ describe('run', () => {
   test('with required params', async () => {
     (getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
-        case 'app':
-          return app;
         case 'bumpProtection':
           return 'false';
         case 'draft':
@@ -69,7 +66,7 @@ describe('run', () => {
     const baseTag = 'v1.0.0';
     (retrieveLastReleasedVersion as jest.Mock).mockImplementation(() => baseTag);
 
-    const releaseName = `draft prerelease ${app}`;
+    const releaseName = `draft prerelease`;
     (renderReleaseName as jest.Mock).mockImplementation(() => releaseName);
     const releaseVersion = '1.0.5';
     const releaseTag = `${tagPrefix}${releaseVersion}`;
@@ -88,7 +85,7 @@ describe('run', () => {
     expect(renderReleaseName).toBeCalledWith(draft, prerelease, undefined);
     expect(renderReleaseBody).toBeCalledWith(
       templatePath,
-      app,
+      undefined,
       releaseVersion,
       changes,
       tasks,
@@ -108,6 +105,7 @@ describe('run', () => {
   });
 
   test('with specific production release and new release tag', async () => {
+    const app = 'fake-app';
     const baseTag = 'v1.0.4';
     const givenDraft = false;
     const givenPrerelease = false;
