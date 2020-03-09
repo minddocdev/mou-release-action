@@ -5,7 +5,7 @@ import {
 } from '@minddocdev/mou-release-action/lib/version';
 import { run } from '@minddocdev/mou-release-action/main';
 import {
-  createGitTag, createGithubRelease, renderReleaseBody
+  createGitTag, createGithubRelease, renderReleaseBody, renderReleaseName,
 } from '@minddocdev/mou-release-action/lib/release';
 import { commitParser } from '@minddocdev/mou-release-action/lib/commits';
 
@@ -18,7 +18,6 @@ jest.mock('@minddocdev/mou-release-action/lib/version');
 describe('run', () => {
   // Required input values
   const app = 'fake-app';
-  const releaseName = 'fake-app';
   const templatePath = 'RELEASE_DRAFT/default.md';
   const token = 'faketoken';
   // Default input values
@@ -70,6 +69,8 @@ describe('run', () => {
     const baseTag = 'v1.0.0';
     (retrieveLastReleasedVersion as jest.Mock).mockImplementation(() => baseTag);
 
+    const releaseName = `draft prerelease ${app}`;
+    (renderReleaseName as jest.Mock).mockImplementation(() => releaseName);
     const releaseVersion = '1.0.5';
     const releaseTag = `${tagPrefix}${releaseVersion}`;
     (bumpVersion as jest.Mock).mockImplementation(() => releaseTag);
@@ -84,6 +85,7 @@ describe('run', () => {
       undefined,
       undefined,
     );
+    expect(renderReleaseName).toBeCalledWith(draft, prerelease, undefined);
     expect(renderReleaseBody).toBeCalledWith(
       templatePath,
       app,
@@ -97,7 +99,7 @@ describe('run', () => {
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
       releaseTag,
-      `${app} ${releaseVersion}`,
+      releaseName,
       body,
       draft,
       prerelease,
@@ -109,6 +111,7 @@ describe('run', () => {
     const baseTag = 'v1.0.4';
     const givenDraft = false;
     const givenPrerelease = false;
+    const releaseName = 'fake-app';
     const releaseTag = `mycustomprefix-1.0.6`;
     const taskBaseUrl = 'https://myfaketask.url';
     (getInput as jest.Mock).mockImplementation((name: string) => {

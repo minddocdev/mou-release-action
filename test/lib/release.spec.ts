@@ -2,7 +2,7 @@ import { resolve as pathResolve } from 'path';
 import { setOutput } from '@actions/core';
 
 import {
-  createGithubRelease, renderReleaseBody, createGitTag
+  createGithubRelease, renderReleaseBody, createGitTag, renderReleaseName
 } from '@minddocdev/mou-release-action/lib/release';
 
 jest.mock('path');
@@ -26,6 +26,33 @@ const createReleaseResponse = {
 };
 
 describe('release', () => {
+  describe('render release name', () => {
+    test('with draft and prerelease', () => {
+      expect(renderReleaseName(true, true)).toBe('Draft prerelease');
+    });
+    test('with draft', () => {
+      expect(renderReleaseName(true, false)).toBe('Draft');
+    });
+    test('with prerelease', () => {
+      expect(renderReleaseName(false, true)).toBe('Prerelease');
+    });
+    test('when release is detected', () => {
+      expect(renderReleaseName(false, false)).toBe('Release');
+    });
+    test('with draft, prerelease and app', () => {
+      expect(renderReleaseName(true, true, 'myapp')).toBe('Draft prerelease myapp');
+    });
+    test('with draft and app', () => {
+      expect(renderReleaseName(true, false, 'myapp')).toBe('Draft myapp');
+    });
+    test('with prerelease and app', () => {
+      expect(renderReleaseName(false, true, 'myapp')).toBe('Prerelease myapp');
+    });
+    test('when release is detected and app is given', () => {
+      expect(renderReleaseName(false, false, 'myapp')).toBe('Release myapp');
+    });
+  });
+
   describe('render release template', () => {
     const app = 'myapp';
     const releaseVersion = '1.0.0';
@@ -43,15 +70,17 @@ describe('release', () => {
       (pathResolve as jest.Mock)
         .mockImplementation(() => `${__dirname}/fixtures/with-changelog.md`);
 
-      const changes = `\
-- [#1](https://commiturl) First commit message ([@darioblanco](https://github.com/darioblanco))
-- [#2](https://commiturl) Second commit message ([@darioblanco](https://github.com/darioblanco))`;
-      const tasks = `\
-- [JIRA-123](https://myorg.atlassian.net/browse/JIRA-123)
-- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)`;
-      const pullRequests = `\
-- [#1716](https://github.com/myorg/myrepo/pull/1716)
-- [#1717](https://github.com/myorg/myrepo/pull/1717)`;
+      const changes = '' +
+        '- [#1](https://commiturl) First commit message ' +
+        '([@darioblanco](https://github.com/darioblanco))\n' +
+        '- [#2](https://commiturl) Second commit message ' +
+        '([@darioblanco](https://github.com/darioblanco))';
+      const tasks = '' +
+        '- [JIRA-123](https://myorg.atlassian.net/browse/JIRA-123)\n' +
+        '- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)';
+      const pullRequests = '' +
+        '- [#1716](https://github.com/myorg/myrepo/pull/1716)\n' +
+        '- [#1717](https://github.com/myorg/myrepo/pull/1717)';
       expect(renderReleaseBody(
         'myTemplatePath.md', app, releaseVersion, changes, tasks, pullRequests,
       )).toMatchSnapshot();

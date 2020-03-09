@@ -3,6 +3,19 @@ import * as path from 'path';
 import * as core from '@actions/core';
 import { context, GitHub } from '@actions/github';
 
+export function renderReleaseName(
+  draft: boolean,
+  prerelease: boolean,
+  app?: string,
+) {
+  let releaseName = `release ${app || ''}`;
+  if (draft || prerelease) {
+    releaseName = `${draft ? 'draft ' : ''}${prerelease ? 'prerelease ' : ''}${app || ''}`;
+  }
+  // Capitalize string
+  return `${releaseName[0].toUpperCase()}${releaseName.slice(1)}`.trim();
+}
+
 export function renderReleaseBody(
   templatePath: string,
   app: string,

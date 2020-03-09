@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import { GitHub } from '@actions/github';
 
-import { createGithubRelease, renderReleaseBody, createGitTag } from './lib/release';
+import { createGithubRelease, renderReleaseBody, createGitTag, renderReleaseName } from './lib/release';
 import { commitParser } from './lib/commits';
 import { retrieveLastReleasedVersion, bumpVersion } from './lib/version';
 
@@ -43,8 +43,8 @@ export async function run() {
     // Won't replace it if release tag is given manually
     const releaseVersion = releaseTag.replace(tagPrefix, '');
     const releaseName =
-      core.getInput('releaseName', { required: false }) || `${app} ${releaseVersion}`;
-
+      core.getInput('releaseName', { required: false }) ||
+      renderReleaseName(draft, prerelease, monorepo ? app : undefined);
     const body = renderReleaseBody(
       templatePath,
       app,
