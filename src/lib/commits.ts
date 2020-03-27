@@ -5,11 +5,11 @@ import { VersionType } from './version';
 
 // Octokit's commit type subset
 interface Commit {
-  username: string,
-  userUrl: string
-  commitUrl: string,
-  message: string,
-  sha: string,
+  username: string;
+  userUrl: string;
+  commitUrl: string;
+  message: string;
+  sha: string;
 }
 
 /**
@@ -22,7 +22,12 @@ export async function commitParser(
   taskPrefix = 'JIRA-',
   taskBaseUrl?: string,
   commitScope?: string,
-) {
+): Promise<{
+  nextVersionType: VersionType;
+  changes: string;
+  tasks: string;
+  pullRequests: string;
+}> {
   const commitGroups: {
     [index: string]: { title: string; commits: Commit[] };
   } = {

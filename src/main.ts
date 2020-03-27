@@ -3,7 +3,7 @@ import { GitHub } from '@actions/github';
 
 import { createGithubRelease, renderReleaseBody, createGitTag, renderReleaseName } from './lib/release';
 import { commitParser } from './lib/commits';
-import { retrieveLastReleasedVersion, bumpVersion } from './lib/version';
+import { retrieveLastReleasedVersion, bumpVersion, VersionType } from './lib/version';
 
 export async function run() {
   try {
@@ -27,13 +27,17 @@ export async function run() {
     const draft = core.getInput('draft', { required: false }) === 'true' || false;
     const prerelease = core.getInput('prerelease', { required: false }) === 'true' || false;
 
-    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
+    const diffInfo = await commitParser(
       github,
       baseTag,
       taskPrefix,
       taskBaseUrl,
       app,
     );
+    const { changes, tasks, pullRequests } = diffInfo;
+    let { nextVersionType } = diffInfo;
+    // Force next version as release candidate if prerelease draft is created
+    if (prerelease) nextVersionType = VersionType.prerelease;
 
     const releaseTag =
       core.getInput('releaseTag', { required: false }) ||

@@ -13,9 +13,8 @@ for `mou-release-action`.
 
 Simplest usage, (single application per repository), and the action will check for
 the latest published release that matches the `v` prefix, create a changelog for all the
-commits in that diff and suggest a version bump to `minor`, `major` or `patch` depending
-on the commit messages, and if there was a previous `minor` or `major` bump in the diff
-with the latest published tag.
+commits in that diff and suggest a version bump to `prerelease` (as by default the `prerelease`
+draft checkbox will be filled).
 
 ```yaml
 name: 'myrelease'
@@ -72,6 +71,8 @@ More complex example, where the action will check for the latest published relea
 `myapp@` prefix, create a changelog for all the commits that has the `(myapp)` scope,
 and bump the version to `minor`, `major` or `patch` depending on the commit messages and if there
 was a previous `minor` or `major` bump in the diff with the latest published tag.
+As the `prerelease` parameter is `false`, the draft won't have the `prerelease` checkbox and
+the proposed tag won't have the `-rc.X` suffix.
 This setting is ideal for monorepos, where multiple release scopes live.
 
 ```yaml
@@ -92,6 +93,7 @@ jobs:
         uses: minddocdev/mou-release-action@master
         with:
           app: ${{ env.APP }}
+          prerelease: false
           templatePath: RELEASE_DRAFT/default.md
           token: ${{ github.token }}
 ```
@@ -140,6 +142,7 @@ See [multiple minor and major bump protection](#multiple-minor-and-major-bump-pr
 - required: false
 - default: `true`
 - description: Mark release as prerelease when creating.
+This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags).
 
 #### `pushTag`
 

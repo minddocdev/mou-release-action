@@ -91,7 +91,12 @@ describe('run', () => {
       tasks,
       pullRequests,
     );
-    expect(bumpVersion).toBeCalledWith(expect.any(GitHub), tagPrefix, nextVersionType, baseTag);
+    expect(bumpVersion).toBeCalledWith(
+      expect.any(GitHub),
+      tagPrefix,
+      VersionType.prerelease,
+      baseTag,
+    );
     expect(createGitTag).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
       expect.any(GitHub),
