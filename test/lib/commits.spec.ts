@@ -187,8 +187,8 @@ describe('commit', () => {
       expect(changes).toMatchSnapshot();
       expect(nextVersionType).toBe(VersionType.major);
       const jiraBaseUrl = taskBaseUrl || 'https://theowner.atlassian.net/browse';
-      expect(tasks).toBe(`- [JIRA-2772](${jiraBaseUrl}/JIRA-2772)\n`);
-      expect(pullRequests).toBe('- [#1716](https://github.com/theowner/therepo/pull/1716)\n');
+      expect(tasks).toBe(`[JIRA-2772](${jiraBaseUrl}/JIRA-2772)`);
+      expect(pullRequests).toBe('[#1716](https://github.com/theowner/therepo/pull/1716)');
     }),
   );
 

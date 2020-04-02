@@ -212,11 +212,11 @@ export async function commitParser(
     tasks: tasks
       .map(
         task =>
-          `- [${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})\n`,
+          `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`,
       )
       .join(),
     pullRequests: pullRequests
-      .map(pr => `- [#${pr}](https://github.com/${owner}/${repo}/pull/${pr})\n`)
+      .map(pr => `[#${pr}](https://github.com/${owner}/${repo}/pull/${pr})`)
       .join(),
   };
 }
