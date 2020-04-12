@@ -373,7 +373,8 @@ them in the release body.
 
 ### Commit Message Conventions
 
-The commit style is strongly influenced by [Angular Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153).
+The commit style follows [Conventional Commits](https://www.conventionalcommits.org/),
+and is able to group changes in the changelog if some specific types are given.
 
 #### Type
 
@@ -396,8 +397,9 @@ the beginning of the commit message or in the Github squash line):
 
 The *scope* is required when an `app` is given, in order to only generate a changelog
 for those commits that belong to the specific app. Therefore, all relevant commit messages
-should have the `<type>(<scope>)` or `(<scope>)` format. Scope should be equal to the given
-`app` input.
+should have the `<type>(<scope>):` or `(<scope>):` format
+(though the latter is not considered a conventional commit).
+Scope should be equal to the given `app` input.
 
 ### Automatic semantic version type detection
 
