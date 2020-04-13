@@ -143,13 +143,12 @@ export async function commitParser(
     const majorMatch = majorRegExp.exec(message);
     if (majorMatch) nextVersionType = VersionType.major;
 
-    // Detect if commit is a Github squash. In that case, ignore commit title and convert
-    // in multiple single line commits
+    // Detect if commit is a Github squash. In that case, convert body
+    // in multiple single line commits and parse
     if (/\* .*\n/.test(message)) {
       const messageLines = message.split('* ');
       // Categorize all commits except first one
       messageLines
-        .slice(1)
         .forEach(messageLine =>
           categorizeCommit({
             username,

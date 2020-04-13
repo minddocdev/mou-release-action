@@ -139,7 +139,7 @@ describe('commit', () => {
   [undefined, 'http://my-task-url'].forEach(taskBaseUrl =>
     test(`render gh squashed commits with scope, PRs and tasks for ${taskBaseUrl}`, async () => {
       const commitMessage =
-        'JIRA-2772 Title of my PR (#1716)\n\n' +
+        'feat(auth): main commit of my PR (#1716)\n\n' +
         '* feat(auth): set login endpoint controller\n\n' +
         '* test(auth): add integration test for login endpoint #MAJOR\n\n' +
         '* fix(auth): set secure and http only options\n\n' +
@@ -150,7 +150,8 @@ describe('commit', () => {
         '* Address comment from PR\n\n' +
         'This is the body of the previous commit\n\n' +
         '* feat(auth): set expiration of the cookie to the amount of time of the token\n\n' +
-        '* fix(auth): remove joi validation since it does not accept localhost';
+        '* fix(auth): remove joi validation since it does not accept localhost\n\n' +
+        'Closes: JIRA-2772';
       const compareSquashedCommitsResponse = {
         data: {
           commits: [
@@ -178,7 +179,7 @@ describe('commit', () => {
         JSON.stringify(
           commitMessage
             .split('* ')
-            .slice(2)
+            .slice(1)
             .map(() => sha),
         ), // 6 commits
       );
@@ -219,7 +220,9 @@ describe('commit', () => {
     );
     expect(setOutput).toBeCalledWith(
       'changes',
-      '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce","62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
+      '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
+      '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
+      '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
     );
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');

@@ -46,6 +46,7 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for http://
 "- Set values for staging and production - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:zap: Features**
+- Main commit of my PR (#1716) - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Set login endpoint controller - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
@@ -64,6 +65,7 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for undefin
 "- Set values for staging and production - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:zap: Features**
+- Main commit of my PR (#1716) - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Set login endpoint controller - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
@@ -79,6 +81,7 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for undefin
 `;
 
 exports[`commit render github squashed commits without scope, PRs and tasks 1`] = `
-"- Set login endpoint controller - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+"- Title of my PR - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- Set login endpoint controller - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Add integration test for login endpoint - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;
