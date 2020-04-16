@@ -151,7 +151,7 @@ describe('commit', () => {
         'This is the body of the previous commit\n\n' +
         '* feat(auth): set expiration of the cookie to the amount of time of the token\n\n' +
         '* fix(auth): remove joi validation since it does not accept localhost\n\n' +
-        'Closes: JIRA-2772';
+        'Closes: JIRA-2772,JIRA-2773';
       const compareSquashedCommitsResponse = {
         data: {
           commits: [
@@ -183,12 +183,14 @@ describe('commit', () => {
             .map(() => sha),
         ), // 6 commits
       );
-      expect(setOutput).toBeCalledWith('tasks', '["JIRA-2772"]');
+      expect(setOutput).toBeCalledWith('tasks', '["JIRA-2772","JIRA-2773"]');
       expect(setOutput).toBeCalledWith('pull_requests', '["1716"]');
       expect(changes).toMatchSnapshot();
       expect(nextVersionType).toBe(VersionType.major);
       const jiraBaseUrl = taskBaseUrl || 'https://theowner.atlassian.net/browse';
-      expect(tasks).toBe(`[JIRA-2772](${jiraBaseUrl}/JIRA-2772)`);
+      expect(tasks).toBe(
+        `[JIRA-2772](${jiraBaseUrl}/JIRA-2772), [JIRA-2773](${jiraBaseUrl}/JIRA-2773)`,
+      );
       expect(pullRequests).toBe('[#1716](https://github.com/theowner/therepo/pull/1716)');
     }),
   );

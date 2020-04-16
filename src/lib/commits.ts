@@ -121,7 +121,7 @@ export async function commitParser(
   };
 
   const prRegExp = new RegExp('(\\(#\\d+\\))', 'gmi');
-  const taskRegExp = new RegExp(`(${taskPrefix}\\d+)`, 'gmi');
+  const taskRegExp = new RegExp(`${taskPrefix}\\d+`, 'gmi');
   const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
   commits.forEach(githubCommit => {
     const {
@@ -137,8 +137,9 @@ export async function commitParser(
     if (prMatch)
       prMatch.slice(1).forEach(pr => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
     // Retrieve task information
-    const taskMatch = taskRegExp.exec(message);
-    if (taskMatch) taskMatch.slice(1).forEach(task => tasks.push(task));
+    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
+    const taskMatch = message.match(taskRegExp);
+    if (taskMatch) taskMatch.forEach(task => tasks.push(task));
     // Retrieve specific bump key words
     const majorMatch = majorRegExp.exec(message);
     if (majorMatch) nextVersionType = VersionType.major;
@@ -213,9 +214,9 @@ export async function commitParser(
         task =>
           `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`,
       )
-      .join(),
+      .join(', '),
     pullRequests: pullRequests
       .map(pr => `[#${pr}](https://github.com/${owner}/${repo}/pull/${pr})`)
-      .join(),
+      .join(', '),
   };
 }
