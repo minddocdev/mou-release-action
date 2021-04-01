@@ -67,6 +67,8 @@ inputs:
     description: "The token to access Github's API"
     required: true
 outputs:
+  change_type:
+    description: "The semantic type of change: major, minor, patch or prerelease"
   changes:
     description: "A JSON array with the list of commit sha that are involved in the release"
   new_tag:

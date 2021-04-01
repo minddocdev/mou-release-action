@@ -205,6 +205,7 @@ export async function commitParser(
   if (nextVersionType === VersionType.patch && commitGroups.feat.commits.length > 0) {
     nextVersionType = VersionType.minor;
   }
+  core.setOutput('change_type', nextVersionType);
 
   return {
     nextVersionType,
