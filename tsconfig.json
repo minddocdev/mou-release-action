@@ -1,21 +1,22 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "esModuleInterop": true,
+    "lib": ["esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "paths": {
-      "@minddocdev/mou-release-action/*": ["./src/*"],
-      "@minddocdev/mou-release-action/test/*": ["./test/*"]
+      "@minddocdev/mou-release-action/*": ["src/*"],
+      "@minddocdev/mou-release-action/test/*": ["test/*"]
     },
     "rootDir": ".",
     "strict": true,
-    "target": "es2017",
+    "target": "esnext",
+    "types": ["jest", "node"]
   },
   "include": [
     "src/**/*.ts",
     "test/**/*.ts",
   ],
-  "types": ["jest", "node"]
 }

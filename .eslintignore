@@ -1,0 +1,10 @@
+# auto-generated folders
+**/.vscode/**
+**/.yarn/**
+**/dist/**
+**/coverage/**
+
+# javascript config files
+.eslintrc.js
+commitlint.config.js
+jest.config.js

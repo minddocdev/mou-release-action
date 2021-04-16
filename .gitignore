@@ -1,5 +1,22 @@
-# .yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-coverage
+# Env files
+.env
+
+# Generated files
+/coverage/**
+
+# Log files
+logs/*.log
+
+# OS Files
 .DS_Store
+
+# Database files
+/docker/db/data
+
+# Yarn files
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions

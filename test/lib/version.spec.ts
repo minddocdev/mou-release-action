@@ -1,6 +1,8 @@
 import { setOutput } from '@actions/core';
 import {
-  retrieveLastReleasedVersion, bumpVersion, VersionType,
+  retrieveLastReleasedVersion,
+  bumpVersion,
+  VersionType,
 } from '@minddocdev/mou-release-action/lib/version';
 
 jest.mock('@actions/github', () => ({
@@ -14,19 +16,21 @@ jest.mock('@actions/github', () => ({
 jest.mock('@actions/core');
 
 interface ReleaseFixture {
-  data: { prerelease: boolean, draft: boolean, tag_name: string }[]
+  data: { prerelease: boolean; draft: boolean; tag_name: string }[];
 }
 
 describe('version', () => {
   const tagPrefix = 'myprefix@';
   const releaseResponseFixture = [
-    { data: [
+    {
+      data: [
         { prerelease: true, draft: true, tag_name: `${tagPrefix}0.0.4` }, // Latest version
         { prerelease: false, draft: false, tag_name: 'fake-prefix-0.0.3' },
         { prerelease: false, draft: false, tag_name: '0.0.3' },
-      ]
+      ],
     },
-    { data: [
+    {
+      data: [
         { prerelease: true, draft: true, tag_name: `${tagPrefix}0.0.3` },
         { prerelease: true, draft: false, tag_name: `${tagPrefix}0.0.2` },
         { prerelease: false, draft: false, tag_name: `${tagPrefix}0.0.1` }, // Production release
@@ -167,9 +171,7 @@ describe('version', () => {
             ],
           },
         ]);
-        expect(await bumpVersion(github, tagPrefix, versionType as VersionType)).toBe(
-          expectedTag,
-        );
+        expect(await bumpVersion(github, tagPrefix, versionType as VersionType)).toBe(expectedTag);
         expect(setOutput).toBeCalledWith('previous_tag', previousTag);
         expect(setOutput).toBeCalledWith('previous_version', previousVersion);
         expect(setOutput).toBeCalledWith('new_tag', expectedTag);
@@ -206,13 +208,9 @@ describe('version', () => {
             ],
           },
         ]);
-        expect(await bumpVersion(
-          github,
-          tagPrefix,
-          versionType as VersionType,
-          publishedTag,
-          true
-        )).toBe(expectedTag);
+        expect(
+          await bumpVersion(github, tagPrefix, versionType as VersionType, publishedTag, true),
+        ).toBe(expectedTag);
         expect(setOutput).toBeCalledWith('previous_tag', previousTag);
         expect(setOutput).toBeCalledWith('previous_version', previousVersion);
         expect(setOutput).toBeCalledWith('new_tag', expectedTag);
@@ -252,13 +250,9 @@ describe('version', () => {
             ],
           },
         ]);
-        expect(await bumpVersion(
-          github,
-          tagPrefix,
-          versionType as VersionType,
-          publishedTag,
-          true
-        )).toBe(expectedTag);
+        expect(
+          await bumpVersion(github, tagPrefix, versionType as VersionType, publishedTag, true),
+        ).toBe(expectedTag);
         expect(setOutput).toBeCalledWith('previous_tag', previousTag);
         expect(setOutput).toBeCalledWith('previous_version', previousVersion);
         expect(setOutput).toBeCalledWith('new_tag', expectedTag);
@@ -292,9 +286,7 @@ describe('version', () => {
   test('retrieve no release', async () => {
     const releaseFixtureOverride = [
       {
-        data: [
-          { prerelease: true, draft: true, tag_name: `${tagPrefix}0.0.4` },
-        ],
+        data: [{ prerelease: true, draft: true, tag_name: `${tagPrefix}0.0.4` }],
       },
       {
         data: [
@@ -304,8 +296,9 @@ describe('version', () => {
       },
     ];
 
-    expect(await retrieveLastReleasedVersion(mockGithub(releaseFixtureOverride), tagPrefix))
-      .toBe(undefined);
+    expect(await retrieveLastReleasedVersion(mockGithub(releaseFixtureOverride), tagPrefix)).toBe(
+      undefined,
+    );
     expect(setOutput).toBeCalledWith('base_tag', '');
   });
 });
