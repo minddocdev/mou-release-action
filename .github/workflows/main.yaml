@@ -5,41 +5,48 @@ on:
     branches:
       - "master"
     paths:
-      - ".github/workflows/main.yaml"
-      - ".github/RELEASE_DRAFT*"
-      - "package.json"
-      - "src/**"
-      - "tests/*"
-      - "tsconfig.json"
-      - "tslint.json"
+      - .github/workflows/main.yaml
+      - .github/RELEASE_DRAFT/*
+      - jest.config.js
+      - package.json
+      - src/*
+      - tests/*
+      - tsconfig.json
+      - yarn.lock
   pull_request:
     paths:
-      - ".github/workflows/main.yaml"
-      - ".github/RELEASE_DRAFT*"
-      - "package.json"
-      - "src/**"
-      - "tests/*"
-      - "tsconfig.json"
-      - "tslint.json"
+      - .github/workflows/main.yaml
+      - .github/RELEASE_DRAFT/*
+      - jest.config.js
+      - package.json
+      - src/*
+      - tests/*
+      - tsconfig.json
+      - yarn.lock
 
 jobs:
-  unit_test:
-    name: unit test
+  build:
+    name: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
-        uses: actions/checkout@v1.2.0
-      - name: Lint code
-        run: yarn lint
-      - name: Test code
+        uses: actions/checkout@v2
+      - name: Install, lint, and build
+        run: |
+          yarn install
+          yarn lint
+          yarn build
+      - name: Test
         run: yarn test
-  integration_test:
+  release:
     if: github.ref == 'refs/heads/master'
-    name: integration test
+    name: release
     runs-on: ubuntu-latest
+    needs:
+      - build
     steps:
       - name: Checkout git repository
-        uses: actions/checkout@v1.2.0
+        uses: actions/checkout@v2
       - name: Create Release
         uses: minddocdev/mou-release-action@master
         with:
