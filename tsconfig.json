@@ -12,11 +12,11 @@
     },
     "rootDir": ".",
     "strict": true,
-    "target": "esnext",
-    "types": ["jest", "node"]
+    "target": "es2017"
   },
   "include": [
     "src/**/*.ts",
     "test/**/*.ts",
   ],
+  "types": ["jest", "node"]
 }
