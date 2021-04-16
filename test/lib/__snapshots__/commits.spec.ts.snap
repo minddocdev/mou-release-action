@@ -34,6 +34,8 @@ exports[`commit render commits diff for each category 1`] = `
 - Ok this is a CI change - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;
 
+exports[`commit render commits diff for each category using the default author 1`] = `"- Commit message - [62ec8ea7](https://commiturl)([@minddocbot](https://github.com/minddocbot))"`;
+
 exports[`commit render commits diff when scope is required 1`] = `
 "**:books: Documentation**
 - Document everything - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))

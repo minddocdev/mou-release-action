@@ -2,7 +2,10 @@ import { resolve as pathResolve } from 'path';
 import { setOutput } from '@actions/core';
 
 import {
-  createGithubRelease, renderReleaseBody, createGitTag, renderReleaseName
+  createGithubRelease,
+  renderReleaseBody,
+  createGitTag,
+  renderReleaseName,
 } from '@minddocdev/mou-release-action/lib/release';
 
 jest.mock('path');
@@ -13,7 +16,7 @@ jest.mock('@actions/github', () => ({
       repo: 'myrepo',
     },
     sha: 'mysha',
-  }
+  },
 }));
 jest.mock('@actions/core');
 
@@ -41,33 +44,46 @@ describe('release', () => {
     const templatePath = 'myTemplatePath.md';
 
     test('render release template', () => {
-      (pathResolve as jest.Mock)
-        .mockImplementation(() => `${__dirname}/fixtures/basic.md`);
+      (pathResolve as jest.Mock).mockImplementation(() => `${__dirname}/fixtures/basic.md`);
       expect(renderReleaseBody('myTemplatePath.md', app, releaseVersion)).toMatchSnapshot();
-      expect(pathResolve)
-        .toBeCalledWith('/home/runner/work', 'myrepo', 'myrepo', '.github', templatePath);
+      expect(pathResolve).toBeCalledWith(
+        '/home/runner/work',
+        'myrepo',
+        'myrepo',
+        '.github',
+        templatePath,
+      );
     });
 
     test('render release template with changes, tasks and pull requests', () => {
-      (pathResolve as jest.Mock)
-        .mockImplementation(() => `${__dirname}/fixtures/with-changelog.md`);
+      (pathResolve as jest.Mock).mockImplementation(
+        () => `${__dirname}/fixtures/with-changelog.md`,
+      );
 
-      const changes = '' +
+      const changes =
+        '' +
         '- [#1](https://commiturl) First commit message ' +
         '([@darioblanco](https://github.com/darioblanco))\n' +
         '- [#2](https://commiturl) Second commit message ' +
         '([@darioblanco](https://github.com/darioblanco))';
-      const tasks = '' +
+      const tasks =
+        '' +
         '- [JIRA-123](https://myorg.atlassian.net/browse/JIRA-123)\n' +
         '- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)';
-      const pullRequests = '' +
+      const pullRequests =
+        '' +
         '- [#1716](https://github.com/myorg/myrepo/pull/1716)\n' +
         '- [#1717](https://github.com/myorg/myrepo/pull/1717)';
-      expect(renderReleaseBody(
-        'myTemplatePath.md', app, releaseVersion, changes, tasks, pullRequests,
-      )).toMatchSnapshot();
-      expect(pathResolve)
-        .toBeCalledWith('/home/runner/work', 'myrepo', 'myrepo', '.github', templatePath);
+      expect(
+        renderReleaseBody('myTemplatePath.md', app, releaseVersion, changes, tasks, pullRequests),
+      ).toMatchSnapshot();
+      expect(pathResolve).toBeCalledWith(
+        '/home/runner/work',
+        'myrepo',
+        'myrepo',
+        '.github',
+        templatePath,
+      );
     });
   });
 
@@ -92,7 +108,7 @@ describe('release', () => {
       const createRef = jest.fn(() => ({ status }));
       const github = { git: { createRef } };
       await expect(createGitTag(github as any, tag)).rejects.toThrowError(
-        new Error(`Unable to create tag ${tag}. Github returned status ${status}`),
+        new Error(`Unable to create tag ${tag}. Github returned status: ${status}`),
       );
     });
   });

@@ -1,6 +1,9 @@
 import semver from 'semver';
+
 import * as core from '@actions/core';
-import { context, GitHub } from '@actions/github';
+import * as github from '@actions/github';
+
+import { GitHubOctokit } from '../types';
 
 // See semver.ReleaseType
 export enum VersionType {
@@ -10,19 +13,24 @@ export enum VersionType {
   prerelease = 'prerelease',
 }
 
-const findReleaseTag = async (github: GitHub, matchFunction: (release: {}) => {}) => {
-  const { owner, repo } = context.repo;
+const findReleaseTag = async (
+  octokit: InstanceType<typeof GitHubOctokit>,
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  matchFunction: (release: Record<string, unknown>) => {},
+) => {
+  const { owner, repo } = github.context.repo;
 
   // Using pagination: https://octokit.github.io/rest.js/v17#pagination
-  const listReleasesOptions = github.repos.listReleases.endpoint.merge({
+  const listReleasesOptions = octokit.repos.listReleases.endpoint.merge({
     owner,
     repo,
   });
 
   // Look for the earliest release that matches the given condition
   /* eslint-disable no-restricted-syntax */
-  for await (const response of github.paginate.iterator(listReleasesOptions)) {
+  for await (const response of octokit.paginate.iterator<any>(listReleasesOptions)) {
     for (const release of response.data) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (matchFunction(release)) return release.tag_name as string;
     }
   }
@@ -31,17 +39,17 @@ const findReleaseTag = async (github: GitHub, matchFunction: (release: {}) => {}
 };
 
 export async function bumpVersion(
-  github: GitHub,
+  octokit: InstanceType<typeof GitHubOctokit>,
   tagPrefix: string,
   nextVersionType = VersionType.patch,
   publishedTag?: string,
   bumpProtection = false,
-) {
+): Promise<string> {
   const publishedVersion = publishedTag ? publishedTag.replace(tagPrefix, '') : undefined;
-
-  const matchesTagPrefix = (release) => release.tag_name.startsWith(tagPrefix);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  const matchesTagPrefix = (release: any) => release.tag_name.startsWith(tagPrefix);
   // Load latest production tag from published releases
-  const lastTag = (await findReleaseTag(github, matchesTagPrefix));
+  const lastTag = await findReleaseTag(octokit, matchesTagPrefix);
   const lastVersion = lastTag ? lastTag.replace(tagPrefix, '') : '0.0.0';
 
   let releaseType = nextVersionType;
@@ -93,12 +101,16 @@ export async function bumpVersion(
   return newTag;
 }
 
-export async function retrieveLastReleasedVersion(github: GitHub, tagPrefix: string) {
+export async function retrieveLastReleasedVersion(
+  octokit: InstanceType<typeof GitHubOctokit>,
+  tagPrefix: string,
+): Promise<string | undefined> {
   const isVersionReleased = (release) => {
     const { prerelease, draft, tag_name: tagName } = release;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     return !draft && !prerelease && tagName.startsWith(tagPrefix);
   };
-  const lastPublishedTag  = await findReleaseTag(github, isVersionReleased);
+  const lastPublishedTag = await findReleaseTag(octokit, isVersionReleased);
   core.setOutput('base_tag', lastPublishedTag || '');
   return lastPublishedTag;
 }

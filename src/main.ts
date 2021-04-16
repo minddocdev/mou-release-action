@@ -1,23 +1,28 @@
 import * as core from '@actions/core';
-import { GitHub } from '@actions/github';
+import * as github from '@actions/github';
 
-import { createGithubRelease, renderReleaseBody, createGitTag, renderReleaseName } from './lib/release';
+import {
+  createGithubRelease,
+  renderReleaseBody,
+  createGitTag,
+  renderReleaseName,
+} from './lib/release';
 import { commitParser } from './lib/commits';
 import { retrieveLastReleasedVersion, bumpVersion, VersionType } from './lib/version';
 
-export async function run() {
+export async function run(): Promise<void> {
   try {
     // Global config
     const app = core.getInput('app', { required: false });
     const token = core.getInput('token', { required: true });
     const tagPrefix = app ? `${app}@` : `v`;
 
-    const github = new GitHub(token);
+    const octokit = github.getOctokit(token);
 
     // Commit loading config
     const baseTag =
       core.getInput('baseTag', { required: false }) ||
-      (await retrieveLastReleasedVersion(github, tagPrefix));
+      (await retrieveLastReleasedVersion(octokit, tagPrefix));
     const taskBaseUrl = core.getInput('taskBaseUrl', { required: false });
     const taskPrefix = core.getInput('taskPrefix', { required: false });
 
@@ -27,13 +32,7 @@ export async function run() {
     const draft = core.getInput('draft', { required: false }) === 'true' || false;
     const prerelease = core.getInput('prerelease', { required: false }) === 'true' || false;
 
-    const diffInfo = await commitParser(
-      github,
-      baseTag,
-      taskPrefix,
-      taskBaseUrl,
-      app,
-    );
+    const diffInfo = await commitParser(octokit, baseTag, taskPrefix, taskBaseUrl, app);
     const { changes, tasks, pullRequests } = diffInfo;
     let { nextVersionType } = diffInfo;
     // Force next version as release candidate if prerelease draft is created
@@ -41,22 +40,16 @@ export async function run() {
 
     const releaseTag =
       core.getInput('releaseTag', { required: false }) ||
-      (await bumpVersion(github, tagPrefix, nextVersionType, baseTag));
-    if (pushTag) createGitTag(github, releaseTag);
+      (await bumpVersion(octokit, tagPrefix, nextVersionType, baseTag));
+    if (pushTag) await createGitTag(octokit, releaseTag);
     // Won't replace it if release tag is given manually
     const releaseVersion = releaseTag.replace(tagPrefix, '');
     const releaseName =
       core.getInput('releaseName', { required: false }) || renderReleaseName(releaseVersion, app);
-    const body = renderReleaseBody(
-      templatePath,
-      app,
-      releaseVersion,
-      changes,
-      tasks,
-      pullRequests,
-    );
-    await createGithubRelease(github, releaseTag, releaseName, body, draft, prerelease);
+    const body = renderReleaseBody(templatePath, app, releaseVersion, changes, tasks, pullRequests);
+    await createGithubRelease(octokit, releaseTag, releaseName, body, draft, prerelease);
   } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     core.setFailed(error.message);
   }
 }

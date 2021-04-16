@@ -1,15 +1,22 @@
-import { getInput, setFailed } from '@actions/core';
-import { GitHub } from '@actions/github';
+import * as core from '@actions/core';
+
 import {
-  retrieveLastReleasedVersion, bumpVersion, VersionType,
+  retrieveLastReleasedVersion,
+  bumpVersion,
+  VersionType,
 } from '@minddocdev/mou-release-action/lib/version';
 import { run } from '@minddocdev/mou-release-action/main';
 import {
-  createGitTag, createGithubRelease, renderReleaseBody, renderReleaseName,
+  createGitTag,
+  createGithubRelease,
+  renderReleaseBody,
+  renderReleaseName,
 } from '@minddocdev/mou-release-action/lib/release';
 import { commitParser } from '@minddocdev/mou-release-action/lib/commits';
 
-jest.mock('@actions/github');
+jest.mock('@actions/github', () => ({
+  getOctokit: jest.fn(() => () => {}),
+}));
 jest.mock('@actions/core');
 jest.mock('@minddocdev/mou-release-action/lib/commits');
 jest.mock('@minddocdev/mou-release-action/lib/release');
@@ -41,14 +48,14 @@ describe('run', () => {
   });
 
   test('with required params', async () => {
-    (getInput as jest.Mock).mockImplementation((name: string) => {
+    (core.getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'bumpProtection':
           return 'false';
         case 'draft':
-          return `${draft}`;
+          return String(draft);
         case 'prerelease':
-          return `${prerelease}`;
+          return String(prerelease);
         case 'pushTag':
           return 'false';
         case 'taskPrefix':
@@ -74,9 +81,9 @@ describe('run', () => {
 
     await run();
 
-    expect(retrieveLastReleasedVersion).toBeCalledWith(expect.any(GitHub), tagPrefix);
+    expect(retrieveLastReleasedVersion).toBeCalledWith(expect.any(Function), tagPrefix);
     expect(commitParser).toBeCalledWith(
-      expect.any(GitHub),
+      expect.any(Function),
       baseTag,
       taskPrefix,
       undefined,
@@ -92,21 +99,21 @@ describe('run', () => {
       pullRequests,
     );
     expect(bumpVersion).toBeCalledWith(
-      expect.any(GitHub),
+      expect.any(Function),
       tagPrefix,
       VersionType.prerelease,
       baseTag,
     );
     expect(createGitTag).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
-      expect.any(GitHub),
+      expect.any(Function),
       releaseTag,
       releaseName,
       body,
       draft,
       prerelease,
     );
-    expect(setFailed).not.toBeCalled();
+    expect(core.setFailed).not.toBeCalled();
   });
 
   test('with specific production release and new release tag', async () => {
@@ -117,7 +124,7 @@ describe('run', () => {
     const releaseName = 'fake-app';
     const releaseTag = `mycustomprefix-1.0.6`;
     const taskBaseUrl = 'https://myfaketask.url';
-    (getInput as jest.Mock).mockImplementation((name: string) => {
+    (core.getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'app':
           return app;
@@ -126,11 +133,11 @@ describe('run', () => {
         case 'bumpProtection':
           return 'true';
         case 'draft':
-          return `${givenDraft}`;
+          return String(givenDraft);
         case 'monorepo':
           return 'true';
         case 'prerelease':
-          return `${givenPrerelease}`;
+          return String(givenPrerelease);
         case 'pushTag':
           return 'true';
         case 'releaseName':
@@ -153,7 +160,13 @@ describe('run', () => {
     await run();
 
     expect(retrieveLastReleasedVersion).not.toBeCalled();
-    expect(commitParser).toBeCalledWith(expect.any(GitHub), baseTag, taskPrefix, taskBaseUrl, app);
+    expect(commitParser).toBeCalledWith(
+      expect.any(Function),
+      baseTag,
+      taskPrefix,
+      taskBaseUrl,
+      app,
+    );
     expect(renderReleaseBody).toBeCalledWith(
       templatePath,
       app,
@@ -163,23 +176,25 @@ describe('run', () => {
       pullRequests,
     );
     expect(bumpVersion).not.toBeCalled();
-    expect(createGitTag).toBeCalledWith(expect.any(GitHub), releaseTag);
+    expect(createGitTag).toBeCalledWith(expect.any(Function), releaseTag);
     expect(createGithubRelease).toBeCalledWith(
-      expect.any(GitHub),
+      expect.any(Function),
       releaseTag,
       releaseName,
       body,
       givenDraft,
       givenPrerelease,
     );
-    expect(setFailed).not.toBeCalled();
+    expect(core.setFailed).not.toBeCalled();
   });
 
   test('unexpected error', async () => {
     const errorMsg = 'fake';
-    (getInput as jest.Mock).mockImplementation(() => { throw new Error(errorMsg); });
+    (core.getInput as jest.Mock).mockImplementation(() => {
+      throw new Error(errorMsg);
+    });
 
     await run();
-    expect(setFailed).toBeCalledWith(errorMsg);
+    expect(core.setFailed).toBeCalledWith(errorMsg);
   });
 });

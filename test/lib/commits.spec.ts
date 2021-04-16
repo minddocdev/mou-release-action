@@ -17,7 +17,7 @@ const author = {
   html_url: 'https://authorurl',
 };
 
-// eslint-disable-next-line @typescript-eslint/camelcase
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const html_url = 'https://commiturl';
 const sha = '62ec8ea713fdf14e4abaef3d7d5138194dec49ce';
 
@@ -100,17 +100,44 @@ describe('commit', () => {
 
   test('render commits diff for each category', async () => {
     const github = { repos: { compareCommits } };
-    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
-      github as any
-    );
+    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(github as any);
     expect(setOutput).toBeCalledWith(
       'changes',
-      JSON.stringify(compareCommitsResponse.data.commits.map(commit => commit.sha)), // 8 commits
+      JSON.stringify(compareCommitsResponse.data.commits.map((commit) => commit.sha)), // 8 commits
     );
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
     expect(nextVersionType).toBe(VersionType.minor);
+    expect(tasks).toBe('');
+    expect(pullRequests).toBe('');
+  });
+
+  test('render commits diff for each category using the default author', async () => {
+    const compareCommitsCategoryResponse = {
+      data: {
+        commits: [
+          {
+            author: undefined,
+            html_url,
+            sha,
+            commit: {
+              message: 'commit message',
+            },
+          },
+        ],
+      },
+    };
+    const github = { repos: { compareCommits: jest.fn(() => compareCommitsCategoryResponse) } };
+    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(github as any);
+    expect(setOutput).toBeCalledWith(
+      'changes',
+      JSON.stringify(compareCommitsCategoryResponse.data.commits.map((commit) => commit.sha)), // 8 commits
+    );
+    expect(setOutput).toBeCalledWith('tasks', '[]');
+    expect(setOutput).toBeCalledWith('pull_requests', '[]');
+    expect(changes).toMatchSnapshot();
+    expect(nextVersionType).toBe(VersionType.patch);
     expect(tasks).toBe('');
     expect(pullRequests).toBe('');
   });
@@ -136,8 +163,9 @@ describe('commit', () => {
     expect(pullRequests).toBe('');
   });
 
-  [undefined, 'http://my-task-url'].forEach(taskBaseUrl =>
-    test(`render gh squashed commits with scope, PRs and tasks for ${taskBaseUrl}`, async () => {
+  [undefined, 'http://my-task-url'].forEach((taskBaseUrl) =>
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    test(`render gh squashed commits with scope, PRs and tasks for ${taskBaseUrl!}`, async () => {
       const commitMessage =
         'feat(auth): main commit of my PR (#1716)\n\n' +
         '* feat(auth): set login endpoint controller\n\n' +
@@ -223,8 +251,8 @@ describe('commit', () => {
     expect(setOutput).toBeCalledWith(
       'changes',
       '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
-      '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
-      '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
+        '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
+        '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
     );
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
