@@ -3,11 +3,6 @@
 
 # Generated files
 /coverage/**
-!/coverage/unit/badge-branches.svg
-!/coverage/unit/badge-functions.svg
-!/coverage/unit/badge-lines.svg
-!/coverage/unit/badge-statements.svg
-dist/
 
 # Log files
 logs/*.log
