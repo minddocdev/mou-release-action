@@ -1,6 +1,9 @@
 .github/workflows
+.husky
 *.spec.ts.snap
 .pnp.js
+.prettierignore
+.prettierrc
 .yarn
 dist
 package.json
