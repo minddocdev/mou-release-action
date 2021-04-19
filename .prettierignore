@@ -1,6 +1,12 @@
-.github/workflows
 *.spec.ts.snap
+.editorconfig
+.github/workflows
+.gitignore
+.husky
 .pnp.js
+.prettierignore
+.prettierrc
 .yarn
 dist
 package.json
+yarn.lock
