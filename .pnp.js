@@ -42,7 +42,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/core", "npm:3.4.0"],
             ["@octokit/plugin-paginate-rest", "virtual:80bcb91a087ff4b248b3dad7606f95dff0dd8bfc050a19114604b6a694f57946c7c879aa3e66f037488a622f3abe53c788b66131c9ff0838a1318d83f1d9ce8e#npm:2.13.3"],
             ["@octokit/plugin-rest-endpoint-methods", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:5.0.1"],
-            ["@types/jest", "npm:26.0.22"],
+            ["@types/jest", "npm:26.0.23"],
             ["@types/node", "npm:14.14.41"],
             ["@types/prettier", "npm:2.2.3"],
             ["@types/semver", "npm:7.3.4"],
@@ -1371,10 +1371,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/jest", [
-        ["npm:26.0.22", {
-          "packageLocation": "./.yarn/cache/@types-jest-npm-26.0.22-1621c2cb77-4c98ed0585.zip/node_modules/@types/jest/",
+        ["npm:26.0.23", {
+          "packageLocation": "./.yarn/cache/@types-jest-npm-26.0.23-f0d419e70e-a015676b78.zip/node_modules/@types/jest/",
           "packageDependencies": [
-            ["@types/jest", "npm:26.0.22"],
+            ["@types/jest", "npm:26.0.23"],
             ["jest-diff", "npm:26.6.2"],
             ["pretty-format", "npm:26.6.2"]
           ],
@@ -7038,7 +7038,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/core", "npm:3.4.0"],
             ["@octokit/plugin-paginate-rest", "virtual:80bcb91a087ff4b248b3dad7606f95dff0dd8bfc050a19114604b6a694f57946c7c879aa3e66f037488a622f3abe53c788b66131c9ff0838a1318d83f1d9ce8e#npm:2.13.3"],
             ["@octokit/plugin-rest-endpoint-methods", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:5.0.1"],
-            ["@types/jest", "npm:26.0.22"],
+            ["@types/jest", "npm:26.0.23"],
             ["@types/node", "npm:14.14.41"],
             ["@types/prettier", "npm:2.2.3"],
             ["@types/semver", "npm:7.3.4"],
@@ -9405,7 +9405,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/$$virtual/ts-jest-virtual-e12f623d1c/0/cache/ts-jest-npm-26.5.5-1f49fc208f-a7fe56357b.zip/node_modules/ts-jest/",
           "packageDependencies": [
             ["ts-jest", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:26.5.5"],
-            ["@types/jest", "npm:26.0.22"],
+            ["@types/jest", "npm:26.0.23"],
             ["@types/typescript", null],
             ["bs-logger", "npm:0.2.6"],
             ["buffer-from", "npm:1.1.1"],
