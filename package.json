@@ -31,10 +31,10 @@
     "semver": "^7.3.5"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.22",
+    "@types/jest": "^26.0.23",
     "@types/node": "^14.14.42",
     "@types/prettier": "^2",
-    "@types/semver": "^7.3.4",
+    "@types/semver": "^7.3.5",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "@yarnpkg/pnpify": "^2.4.0",
