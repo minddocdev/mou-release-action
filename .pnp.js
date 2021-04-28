@@ -43,7 +43,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/plugin-paginate-rest", "virtual:80bcb91a087ff4b248b3dad7606f95dff0dd8bfc050a19114604b6a694f57946c7c879aa3e66f037488a622f3abe53c788b66131c9ff0838a1318d83f1d9ce8e#npm:2.13.3"],
             ["@octokit/plugin-rest-endpoint-methods", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:5.0.1"],
             ["@types/jest", "npm:26.0.23"],
-            ["@types/node", "npm:14.14.42"],
+            ["@types/node", "npm:14.14.43"],
             ["@types/prettier", "npm:2.2.3"],
             ["@types/semver", "npm:7.3.5"],
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:4.22.0"],
@@ -1440,10 +1440,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "HARD",
         }],
-        ["npm:14.14.42", {
-          "packageLocation": "./.yarn/cache/@types-node-npm-14.14.42-4955823359-a9803d904b.zip/node_modules/@types/node/",
+        ["npm:14.14.43", {
+          "packageLocation": "./.yarn/cache/@types-node-npm-14.14.43-cddd452ab7-b7a9e6df7c.zip/node_modules/@types/node/",
           "packageDependencies": [
-            ["@types/node", "npm:14.14.42"]
+            ["@types/node", "npm:14.14.43"]
           ],
           "linkType": "HARD",
         }]
@@ -7039,7 +7039,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/plugin-paginate-rest", "virtual:80bcb91a087ff4b248b3dad7606f95dff0dd8bfc050a19114604b6a694f57946c7c879aa3e66f037488a622f3abe53c788b66131c9ff0838a1318d83f1d9ce8e#npm:2.13.3"],
             ["@octokit/plugin-rest-endpoint-methods", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:5.0.1"],
             ["@types/jest", "npm:26.0.23"],
-            ["@types/node", "npm:14.14.42"],
+            ["@types/node", "npm:14.14.43"],
             ["@types/prettier", "npm:2.2.3"],
             ["@types/semver", "npm:7.3.5"],
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:4.22.0"],
