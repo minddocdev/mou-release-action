@@ -112,10 +112,8 @@ describe('release', () => {
           changes,
           tasks,
           pullRequests,
-          true,
-          `${__dirname}/fixtures/release-notes`,
-          'de_DE,en_GB',
-          'release_notes.txt',
+          `${__dirname}/fixtures/release-notes/{LANGUAGE_TAG}/release_notes.txt`,
+          'de-DE, en-GB',
         ),
       ).toMatchSnapshot();
       expect(pathResolve).toBeCalledWith(

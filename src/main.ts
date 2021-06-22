@@ -30,10 +30,8 @@ export async function run(): Promise<void> {
     const pushTag = core.getInput('pushTag', { required: false }) === 'true';
     const templatePath = core.getInput('templatePath', { required: true });
 
-    const releaseNotes = core.getInput('releaseNotes', { required: false }) === 'true' || false;
-    const releaseNotesPath = core.getInput('releaseNotesPath', { required: false });
-    const releaseNotesCountryCodes = core.getInput('releaseNotesCountryCodes', { required: false });
-    const releaseNotesFilename = core.getInput('releaseNotesFilename', { required: false });
+    const releaseNotesFilepath = core.getInput('releaseNotesFilepath', { required: false });
+    const releaseNotesLanguageTags = core.getInput('releaseNotesLanguageTags', { required: false });
 
     const draft = core.getInput('draft', { required: false }) === 'true' || false;
     const prerelease = core.getInput('prerelease', { required: false }) === 'true' || false;
@@ -60,10 +58,8 @@ export async function run(): Promise<void> {
       changes,
       tasks,
       pullRequests,
-      releaseNotes,
-      releaseNotesPath,
-      releaseNotesCountryCodes,
-      releaseNotesFilename,
+      releaseNotesFilepath,
+      releaseNotesLanguageTags,
     );
     await createGithubRelease(octokit, releaseTag, releaseName, body, draft, prerelease);
   } catch (error) {

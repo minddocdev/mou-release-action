@@ -11,20 +11,18 @@ export function renderReleaseName(releaseVersion: string, app?: string): string 
 }
 
 function createReleaseNotes(
-  releaseNotesPath: string,
-  releaseNotesCountryCodes: string,
-  releaseNotesFilename: string,
+  releaseNotesFilepath: string,
+  releaseNotesLanguageTags: string,
 ): string {
-  const countryCodes = releaseNotesCountryCodes.split(',');
-  const releaseNotes = countryCodes.map((countryCode) => {
-    const releaseNote = fs.readFileSync(
-      `${releaseNotesPath}/${countryCode}/${releaseNotesFilename}`,
-      'utf8',
-    );
-    return `${countryCode}\n${releaseNote}\n`;
-  });
-
-  return releaseNotes.join('\n');
+  return releaseNotesLanguageTags
+    .split(',')
+    .map((entry) => {
+      const tag = entry.trim();
+      const filepath = releaseNotesFilepath.replace('{LANGUAGE_TAG}', tag);
+      const releaseNotes = fs.readFileSync(filepath, 'utf8');
+      return `${tag}\n${releaseNotes}\n`;
+    })
+    .join('\n');
 }
 
 export function renderReleaseBody(
@@ -34,10 +32,8 @@ export function renderReleaseBody(
   changes = '',
   tasks = '',
   pullRequests = '',
-  releaseNotes = false,
-  releaseNotesPath = '',
-  releaseNotesCountryCodes = '',
-  releaseNotesFilename = '',
+  releaseNotesFilepath = '',
+  releaseNotesLanguageTags = '',
 ): string {
   const { repo } = github.context.repo;
   let body = fs
@@ -49,10 +45,10 @@ export function renderReleaseBody(
   body = body.replace(/\$TASKS/g, tasks);
   body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
 
-  if (releaseNotes) {
+  if (releaseNotesFilepath !== '') {
     body = body.replace(
       /\$RELEASE_NOTES/g,
-      createReleaseNotes(releaseNotesPath, releaseNotesCountryCodes, releaseNotesFilename),
+      createReleaseNotes(releaseNotesFilepath, releaseNotesLanguageTags),
     );
   }
 
