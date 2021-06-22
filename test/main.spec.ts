@@ -36,6 +36,11 @@ describe('run', () => {
   const tasks = '';
   const pullRequests = '';
   const body = 'releaseBody';
+  // Release Notes
+  const releaseNotes = true;
+  const releaseNotesPath = 'releaseNotesPath';
+  const releaseNotesCountryCodes = 'releaseNotesCountryCodes';
+  const releaseNotesFilename = 'releaseNotesFilename';
 
   beforeEach(() => {
     (commitParser as jest.Mock).mockImplementation(() => ({
@@ -64,6 +69,14 @@ describe('run', () => {
           return templatePath;
         case 'token':
           return token;
+        case 'releaseNotes':
+          return 'true';
+        case 'releaseNotesPath':
+          return 'releaseNotesPath';
+        case 'releaseNotesCountryCodes':
+          return 'releaseNotesCountryCodes';
+        case 'releaseNotesFilename':
+          return 'releaseNotesFilename';
         default:
           return undefined;
       }
@@ -97,6 +110,10 @@ describe('run', () => {
       changes,
       tasks,
       pullRequests,
+      releaseNotes,
+      releaseNotesPath,
+      releaseNotesCountryCodes,
+      releaseNotesFilename,
     );
     expect(bumpVersion).toBeCalledWith(
       expect.any(Function),
@@ -124,6 +141,12 @@ describe('run', () => {
     const releaseName = 'fake-app';
     const releaseTag = `mycustomprefix-1.0.6`;
     const taskBaseUrl = 'https://myfaketask.url';
+    // Release Notes
+    const releaseNotes = true;
+    const releaseNotesPath = 'releaseNotesPath';
+    const releaseNotesCountryCodes = 'releaseNotesCountryCodes';
+    const releaseNotesFilename = 'releaseNotesFilename';
+
     (core.getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'app':
@@ -152,6 +175,14 @@ describe('run', () => {
           return templatePath;
         case 'token':
           return token;
+        case 'releaseNotes':
+          return 'true';
+        case 'releaseNotesPath':
+          return 'releaseNotesPath';
+        case 'releaseNotesCountryCodes':
+          return 'releaseNotesCountryCodes';
+        case 'releaseNotesFilename':
+          return 'releaseNotesFilename';
         default:
           return undefined;
       }
@@ -174,6 +205,22 @@ describe('run', () => {
       changes,
       tasks,
       pullRequests,
+      releaseNotes,
+      releaseNotesPath,
+      releaseNotesCountryCodes,
+      releaseNotesFilename,
+    );
+    expect(renderReleaseBody).toBeCalledWith(
+      templatePath,
+      app,
+      releaseTag,
+      changes,
+      tasks,
+      pullRequests,
+      releaseNotes,
+      releaseNotesPath,
+      releaseNotesCountryCodes,
+      releaseNotesFilename,
     );
     expect(bumpVersion).not.toBeCalled();
     expect(createGitTag).toBeCalledWith(expect.any(Function), releaseTag);

@@ -38,3 +38,45 @@ exports[`release render release template render release template with changes, t
 - [ ] Stakeholder 2
 "
 `;
+
+exports[`release render release template render release template with changes, tasks, pull requests and release notes 1`] = `
+"# myapp 1.0.0 release
+
+## Changelog
+
+- [#1](https://commiturl) First commit message ([@darioblanco](https://github.com/darioblanco))
+- [#2](https://commiturl) Second commit message ([@darioblanco](https://github.com/darioblanco))
+
+## JIRA
+
+- [JIRA-123](https://myorg.atlassian.net/browse/JIRA-123)
+- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)
+
+## PRs
+
+- [#1716](https://github.com/myorg/myrepo/pull/1716)
+- [#1717](https://github.com/myorg/myrepo/pull/1717)
+
+## Checklist
+
+- [ ] Check 1
+
+  - [ ] Check 1.2
+
+- [ ] Check 2
+
+## Stakeholders
+
+- [ ] Stakeholder 1
+- [ ] Stakeholder 2
+
+## Release Notes
+
+de_DE
+German release notes.
+
+en_GB
+English release notes.
+
+"
+`;
