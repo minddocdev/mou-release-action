@@ -198,13 +198,13 @@ jobs:
 
 - name: releaseNotesFilepath
 - required: false
-- description: Filepath to generate release notes.
+- description: Filepath where release notes are located, using the placerholder `{LANGUAGE_TAG}`. E.g. /some_path/{LANGUAGE_TAG}/release_notes.txt
 
 #### `releaseNotesLanguageTags`
 
 - name: releaseNotesLanguageTags
 - required: false
-- description: Language tags (e.g. en-GB, de-DE) to generate localized release notes. IANA language tag registry: https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+- description: Language tags (e.g. en-GB, de-DE) to generate localized release notes. More info: https://www.w3.org/International/articles/language-tags/
 
 ### Outputs
 
