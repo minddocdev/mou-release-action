@@ -10,6 +10,21 @@ export function renderReleaseName(releaseVersion: string, app?: string): string 
   return `${app ? `${app}@` : ''}${releaseVersion}`.trim();
 }
 
+function createReleaseNotes(
+  releaseNotesFilepath: string,
+  releaseNotesLanguageTags: string,
+): string {
+  return releaseNotesLanguageTags
+    .split(',')
+    .map((entry) => {
+      const tag = entry.trim();
+      const filepath = releaseNotesFilepath.replace('{LANGUAGE_TAG}', tag);
+      const releaseNotes = fs.readFileSync(filepath, 'utf8');
+      return `${tag}\n${releaseNotes}\n`;
+    })
+    .join('\n');
+}
+
 export function renderReleaseBody(
   templatePath: string,
   app: string,
@@ -17,15 +32,26 @@ export function renderReleaseBody(
   changes = '',
   tasks = '',
   pullRequests = '',
+  releaseNotesFilepath = '',
+  releaseNotesLanguageTags = '',
 ): string {
   const { repo } = github.context.repo;
   let body = fs
     .readFileSync(path.resolve('/home/runner/work', repo, repo, '.github', templatePath), 'utf8')
     .replace(/\$APP/g, app)
     .replace(/\$VERSION/g, releaseVersion);
+
   body = body.replace(/\$CHANGES/g, changes);
   body = body.replace(/\$TASKS/g, tasks);
   body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
+
+  if (releaseNotesFilepath !== '') {
+    body = body.replace(
+      /\$RELEASE_NOTES/g,
+      createReleaseNotes(releaseNotesFilepath, releaseNotesLanguageTags),
+    );
+  }
+
   return body;
 }
 

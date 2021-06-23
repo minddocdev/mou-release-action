@@ -29,11 +29,16 @@ export async function run(): Promise<void> {
     // Release config
     const pushTag = core.getInput('pushTag', { required: false }) === 'true';
     const templatePath = core.getInput('templatePath', { required: true });
+
+    const releaseNotesFilepath = core.getInput('releaseNotesFilepath', { required: false });
+    const releaseNotesLanguageTags = core.getInput('releaseNotesLanguageTags', { required: false });
+
     const draft = core.getInput('draft', { required: false }) === 'true' || false;
     const prerelease = core.getInput('prerelease', { required: false }) === 'true' || false;
 
     const diffInfo = await commitParser(octokit, baseTag, taskPrefix, taskBaseUrl, app);
     const { changes, tasks, pullRequests } = diffInfo;
+
     let { nextVersionType } = diffInfo;
     // Force next version as release candidate if prerelease draft is created
     if (prerelease) nextVersionType = VersionType.prerelease;
@@ -46,7 +51,16 @@ export async function run(): Promise<void> {
     const releaseVersion = releaseTag.replace(tagPrefix, '');
     const releaseName =
       core.getInput('releaseName', { required: false }) || renderReleaseName(releaseVersion, app);
-    const body = renderReleaseBody(templatePath, app, releaseVersion, changes, tasks, pullRequests);
+    const body = renderReleaseBody(
+      templatePath,
+      app,
+      releaseVersion,
+      changes,
+      tasks,
+      pullRequests,
+      releaseNotesFilepath,
+      releaseNotesLanguageTags,
+    );
     await createGithubRelease(octokit, releaseTag, releaseName, body, draft, prerelease);
   } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

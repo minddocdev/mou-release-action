@@ -107,18 +107,18 @@ jobs:
 - name: app
 - required: false
 - description: The name of the app involved in the release.
-Creates tag and render commits for a specific scope, based on the given app name.
-Scopes from commits are analyzed for commits that follow the Angular commit style.
-e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
+  Creates tag and render commits for a specific scope, based on the given app name.
+  Scopes from commits are analyzed for commits that follow the Angular commit style.
+  e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
 
 #### `baseTag`
 
 - name: baseTag
 - required: false
 - description: The tag that will be used as base for git commit comparison,
-instead of the automatic detection of latest published release.
-The commits will be formatted into a Markdown list and replaced into the `$CHANGES`
-variable for the given `templatePath` template file.
+  instead of the automatic detection of latest published release.
+  The commits will be formatted into a Markdown list and replaced into the `$CHANGES`
+  variable for the given `templatePath` template file.
 
 #### `bumpProtection`
 
@@ -126,8 +126,8 @@ variable for the given `templatePath` template file.
 - required: false
 - default: `false`
 - description: Propose PATCH version bumps whenever a MINOR or MAJOR is detected
-in a diff that had a previous MINOR or MAJOR bump.
-See [multiple minor and major bump protection](#multiple-minor-and-major-bump-protection).
+  in a diff that had a previous MINOR or MAJOR bump.
+  See [multiple minor and major bump protection](#multiple-minor-and-major-bump-protection).
 
 #### `draft`
 
@@ -142,7 +142,7 @@ See [multiple minor and major bump protection](#multiple-minor-and-major-bump-pr
 - required: false
 - default: `true`
 - description: Mark release as prerelease when creating.
-This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags).
+  This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags).
 
 #### `pushTag`
 
@@ -150,8 +150,8 @@ This will ignore `major`, `minor` and `patch` bump suggestions and propose a [pr
 - required: false
 - default: `false`
 - description: Creates and pushes the automatic calculated tag before creating the release.
-Useful if you want the action to handle tags for you when publishing drafts.
-By default, a release draft won't create the tag, which only happens when it is published.
+  Useful if you want the action to handle tags for you when publishing drafts.
+  By default, a release draft won't create the tag, which only happens when it is published.
 
 #### `releaseName`
 
@@ -171,8 +171,8 @@ By default, a release draft won't create the tag, which only happens when it is 
 - name: taskBaseUrl
 - required: false
 - description: The base url to append for a detected task (do not set a trailing `/`).
-By default, it will create a url based on your Github organization.
-(e.g. `https://myorg.atlassian.net/browse`)
+  By default, it will create a url based on your Github organization.
+  (e.g. `https://myorg.atlassian.net/browse`)
 
 #### `taskPrefix`
 
@@ -186,13 +186,25 @@ By default, it will create a url based on your Github organization.
 - name: templatePath
 - required: true
 - description: The path for the Markdown template that will be used to create the release body,
-relative to `.github/`.
+  relative to `.github/`.
 
 #### `token`
 
 - name: token
 - required: true
 - description: The token to access Github's API.
+
+#### `releaseNotesFilepath`
+
+- name: releaseNotesFilepath
+- required: false
+- description: Filepath where release notes are located, using the placerholder `{LANGUAGE_TAG}`. E.g. /some_path/{LANGUAGE_TAG}/release_notes.txt
+
+#### `releaseNotesLanguageTags`
+
+- name: releaseNotesLanguageTags
+- required: false
+- description: Language tags (e.g. en-GB, de-DE) to generate localized release notes. More info: https://www.w3.org/International/articles/language-tags/
 
 ### Outputs
 
@@ -269,6 +281,7 @@ $PULL_REQUESTS
 ## Checklist
 
 - [ ] Check 1
+
   - [ ] Check 1.2
 
 - [ ] Check 2
@@ -286,8 +299,8 @@ The action will replace the following variables:
 - `$APP`: the `app` input.
 - `$VERSION`: the updated version without `tagPrefix`.
 - `$CHANGES`: the rendered list of commit messages. See [commit format](#commit-format).
-Commits will be detected if a `baseRef` is given or if another previous (and matching) tag was
-pushed to the repository and its release was published (automatic detection).
+  Commits will be detected if a `baseRef` is given or if another previous (and matching) tag was
+  pushed to the repository and its release was published (automatic detection).
 - `$TASKS`: the bullet list of detected tasks. See [task format](#task-format).
 - `$PULL_REQUESTS`: the list of Github PRs. See [PR format](#pr-format).
 
@@ -302,24 +315,31 @@ the action will automatically categorize them in `$CHANGES` like in the followin
 - Uncategorized commit - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:zap: Features**
+
 - Super feature - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:wrench: Fixes**
+
 - My fix - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:books: Documentation**
+
 - Document everything - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:nail_care: Style changes**
+
 - Awesome style - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:mountain: Refactors**
+
 - One does not simply refactor - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:traffic_light: Tests**
+
 - Tests are good - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:construction: Maintenance**
+
 - Somebody has to keep things going - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 ```
 
@@ -378,7 +398,7 @@ and is able to group changes in the changelog if some specific types are given.
 
 #### Type
 
-The following commit *types* are detected (using `<type>:` or `<type>(<scope>):` at
+The following commit _types_ are detected (using `<type>:` or `<type>(<scope>):` at
 the beginning of the commit message or in the Github squash line):
 
 - `feat`: a new feature
@@ -390,12 +410,12 @@ the beginning of the commit message or in the Github squash line):
 - `test`: adding missing tests or correcting existing tests
 - `chore`: changes that affect the system or external development dependencies
 - `build`: as an alternative to `chore`, but with very similar m eaning
-(updated in `Angular` commit style)
+  (updated in `Angular` commit style)
 - `ci`: changes for CI configuration files and scripts
 
 #### Scope
 
-The *scope* is required when an `app` is given, in order to only generate a changelog
+The _scope_ is required when an `app` is given, in order to only generate a changelog
 for those commits that belong to the specific app. Therefore, all relevant commit messages
 should have the `<type>(<scope>):` or `(<scope>):` format
 (though the latter is not considered a conventional commit).
@@ -441,9 +461,9 @@ For example, `MINOR` protection:
 - `1.2.1` -> it detected a `MINOR` bump, but it is default to `PATCH` (one new feature)
 - `1.2.3` -> it detected a `MINOR` bump, but it is default to `PATCH` (three new features)
 - `1.2.4` -> newly published released with three backwards compatible changes, it would be
-`1.4.0` without the protection, losing `1.2.0` and `1.3.0` on the way. As we want to avoid
-those big gaps while encouraging small branches, the protection limits the `MINOR` bump to 1,
-patching the rest. Users would still see that there are new features in the release.
+  `1.4.0` without the protection, losing `1.2.0` and `1.3.0` on the way. As we want to avoid
+  those big gaps while encouraging small branches, the protection limits the `MINOR` bump to 1,
+  patching the rest. Users would still see that there are new features in the release.
 
 Users have seen `1.1.0` going up to `1.2.4`, instead of `1.4.0`.
 Truncated would be `1.1` and `1.2`.

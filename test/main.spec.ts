@@ -36,6 +36,9 @@ describe('run', () => {
   const tasks = '';
   const pullRequests = '';
   const body = 'releaseBody';
+  // Release Notes
+  const releaseNotesFilepath = 'releaseNotesFilepath';
+  const releaseNotesLanguageTags = 'releaseNotesLanguageTags';
 
   beforeEach(() => {
     (commitParser as jest.Mock).mockImplementation(() => ({
@@ -64,6 +67,10 @@ describe('run', () => {
           return templatePath;
         case 'token':
           return token;
+        case 'releaseNotesFilepath':
+          return 'releaseNotesFilepath';
+        case 'releaseNotesLanguageTags':
+          return 'releaseNotesLanguageTags';
         default:
           return undefined;
       }
@@ -97,6 +104,8 @@ describe('run', () => {
       changes,
       tasks,
       pullRequests,
+      releaseNotesFilepath,
+      releaseNotesLanguageTags,
     );
     expect(bumpVersion).toBeCalledWith(
       expect.any(Function),
@@ -124,6 +133,7 @@ describe('run', () => {
     const releaseName = 'fake-app';
     const releaseTag = `mycustomprefix-1.0.6`;
     const taskBaseUrl = 'https://myfaketask.url';
+
     (core.getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'app':
@@ -152,6 +162,10 @@ describe('run', () => {
           return templatePath;
         case 'token':
           return token;
+        case 'releaseNotesFilepath':
+          return 'releaseNotesFilepath';
+        case 'releaseNotesLanguageTags':
+          return 'releaseNotesLanguageTags';
         default:
           return undefined;
       }
@@ -174,6 +188,18 @@ describe('run', () => {
       changes,
       tasks,
       pullRequests,
+      releaseNotesFilepath,
+      releaseNotesLanguageTags,
+    );
+    expect(renderReleaseBody).toBeCalledWith(
+      templatePath,
+      app,
+      releaseTag,
+      changes,
+      tasks,
+      pullRequests,
+      releaseNotesFilepath,
+      releaseNotesLanguageTags,
     );
     expect(bumpVersion).not.toBeCalled();
     expect(createGitTag).toBeCalledWith(expect.any(Function), releaseTag);

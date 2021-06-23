@@ -85,6 +85,45 @@ describe('release', () => {
         templatePath,
       );
     });
+    test('render release template with changes, tasks, pull requests and release notes', () => {
+      (pathResolve as jest.Mock).mockImplementation(
+        () => `${__dirname}/fixtures/with-release-notes.md`,
+      );
+
+      const changes =
+        '' +
+        '- [#1](https://commiturl) First commit message ' +
+        '([@darioblanco](https://github.com/darioblanco))\n' +
+        '- [#2](https://commiturl) Second commit message ' +
+        '([@darioblanco](https://github.com/darioblanco))';
+      const tasks =
+        '' +
+        '- [JIRA-123](https://myorg.atlassian.net/browse/JIRA-123)\n' +
+        '- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)';
+      const pullRequests =
+        '' +
+        '- [#1716](https://github.com/myorg/myrepo/pull/1716)\n' +
+        '- [#1717](https://github.com/myorg/myrepo/pull/1717)';
+      expect(
+        renderReleaseBody(
+          'myTemplatePath.md',
+          app,
+          releaseVersion,
+          changes,
+          tasks,
+          pullRequests,
+          `${__dirname}/fixtures/release-notes/{LANGUAGE_TAG}/release_notes.txt`,
+          'de-DE, en-GB',
+        ),
+      ).toMatchSnapshot();
+      expect(pathResolve).toBeCalledWith(
+        '/home/runner/work',
+        'myrepo',
+        'myrepo',
+        '.github',
+        templatePath,
+      );
+    });
   });
 
   describe('create git tag', () => {
