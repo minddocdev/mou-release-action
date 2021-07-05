@@ -198,7 +198,7 @@ jobs:
 
 - name: releaseNotesFilepath
 - required: false
-- description: Filepath where release notes are located, using the placerholder `{LANGUAGE_TAG}`. E.g. /some_path/{LANGUAGE_TAG}/release_notes.txt
+- description: Filepath where release notes are located, using the placeholder `{LANGUAGE_TAG}`. E.g. /some_path/{LANGUAGE_TAG}/release_notes.txt
 
 #### `releaseNotesLanguageTags`
 
@@ -292,6 +292,10 @@ $PULL_REQUESTS
 - [ ] Stakeholder 2
 ```
 
+## Release Notes
+
+$RELEASE_NOTES
+
 ### Template variables
 
 The action will replace the following variables:
@@ -303,6 +307,7 @@ The action will replace the following variables:
   pushed to the repository and its release was published (automatic detection).
 - `$TASKS`: the bullet list of detected tasks. See [task format](#task-format).
 - `$PULL_REQUESTS`: the list of Github PRs. See [PR format](#pr-format).
+- `$RELEASE_NOTES`: generated release notes from a filepath. See [release notes](#releasenotesfilepath).
 
 #### Commit format
 
