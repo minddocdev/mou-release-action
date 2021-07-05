@@ -41,10 +41,8 @@ export function renderReleaseBody(
     .replace(/\$APP/g, app)
     .replace(/\$VERSION/g, releaseVersion);
 
-  const uniqueTasks = [...new Set(tasks.split('\n'))].join('\n');
-
   body = body.replace(/\$CHANGES/g, changes);
-  body = body.replace(/\$TASKS/g, uniqueTasks);
+  body = body.replace(/\$TASKS/g, tasks);
   body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
 
   if (releaseNotesFilepath !== '') {
