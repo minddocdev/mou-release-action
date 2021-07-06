@@ -169,8 +169,8 @@ describe('commit', () => {
       const commitMessage =
         'feat(auth): main commit of my PR (#1716)\n\n' +
         '* feat(auth): set login endpoint controller\n\n' +
-        '* test(auth): add integration test for login endpoint #MAJOR\n\n' +
-        '* fix(auth): set secure and http only options\n\n' +
+        '* test(auth): [JIRA-123] add integration test for login endpoint #MAJOR\n\n' +
+        '* fix(auth): [JIRA-123] set secure and http only options\n\n' +
         '* perf(auth): add additional fake performance\n\n' +
         'This is the body of the previous commit\n\n' +
         'And this is the footer\n\n' +
@@ -211,13 +211,13 @@ describe('commit', () => {
             .map(() => sha),
         ), // 6 commits
       );
-      expect(setOutput).toBeCalledWith('tasks', '["JIRA-2772","JIRA-2773"]');
+      expect(setOutput).toBeCalledWith('tasks', '["JIRA-123","JIRA-2772","JIRA-2773"]');
       expect(setOutput).toBeCalledWith('pull_requests', '["1716"]');
       expect(changes).toMatchSnapshot();
       expect(nextVersionType).toBe(VersionType.major);
       const jiraBaseUrl = taskBaseUrl || 'https://theowner.atlassian.net/browse';
       expect(tasks).toBe(
-        `[JIRA-2772](${jiraBaseUrl}/JIRA-2772), [JIRA-2773](${jiraBaseUrl}/JIRA-2773)`,
+        `[JIRA-123](${jiraBaseUrl}/JIRA-123), [JIRA-2772](${jiraBaseUrl}/JIRA-2772), [JIRA-2773](${jiraBaseUrl}/JIRA-2773)`,
       );
       expect(pullRequests).toBe('[#1716](https://github.com/theowner/therepo/pull/1716)');
     }),

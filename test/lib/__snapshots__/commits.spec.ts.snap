@@ -53,14 +53,14 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for http://
 - Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:wrench: Fixes**
-- Set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- [JIRA-123] set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:runner: Performance**
 - Add additional fake performance - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:traffic_light: Tests**
-- Add integration test for login endpoint #MAJOR - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
+- [JIRA-123] add integration test for login endpoint #MAJOR - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;
 
 exports[`commit render gh squashed commits with scope, PRs and tasks for undefined 1`] = `
@@ -72,14 +72,14 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for undefin
 - Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:wrench: Fixes**
-- Set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- [JIRA-123] set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:runner: Performance**
 - Add additional fake performance - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:traffic_light: Tests**
-- Add integration test for login endpoint #MAJOR - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
+- [JIRA-123] add integration test for login endpoint #MAJOR - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))"
 `;
 
 exports[`commit render github squashed commits without scope, PRs and tasks 1`] = `
