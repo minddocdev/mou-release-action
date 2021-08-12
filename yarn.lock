@@ -1412,10 +1412,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.17.1":
-  version: 14.17.1
-  resolution: "@types/node@npm:14.17.1"
-  checksum: 3ab1180ff2579f4039aa2416087df03e4e8b5f930b64e024ad2b2ae73e546f6054c3bae0324180d425944c7c408c02fdf6ca71f5a265ed05f28aeaae0a2c3599
+"@types/node@npm:^14.17.9":
+  version: 14.17.9
+  resolution: "@types/node@npm:14.17.9"
+  checksum: b1d145b37dd4b060ed8887975b1452ba6d47bb06c1c4a53ff75d21df2e34a94bba98678d700e736bcb5f9bb418915fe75640851da72c874639f0b0ba7bf6cf1f
   languageName: node
   linkType: hard
 
@@ -5974,7 +5974,7 @@ fsevents@^2.3.2:
     "@octokit/plugin-paginate-rest": ^2.13.3
     "@octokit/plugin-rest-endpoint-methods": ^5.0.1
     "@types/jest": ^26.0.24
-    "@types/node": ^14.17.1
+    "@types/node": ^14.17.9
     "@types/prettier": ^2
     "@types/semver": ^7.3.6
     "@typescript-eslint/eslint-plugin": ^4.25.0
