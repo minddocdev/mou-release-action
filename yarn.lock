@@ -1451,10 +1451,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/semver@npm:^7.3.6":
-  version: 7.3.6
-  resolution: "@types/semver@npm:7.3.6"
-  checksum: 36776caed9a5d80cc7e0dd32fc08ac762918273bef849c369a300895646f9126e9857c9235e130493cf1fb2ee77e44cd1b599eded4fcbd11803962936771506a
+"@types/semver@npm:^7.3.8":
+  version: 7.3.8
+  resolution: "@types/semver@npm:7.3.8"
+  checksum: b352963163bfd8bb24537a6069d02a64c0b0edbb9eec87f189042d1e08cbbbee1439629bb87c5626a5ff6617546e466846ae5d7a3ae67430520bd64fbae621c7
   languageName: node
   linkType: hard
 
@@ -5976,7 +5976,7 @@ fsevents@^2.3.2:
     "@types/jest": ^26.0.24
     "@types/node": ^14.17.9
     "@types/prettier": ^2
-    "@types/semver": ^7.3.6
+    "@types/semver": ^7.3.8
     "@typescript-eslint/eslint-plugin": ^4.25.0
     "@typescript-eslint/parser": ^4.25.0
     "@yarnpkg/pnpify": ^2.4.0

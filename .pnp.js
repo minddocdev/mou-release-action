@@ -45,7 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:26.0.24"],
             ["@types/node", "npm:14.17.9"],
             ["@types/prettier", "npm:2.2.3"],
-            ["@types/semver", "npm:7.3.6"],
+            ["@types/semver", "npm:7.3.8"],
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:4.25.0"],
             ["@typescript-eslint/parser", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:4.25.0"],
             ["@yarnpkg/pnpify", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:2.4.0"],
@@ -1988,10 +1988,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "HARD",
         }],
-        ["npm:7.3.6", {
-          "packageLocation": "./.yarn/cache/@types-semver-npm-7.3.6-4add0df8f9-36776caed9.zip/node_modules/@types/semver/",
+        ["npm:7.3.8", {
+          "packageLocation": "./.yarn/cache/@types-semver-npm-7.3.8-5cef470bfc-b352963163.zip/node_modules/@types/semver/",
           "packageDependencies": [
-            ["@types/semver", "npm:7.3.6"]
+            ["@types/semver", "npm:7.3.8"]
           ],
           "linkType": "HARD",
         }]
@@ -7375,7 +7375,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:26.0.24"],
             ["@types/node", "npm:14.17.9"],
             ["@types/prettier", "npm:2.2.3"],
-            ["@types/semver", "npm:7.3.6"],
+            ["@types/semver", "npm:7.3.8"],
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:4.25.0"],
             ["@typescript-eslint/parser", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:4.25.0"],
             ["@yarnpkg/pnpify", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:2.4.0"],
