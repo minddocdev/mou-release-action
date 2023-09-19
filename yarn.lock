@@ -5,10 +5,13 @@ __metadata:
   version: 4
   cacheKey: 7
 
-"@actions/core@npm:^1.2.7":
-  version: 1.2.7
-  resolution: "@actions/core@npm:1.2.7"
-  checksum: ea8aa7e54523f26e51b056e2b5b830d24a26a972e5aa80cf4c9ea2ad8785e4f67cf316a0514cec0a71bd6d1267c415b85143774a13690988532071b395bcb4a3
+"@actions/core@npm:^1.10.1":
+  version: 1.10.1
+  resolution: "@actions/core@npm:1.10.1"
+  dependencies:
+    "@actions/http-client": ^2.0.1
+    uuid: ^8.3.2
+  checksum: 4714ad6c105dd11b64759b07d17db5ccdace728258e817821857584a164e9885d53d12cf0acfd94d2bf49d11e4fe63e82dad68fda506e1231754cd6ca5cd7e26
   languageName: node
   linkType: hard
 
@@ -30,6 +33,15 @@ __metadata:
   dependencies:
     tunnel: 0.0.6
   checksum: ccd0ae6ce99662e31daf1f5cb6b5130cc10ac9a3d4f2de74c54031cf13cd191dbbf0719e60e74f724f073f27af4cb9f393218d92f7f70c0b6e23bb1962c386e3
+  languageName: node
+  linkType: hard
+
+"@actions/http-client@npm:^2.0.1":
+  version: 2.1.1
+  resolution: "@actions/http-client@npm:2.1.1"
+  dependencies:
+    tunnel: ^0.0.6
+  checksum: c94850e90dfdbdcdf0f4cdabce7f4962a39d54bd021804608144d9c04a7aa6b62b7dbf7739ea6e267bfcdd3fb138df237b470c9ed71f70d3d71e5f9fc1cb9a90
   languageName: node
   linkType: hard
 
@@ -6109,7 +6121,7 @@ fsevents@^2.3.2:
   version: 0.0.0-use.local
   resolution: "mou-release-action@workspace:."
   dependencies:
-    "@actions/core": ^1.2.7
+    "@actions/core": ^1.10.1
     "@actions/github": ^4.0.0
     "@octokit/core": ^3.4.0
     "@octokit/plugin-paginate-rest": ^2.13.3
@@ -8195,6 +8207,15 @@ typescript@^4.2.4:
   bin:
     uuid: ./bin/uuid
   checksum: 1ce3f37e214d6d0dc94a6a9663a0365013ace66bc3fd5b203e6f5d2eeb978aaee1192367222386345d30b4c6a447928c501121aa84c637724bf105ef57284949
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^8.3.2":
+  version: 8.3.2
+  resolution: "uuid@npm:8.3.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: aed2bcef341f95635f308fea8831fb9038b18c485fe7e71feb89d2e05602dfecad0cb6f2246fae096d4da425cca6e8a71056f28abd97ad98cf770a2018853248
   languageName: node
   linkType: hard
 

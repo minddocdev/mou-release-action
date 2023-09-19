@@ -37,7 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
-            ["@actions/core", "npm:1.2.7"],
+            ["@actions/core", "npm:1.10.1"],
             ["@actions/github", "npm:4.0.0"],
             ["@octokit/core", "npm:3.4.0"],
             ["@octokit/plugin-paginate-rest", "virtual:80bcb91a087ff4b248b3dad7606f95dff0dd8bfc050a19114604b6a694f57946c7c879aa3e66f037488a622f3abe53c788b66131c9ff0838a1318d83f1d9ce8e#npm:2.13.3"],
@@ -77,10 +77,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@actions/core", [
-        ["npm:1.2.7", {
-          "packageLocation": "./.yarn/cache/@actions-core-npm-1.2.7-73b9b70d91-ea8aa7e545.zip/node_modules/@actions/core/",
+        ["npm:1.10.1", {
+          "packageLocation": "./.yarn/cache/@actions-core-npm-1.10.1-3cb1000b4d-4714ad6c10.zip/node_modules/@actions/core/",
           "packageDependencies": [
-            ["@actions/core", "npm:1.2.7"]
+            ["@actions/core", "npm:1.10.1"],
+            ["@actions/http-client", "npm:2.1.1"],
+            ["uuid", "npm:8.3.2"]
           ],
           "linkType": "HARD",
         }]
@@ -103,6 +105,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@actions-http-client-npm-1.0.11-f7fe88143c-ccd0ae6ce9.zip/node_modules/@actions/http-client/",
           "packageDependencies": [
             ["@actions/http-client", "npm:1.0.11"],
+            ["tunnel", "npm:0.0.6"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:2.1.1", {
+          "packageLocation": "./.yarn/cache/@actions-http-client-npm-2.1.1-0483f7844f-c94850e90d.zip/node_modules/@actions/http-client/",
+          "packageDependencies": [
+            ["@actions/http-client", "npm:2.1.1"],
             ["tunnel", "npm:0.0.6"]
           ],
           "linkType": "HARD",
@@ -7533,7 +7543,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["mou-release-action", "workspace:."],
-            ["@actions/core", "npm:1.2.7"],
+            ["@actions/core", "npm:1.10.1"],
             ["@actions/github", "npm:4.0.0"],
             ["@octokit/core", "npm:3.4.0"],
             ["@octokit/plugin-paginate-rest", "virtual:80bcb91a087ff4b248b3dad7606f95dff0dd8bfc050a19114604b6a694f57946c7c879aa3e66f037488a622f3abe53c788b66131c9ff0838a1318d83f1d9ce8e#npm:2.13.3"],
@@ -9874,6 +9884,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/uuid-npm-3.4.0-4fd8ef88ad-1ce3f37e21.zip/node_modules/uuid/",
           "packageDependencies": [
             ["uuid", "npm:3.4.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:8.3.2", {
+          "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-aed2bcef34.zip/node_modules/uuid/",
+          "packageDependencies": [
+            ["uuid", "npm:8.3.2"]
           ],
           "linkType": "HARD",
         }]
