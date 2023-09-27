@@ -4,6 +4,7 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 
 import { GitHubOctokit } from '../types';
+import { Octokit } from '@octokit/rest';
 
 // See semver.ReleaseType
 export enum VersionType {
@@ -14,7 +15,7 @@ export enum VersionType {
 }
 
 const findReleaseTag = async (
-  octokit: InstanceType<typeof GitHubOctokit>,
+  octokit: InstanceType<typeof Octokit>,
   // eslint-disable-next-line @typescript-eslint/ban-types
   matchFunction: (release: Record<string, unknown>) => {},
 ) => {
@@ -102,7 +103,7 @@ export async function bumpVersion(
 }
 
 export async function retrieveLastReleasedVersion(
-  octokit: InstanceType<typeof GitHubOctokit>,
+  octokit: any,
   tagPrefix: string,
 ): Promise<string | undefined> {
   const isVersionReleased = (release) => {

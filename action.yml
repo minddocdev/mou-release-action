@@ -98,5 +98,5 @@ outputs:
   upload_url:
     description: 'The url used for uploading release artifacts'
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/run.js'

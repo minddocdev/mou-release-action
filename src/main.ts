@@ -1,5 +1,4 @@
 import * as core from '@actions/core';
-import * as github from '@actions/github';
 
 import {
   createGithubRelease,
@@ -9,6 +8,7 @@ import {
 } from './lib/release';
 import { commitParser } from './lib/commits';
 import { retrieveLastReleasedVersion, bumpVersion, VersionType } from './lib/version';
+import { Octokit } from '@octokit/rest';
 
 export async function run(): Promise<void> {
   try {
@@ -17,7 +17,7 @@ export async function run(): Promise<void> {
     const token = core.getInput('token', { required: true });
     const tagPrefix = app ? `${app}@` : `v`;
 
-    const octokit = github.getOctokit(token);
+    const octokit: Octokit = new Octokit({ auth: token });
 
     // Commit loading config
     const baseTag =
@@ -62,7 +62,7 @@ export async function run(): Promise<void> {
       releaseNotesLanguageTags,
     );
     await createGithubRelease(octokit, releaseTag, releaseName, body, draft, prerelease);
-  } catch (error) {
+  } catch (error: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     core.setFailed(error.message);
   }
