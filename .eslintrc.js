@@ -54,5 +54,10 @@ module.exports = {
     'node/no-missing-import': 'off',
     'one-var': 'off',
     semi: ['error', 'always'],
+    'jest/no-alias-methods': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    'typescript-eslint/no-unsafe-enum-comparison': 'off',
+    '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off'
   },
 };

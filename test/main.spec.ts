@@ -13,6 +13,7 @@ import {
   renderReleaseName,
 } from '@minddocdev/mou-release-action/lib/release';
 import { commitParser } from '@minddocdev/mou-release-action/lib/commits';
+import { Octokit } from '@octokit/rest';
 
 jest.mock('@actions/github', () => ({
   getOctokit: jest.fn(() => () => {}),
@@ -88,9 +89,9 @@ describe('run', () => {
 
     await run();
 
-    expect(retrieveLastReleasedVersion).toBeCalledWith(expect.any(Function), tagPrefix);
+    expect(retrieveLastReleasedVersion).toBeCalledWith(expect.any(Octokit), tagPrefix);
     expect(commitParser).toBeCalledWith(
-      expect.any(Function),
+      expect.any(Octokit),
       baseTag,
       taskPrefix,
       undefined,
@@ -108,14 +109,14 @@ describe('run', () => {
       releaseNotesLanguageTags,
     );
     expect(bumpVersion).toBeCalledWith(
-      expect.any(Function),
+      expect.any(Octokit),
       tagPrefix,
       VersionType.prerelease,
       baseTag,
     );
     expect(createGitTag).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
-      expect.any(Function),
+      expect.any(Octokit),
       releaseTag,
       releaseName,
       body,
@@ -174,13 +175,7 @@ describe('run', () => {
     await run();
 
     expect(retrieveLastReleasedVersion).not.toBeCalled();
-    expect(commitParser).toBeCalledWith(
-      expect.any(Function),
-      baseTag,
-      taskPrefix,
-      taskBaseUrl,
-      app,
-    );
+    expect(commitParser).toBeCalledWith(expect.any(Octokit), baseTag, taskPrefix, taskBaseUrl, app);
     expect(renderReleaseBody).toBeCalledWith(
       templatePath,
       app,
@@ -202,9 +197,9 @@ describe('run', () => {
       releaseNotesLanguageTags,
     );
     expect(bumpVersion).not.toBeCalled();
-    expect(createGitTag).toBeCalledWith(expect.any(Function), releaseTag);
+    expect(createGitTag).toBeCalledWith(expect.any(Octokit), releaseTag);
     expect(createGithubRelease).toBeCalledWith(
-      expect.any(Function),
+      expect.any(Octokit),
       releaseTag,
       releaseName,
       body,

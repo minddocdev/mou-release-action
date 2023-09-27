@@ -1,8 +1,8 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { GitHubOctokit } from '../types';
 import { VersionType } from './version';
+import { Octokit } from '@octokit/rest';
 
 // Octokit commit type subset
 interface Commit {
@@ -18,7 +18,7 @@ interface Commit {
  * @param commits - The JSON array with Github commit info.
  */
 export async function commitParser(
-  octokit: InstanceType<typeof GitHubOctokit>,
+  octokit: InstanceType<typeof Octokit>,
   baseRef = 'master',
   taskPrefix = 'JIRA-',
   taskBaseUrl?: string,
