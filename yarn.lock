@@ -4258,7 +4258,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.3":
+"husky@npm:^8.0.0":
   version: 8.0.3
   resolution: "husky@npm:8.0.3"
   bin:
@@ -5596,16 +5596,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "minimatch@npm:3.0.4"
-  dependencies:
-    brace-expansion: ^1.1.7
-  checksum: 66ac295f8a7b59788000ea3749938b0970344c841750abd96694f80269b926ebcafad3deeb3f1da2522978b119e6ae3a5869b63b13a7859a456b3408bd18a078
-  languageName: node
-  linkType: hard
-
-"minimatch@npm:^3.0.5, minimatch@npm:^3.1.2":
+"minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.2":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
   dependencies:
@@ -5689,7 +5680,7 @@ fsevents@^2.3.2:
     eslint-plugin-jsx-a11y: ^6.7.1
     eslint-plugin-node: ^11.1.0
     eslint-plugin-prettier: ^5.0.0
-    husky: ^8.0.3
+    husky: ^8.0.0
     jest: ^29.7.0
     jest-config: ^29.7.0
     jest-environment-node: ^29.7.0
