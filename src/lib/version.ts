@@ -3,7 +3,6 @@ import semver from 'semver';
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { GitHubOctokit } from '../types';
 import { Octokit } from '@octokit/rest';
 
 // See semver.ReleaseType
@@ -40,7 +39,7 @@ const findReleaseTag = async (
 };
 
 export async function bumpVersion(
-  octokit: InstanceType<typeof GitHubOctokit>,
+  octokit: InstanceType<typeof Octokit>,
   tagPrefix: string,
   nextVersionType = VersionType.patch,
   publishedTag?: string,
