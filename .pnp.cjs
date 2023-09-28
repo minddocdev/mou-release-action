@@ -3452,18 +3452,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["browserslist", [\
-        ["npm:4.16.4", {\
-          "packageLocation": "./.yarn/cache/browserslist-npm-4.16.4-9ca361ea82-e35cab68c5.zip/node_modules/browserslist/",\
-          "packageDependencies": [\
-            ["browserslist", "npm:4.16.4"],\
-            ["caniuse-lite", "npm:1.0.30001209"],\
-            ["colorette", "npm:1.2.2"],\
-            ["electron-to-chromium", "npm:1.3.717"],\
-            ["escalade", "npm:3.1.1"],\
-            ["node-releases", "npm:1.1.71"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:4.22.0", {\
           "packageLocation": "./.yarn/cache/browserslist-npm-4.22.0-983327b82b-14fc119bbf.zip/node_modules/browserslist/",\
           "packageDependencies": [\
@@ -3552,13 +3540,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["caniuse-lite", [\
-        ["npm:1.0.30001209", {\
-          "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001209-740e336c01-7a0f962bb5.zip/node_modules/caniuse-lite/",\
-          "packageDependencies": [\
-            ["caniuse-lite", "npm:1.0.30001209"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:1.0.30001540", {\
           "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001540-46ed103772-95b9203a85.zip/node_modules/caniuse-lite/",\
           "packageDependencies": [\
@@ -3738,13 +3719,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["colorette", [\
-        ["npm:1.2.2", {\
-          "packageLocation": "./.yarn/cache/colorette-npm-1.2.2-da75bd0b32-69fec14dda.zip/node_modules/colorette/",\
-          "packageDependencies": [\
-            ["colorette", "npm:1.2.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:2.0.20", {\
           "packageLocation": "./.yarn/cache/colorette-npm-2.0.20-692d428726-0c016fea2b.zip/node_modules/colorette/",\
           "packageDependencies": [\
@@ -4207,13 +4181,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["electron-to-chromium", [\
-        ["npm:1.3.717", {\
-          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.3.717-56b0fba1fa-d1762acc1c.zip/node_modules/electron-to-chromium/",\
-          "packageDependencies": [\
-            ["electron-to-chromium", "npm:1.3.717"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:1.4.531", {\
           "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.4.531-08d5e1b5ae-a9e21d767e.zip/node_modules/electron-to-chromium/",\
           "packageDependencies": [\
@@ -7633,13 +7600,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["node-releases", [\
-        ["npm:1.1.71", {\
-          "packageLocation": "./.yarn/cache/node-releases-npm-1.1.71-612c3802fd-a6ab18069e.zip/node_modules/node-releases/",\
-          "packageDependencies": [\
-            ["node-releases", "npm:1.1.71"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:2.0.13", {\
           "packageLocation": "./.yarn/cache/node-releases-npm-2.0.13-1f2e177887-17ec8f315d.zip/node_modules/node-releases/",\
           "packageDependencies": [\
@@ -9848,7 +9808,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/wasm-parser", "npm:1.11.6"],\
             ["acorn", "npm:8.10.0"],\
             ["acorn-import-assertions", "virtual:c88d64460d6c99ff18030ec320b1ae4866ba4cf2d8ae2f00a2024675b6c79e38672455204efbf855990168cb3f2e080ce57a0ae8a8f5afe08b0c4347900ed916#npm:1.9.0"],\
-            ["browserslist", "npm:4.16.4"],\
+            ["browserslist", "npm:4.22.0"],\
             ["chrome-trace-event", "npm:1.0.2"],\
             ["enhanced-resolve", "npm:5.15.0"],\
             ["es-module-lexer", "npm:1.3.1"],\
