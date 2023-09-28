@@ -2876,17 +2876,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["ajv", [\
-        ["npm:6.12.0", {\
-          "packageLocation": "./.yarn/cache/ajv-npm-6.12.0-2c613c5c4b-ca41b2185f.zip/node_modules/ajv/",\
-          "packageDependencies": [\
-            ["ajv", "npm:6.12.0"],\
-            ["fast-deep-equal", "npm:3.1.1"],\
-            ["fast-json-stable-stringify", "npm:2.1.0"],\
-            ["json-schema-traverse", "npm:0.4.1"],\
-            ["uri-js", "npm:4.2.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:6.12.6", {\
           "packageLocation": "./.yarn/cache/ajv-npm-6.12.6-4b5105e2b2-874972efe5.zip/node_modules/ajv/",\
           "packageDependencies": [\
@@ -5567,7 +5556,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/har-validator-npm-5.1.3-f192d43c41-5903ddf55f.zip/node_modules/har-validator/",\
           "packageDependencies": [\
             ["har-validator", "npm:5.1.3"],\
-            ["ajv", "npm:6.12.0"],\
+            ["ajv", "npm:6.12.6"],\
             ["har-schema", "npm:2.0.0"]\
           ],\
           "linkType": "HARD"\
