@@ -1758,7 +1758,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/types", "npm:2.3.1"],\
             ["deprecation", "npm:2.3.1"],\
             ["is-plain-object", "npm:3.0.0"],\
-            ["node-fetch", "npm:2.6.0"],\
+            ["node-fetch", "virtual:968f9d2faf55650e18bad0b3bc5e1e3bba013e48065f8c5b50f9f73fd6ee12176be30fcb4572cbaa4b293b8b733ba62f0cbfcfcf627545e648f85f6012be5e88#npm:2.7.0"],\
             ["once", "npm:1.4.0"],\
             ["universal-user-agent", "npm:5.0.0"]\
           ],\
@@ -1772,7 +1772,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/request-error", "npm:2.1.0"],\
             ["@octokit/types", "npm:6.41.0"],\
             ["is-plain-object", "npm:5.0.0"],\
-            ["node-fetch", "virtual:25a5f5382d53dbf298bf7a1191760bc2e0a523a619eeb0e667b99a8649e8ad183f9e2e0b45f6fb831b92f4078b61622aa567cf79565f6aa5af9597e3c84864f6#npm:2.7.0"],\
+            ["node-fetch", "virtual:968f9d2faf55650e18bad0b3bc5e1e3bba013e48065f8c5b50f9f73fd6ee12176be30fcb4572cbaa4b293b8b733ba62f0cbfcfcf627545e648f85f6012be5e88#npm:2.7.0"],\
             ["universal-user-agent", "npm:6.0.0"]\
           ],\
           "linkType": "HARD"\
@@ -7574,14 +7574,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["node-fetch", [\
-        ["npm:2.6.0", {\
-          "packageLocation": "./.yarn/cache/node-fetch-npm-2.6.0-29c7a53447-2b741e9315.zip/node_modules/node-fetch/",\
-          "packageDependencies": [\
-            ["node-fetch", "npm:2.6.0"],\
-            ["encoding", "npm:0.1.12"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:2.7.0", {\
           "packageLocation": "./.yarn/cache/node-fetch-npm-2.7.0-587d57004e-d76d2f5edb.zip/node_modules/node-fetch/",\
           "packageDependencies": [\
@@ -7589,10 +7581,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:25a5f5382d53dbf298bf7a1191760bc2e0a523a619eeb0e667b99a8649e8ad183f9e2e0b45f6fb831b92f4078b61622aa567cf79565f6aa5af9597e3c84864f6#npm:2.7.0", {\
-          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-3c0e1e2d12/0/cache/node-fetch-npm-2.7.0-587d57004e-d76d2f5edb.zip/node_modules/node-fetch/",\
+        ["virtual:968f9d2faf55650e18bad0b3bc5e1e3bba013e48065f8c5b50f9f73fd6ee12176be30fcb4572cbaa4b293b8b733ba62f0cbfcfcf627545e648f85f6012be5e88#npm:2.7.0", {\
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-4990486c29/0/cache/node-fetch-npm-2.7.0-587d57004e-d76d2f5edb.zip/node_modules/node-fetch/",\
           "packageDependencies": [\
-            ["node-fetch", "virtual:25a5f5382d53dbf298bf7a1191760bc2e0a523a619eeb0e667b99a8649e8ad183f9e2e0b45f6fb831b92f4078b61622aa567cf79565f6aa5af9597e3c84864f6#npm:2.7.0"],\
+            ["node-fetch", "virtual:968f9d2faf55650e18bad0b3bc5e1e3bba013e48065f8c5b50f9f73fd6ee12176be30fcb4572cbaa4b293b8b733ba62f0cbfcfcf627545e648f85f6012be5e88#npm:2.7.0"],\
             ["@types/encoding", null],\
             ["encoding", "npm:0.1.12"],\
             ["whatwg-url", "npm:5.0.0"]\
