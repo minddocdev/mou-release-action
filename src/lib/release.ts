@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { GitHubOctokit } from '../types';
+import { Octokit } from '@octokit/rest';
 
 export function renderReleaseName(releaseVersion: string, app?: string): string {
   return `${app ? `${app}@` : ''}${releaseVersion}`.trim();
@@ -56,7 +56,7 @@ export function renderReleaseBody(
 }
 
 export async function createGitTag(
-  octokit: InstanceType<typeof GitHubOctokit>,
+  octokit: InstanceType<typeof Octokit>,
   tag: string,
 ): Promise<void> {
   const { owner, repo } = github.context.repo;
@@ -75,7 +75,7 @@ export async function createGitTag(
 }
 
 export async function createGithubRelease(
-  octokit: InstanceType<typeof GitHubOctokit>,
+  octokit: InstanceType<typeof Octokit>,
   tag: string,
   name: string,
   body: string,
