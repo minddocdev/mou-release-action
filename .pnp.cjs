@@ -34,7 +34,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/plugin-rest-endpoint-methods", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:10.0.0"],\
             ["@octokit/rest", "npm:20.0.2"],\
             ["@types/jest", "npm:29.5.5"],\
-            ["@types/node", "npm:20.7.0"],\
+            ["@types/node", "npm:20.7.1"],\
             ["@types/semver", "npm:7.5.3"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:6.7.3"],\
             ["@typescript-eslint/parser", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:6.7.3"],\
@@ -2143,10 +2143,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:20.7.0", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-20.7.0-55c329fdd3-1b2919925c.zip/node_modules/@types/node/",\
+        ["npm:20.7.1", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-20.7.1-35d2d24f0c-3140bd6c91.zip/node_modules/@types/node/",\
           "packageDependencies": [\
-            ["@types/node", "npm:20.7.0"]\
+            ["@types/node", "npm:20.7.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7447,7 +7447,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/plugin-rest-endpoint-methods", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:10.0.0"],\
             ["@octokit/rest", "npm:20.0.2"],\
             ["@types/jest", "npm:29.5.5"],\
-            ["@types/node", "npm:20.7.0"],\
+            ["@types/node", "npm:20.7.1"],\
             ["@types/semver", "npm:7.5.3"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:6.7.3"],\
             ["@typescript-eslint/parser", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:6.7.3"],\
