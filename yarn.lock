@@ -1529,10 +1529,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.7.1":
-  version: 20.7.1
-  resolution: "@types/node@npm:20.7.1"
-  checksum: 3140bd6c9130f1ed73a78ce7a1765ee43e155c1eea50eea45e18faeb31d11d97a84fffdc5e3a97582101d2f57d2652a50f510ede6c702780267bad74c822d56c
+"@types/node@npm:^20.8.2":
+  version: 20.8.2
+  resolution: "@types/node@npm:20.8.2"
+  checksum: 3da73e25d821bfcdb7de98589027e08bb4848e55408671c4a83ec0341e124b5313a0b20e1e4b4eff1168ea17a86f622ad73fcb04b761abd77496b9a27cbd5de5
   languageName: node
   linkType: hard
 
@@ -5622,7 +5622,7 @@ fsevents@^2.3.2:
     "@octokit/plugin-rest-endpoint-methods": ^10.0.0
     "@octokit/rest": ^20.0.2
     "@types/jest": ^29.5.5
-    "@types/node": ^20.7.1
+    "@types/node": ^20.8.2
     "@types/semver": ^7.5.3
     "@typescript-eslint/eslint-plugin": ^6.7.4
     "@typescript-eslint/parser": ^6.7.4
