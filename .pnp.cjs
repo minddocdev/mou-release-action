@@ -34,7 +34,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/plugin-rest-endpoint-methods", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:10.0.0"],\
             ["@octokit/rest", "npm:20.0.2"],\
             ["@types/jest", "npm:29.5.5"],\
-            ["@types/node", "npm:20.8.4"],\
+            ["@types/node", "npm:20.8.5"],\
             ["@types/semver", "npm:7.5.3"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:6.7.5"],\
             ["@typescript-eslint/parser", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:6.7.5"],\
@@ -2143,10 +2143,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:20.8.4", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-20.8.4-eacd001178-2106b9ef97.zip/node_modules/@types/node/",\
+        ["npm:20.8.5", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-20.8.5-e81f847ee3-4bca4e4f63.zip/node_modules/@types/node/",\
           "packageDependencies": [\
-            ["@types/node", "npm:20.8.4"],\
+            ["@types/node", "npm:20.8.5"],\
             ["undici-types", "npm:5.25.3"]\
           ],\
           "linkType": "HARD"\
@@ -6274,7 +6274,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.23.0"],\
             ["@jest/test-sequencer", "npm:29.7.0"],\
             ["@jest/types", "npm:29.6.3"],\
-            ["@types/node", "npm:20.8.4"],\
+            ["@types/node", "npm:20.8.5"],\
             ["@types/ts-node", null],\
             ["babel-jest", "virtual:b81fad0823788b5c3620ba34efd84aba91f3169abb058ac30d3c4d8d8941df44e34cab8c84bccd162522da3a5f0cd8819af2024ec71e73d51b44fa5ac5158a90#npm:29.7.0"],\
             ["chalk", "npm:4.1.0"],\
@@ -7179,7 +7179,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/plugin-rest-endpoint-methods", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:10.0.0"],\
             ["@octokit/rest", "npm:20.0.2"],\
             ["@types/jest", "npm:29.5.5"],\
-            ["@types/node", "npm:20.8.4"],\
+            ["@types/node", "npm:20.8.5"],\
             ["@types/semver", "npm:7.5.3"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:6.7.5"],\
             ["@typescript-eslint/parser", "virtual:4378a32ce12a4ae9886fad0c3692664a6f4c4ab9a16443d423202e6122bf6d4a3efd171e035b95388d6948ab2c4ae05567c81abaf43c606554316232a8e8d263#npm:6.7.5"],\
