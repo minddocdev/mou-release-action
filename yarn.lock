@@ -2809,17 +2809,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.0":
-  version: 7.0.1
-  resolution: "cross-spawn@npm:7.0.1"
-  dependencies:
-    path-key: ^3.1.0
-    shebang-command: ^2.0.0
-    which: ^2.0.1
-  checksum: 5c1c52be2d24f0ada793920bf0beca61ea9cc03bb5c400617ddfd2c03f10ed86a0c39fb67bcf2cee91ec4dd7e9f1595ed9c40f84352d2881937bf861281f651a
-  languageName: node
-  linkType: hard
-
 "cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -3646,23 +3635,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "execa@npm:4.1.0"
-  dependencies:
-    cross-spawn: ^7.0.0
-    get-stream: ^5.0.0
-    human-signals: ^1.1.1
-    is-stream: ^2.0.0
-    merge-stream: ^2.0.0
-    npm-run-path: ^4.0.0
-    onetime: ^5.1.0
-    signal-exit: ^3.0.2
-    strip-final-newline: ^2.0.0
-  checksum: e30d298934d9c52f90f3847704fd8224e849a081ab2b517bbc02f5f7732c24e56a21f14cb96a08256deffeb2d12b2b7cb7e2b014a12fb36f8d3357e06417ed55
-  languageName: node
-  linkType: hard
-
 "execa@npm:^5.0.0":
   version: 5.0.0
   resolution: "execa@npm:5.0.0"
@@ -3677,6 +3649,23 @@ __metadata:
     signal-exit: ^3.0.3
     strip-final-newline: ^2.0.0
   checksum: a044367ebdcc68ca019810cb134510fc77bbc55c799122258ee0e00e289c132941ab48c2a331a036699c42bc8d479d451ae67c105fce5ce5cc813e7dd92d642b
+  languageName: node
+  linkType: hard
+
+"execa@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "execa@npm:5.1.1"
+  dependencies:
+    cross-spawn: ^7.0.3
+    get-stream: ^6.0.0
+    human-signals: ^2.1.0
+    is-stream: ^2.0.0
+    merge-stream: ^2.0.0
+    npm-run-path: ^4.0.1
+    onetime: ^5.1.2
+    signal-exit: ^3.0.3
+    strip-final-newline: ^2.0.0
+  checksum: fba9022c8c8c15ed862847e94c252b3d946036d7547af310e344a527e59021fd8b6bb0723883ea87044dc4f0201f949046993124a42ccb0855cae5bf8c786343
   languageName: node
   linkType: hard
 
@@ -4016,15 +4005,6 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"get-stream@npm:^5.0.0":
-  version: 5.1.0
-  resolution: "get-stream@npm:5.1.0"
-  dependencies:
-    pump: ^3.0.0
-  checksum: 371e1fb3f3b009edffd379810ed52a1f0a0a621dbb3778bd844e3b002065af0790bfddde845b4a0f05f71da5d99441465f5586281497321b151a8bdd102c885a
-  languageName: node
-  linkType: hard
-
 "get-stream@npm:^6.0.0, get-stream@npm:^6.0.1":
   version: 6.0.1
   resolution: "get-stream@npm:6.0.1"
@@ -4290,13 +4270,6 @@ fsevents@^2.3.2:
     jsprim: ^1.2.2
     sshpk: ^1.7.0
   checksum: 3324598712266a9683585bb84a75dec4fd550567d5e0dd4a0fff6ff3f74348793404d3eeac4918fa0902c810eeee1a86419e4a2e92a164132dfe6b26743fb47c
-  languageName: node
-  linkType: hard
-
-"human-signals@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "human-signals@npm:1.1.1"
-  checksum: d587647c9e8ec24e02821b6be7de5a0fc37f591f6c4e319b3054b43fd4c35a70a94c46fc74d8c1a43c47fde157d23acd7421f375e1c1365b09a16835b8300205
   languageName: node
   linkType: hard
 
@@ -5843,7 +5816,7 @@ fsevents@^2.3.2:
     jest-config: ^29.7.0
     jest-environment-node: ^29.7.0
     prettier: ^3.2.4
-    pretty-quick: ^3.3.1
+    pretty-quick: ^4.0.0
     semver: ^7.5.4
     ts-jest: ^29.1.1
     ts-loader: ^9.5.1
@@ -5966,7 +5939,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"npm-run-path@npm:^4.0.0, npm-run-path@npm:^4.0.1":
+"npm-run-path@npm:^4.0.1":
   version: 4.0.1
   resolution: "npm-run-path@npm:4.0.1"
   dependencies:
@@ -6113,15 +6086,6 @@ fsevents@^2.3.2:
   dependencies:
     wrappy: 1
   checksum: cd0a88501333edd640d95f0d2700fbde6bff20b3d4d9bdc521bdd31af0656b5706570d6c6afe532045a20bb8dc0849f8332d6f2a416e0ba6d3d3b98806c7db68
-  languageName: node
-  linkType: hard
-
-"onetime@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "onetime@npm:5.1.0"
-  dependencies:
-    mimic-fn: ^2.1.0
-  checksum: 426c13de5015249d2e38855e9900276ad34d9d2738f780ed4bf8d1334deab4ca7a45628e36ce8a6c5f679b0508c65bb0907dbbd6f67a6e23bd1187e501834f71
   languageName: node
   linkType: hard
 
@@ -6410,22 +6374,22 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"pretty-quick@npm:^3.3.1":
-  version: 3.3.1
-  resolution: "pretty-quick@npm:3.3.1"
+"pretty-quick@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "pretty-quick@npm:4.0.0"
   dependencies:
-    execa: ^4.1.0
-    find-up: ^4.1.0
+    execa: ^5.1.1
+    find-up: ^5.0.0
     ignore: ^5.3.0
     mri: ^1.2.0
     picocolors: ^1.0.0
     picomatch: ^3.0.1
     tslib: ^2.6.2
   peerDependencies:
-    prettier: ^2.0.0
+    prettier: ^3.0.0
   bin:
-    pretty-quick: dist/cli.js
-  checksum: ce6af6e0818916ec52b24bffa5f45b8623c0ab1e5d0855eb8e8d42a42e396be3ff8c400f7661097eed77d7638f4ad279cd86c6f5996384c7178c202c85f845ed
+    pretty-quick: lib/cli.mjs
+  checksum: 5825513f71feb8d2fb19601e2fc73841ea65c558ebb3cbb05fa30f6e4394efddf796921a57f28b7f3acb12230291853466176c03b25465e48723615963fd5003
   languageName: node
   linkType: hard
 
@@ -6952,7 +6916,7 @@ resolve@^1.20.0:
   languageName: node
   linkType: hard
 
-"signal-exit@npm:^3.0.0, signal-exit@npm:^3.0.2":
+"signal-exit@npm:^3.0.0":
   version: 3.0.2
   resolution: "signal-exit@npm:3.0.2"
   checksum: ccc08b9ad53644154d274ed147bb5e6cd5fd09c81bc6480a93bbe581f9030a599882907f78b305b81214ea725be7c09ed9182b58c675a148a1fe48cd50e43b2b
