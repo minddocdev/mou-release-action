@@ -1586,10 +1586,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/semver@npm:^7.5.6":
-  version: 7.5.6
-  resolution: "@types/semver@npm:7.5.6"
-  checksum: 563a0120ec0efcc326567db2ed920d5d98346f3638b6324ea6b50222b96f02a8add3c51a916b6897b51523aad8ac227d21d3dcf8913559f1bfc6c15b14d23037
+"@types/semver@npm:^7.5.8":
+  version: 7.5.8
+  resolution: "@types/semver@npm:7.5.8"
+  checksum: ea6f5276f5b84c55921785a3a27a3cd37afee0111dfe2bcb3e03c31819c197c782598f17f0b150a69d453c9584cd14c4c4d7b9a55d2c5e6cacd4d66fdb3b3663
   languageName: node
   linkType: hard
 
@@ -5836,7 +5836,7 @@ fsevents@^2.3.2:
     "@octokit/rest": ^20.0.2
     "@types/jest": ^29.5.12
     "@types/node": ^20.11.20
-    "@types/semver": ^7.5.6
+    "@types/semver": ^7.5.8
     "@typescript-eslint/eslint-plugin": ^7.0.2
     "@typescript-eslint/parser": ^7.0.2
     eslint: ^8.57.0
@@ -5855,7 +5855,7 @@ fsevents@^2.3.2:
     jest-environment-node: ^29.7.0
     prettier: ^3.2.5
     pretty-quick: ^4.0.0
-    semver: ^7.5.4
+    semver: ^7.6.3
     ts-jest: ^29.1.2
     ts-loader: ^9.5.1
     tsconfig-paths-webpack-plugin: ^4.1.0
@@ -6867,6 +6867,15 @@ resolve@^1.20.0:
   bin:
     semver: bin/semver.js
   checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.6.3":
+  version: 7.6.3
+  resolution: "semver@npm:7.6.3"
+  bin:
+    semver: bin/semver.js
+  checksum: 4110ec5d015c9438f322257b1c51fe30276e5f766a3f64c09edd1d7ea7118ecbc3f379f3b69032bacf13116dc7abc4ad8ce0d7e2bd642e26b0d271b56b61a7d8
   languageName: node
   linkType: hard
 
