@@ -3770,10 +3770,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["cross-spawn", [\
-        ["npm:6.0.5", {\
-          "packageLocation": "./.yarn/cache/cross-spawn-npm-6.0.5-2deab6c280-f893bb0d96.zip/node_modules/cross-spawn/",\
+        ["npm:6.0.6", {\
+          "packageLocation": "./.yarn/cache/cross-spawn-npm-6.0.6-a983639a0d-a6e2e5b04a.zip/node_modules/cross-spawn/",\
           "packageDependencies": [\
-            ["cross-spawn", "npm:6.0.5"],\
+            ["cross-spawn", "npm:6.0.6"],\
             ["nice-try", "npm:1.0.5"],\
             ["path-key", "npm:2.0.1"],\
             ["semver", "npm:5.7.1"],\
@@ -4875,7 +4875,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/execa-npm-1.0.0-7028e37029-ddf1342c1c.zip/node_modules/execa/",\
           "packageDependencies": [\
             ["execa", "npm:1.0.0"],\
-            ["cross-spawn", "npm:6.0.5"],\
+            ["cross-spawn", "npm:6.0.6"],\
             ["get-stream", "npm:4.1.0"],\
             ["is-stream", "npm:1.1.0"],\
             ["npm-run-path", "npm:2.0.2"],\
